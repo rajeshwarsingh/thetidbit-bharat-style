@@ -1,0 +1,34 @@
+{
+  "name": "thetidbit---eco-friendly-jute-bags",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/generate-sitemaps.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-feed.mjs && vite build && vite build --ssr entry-server.tsx --outDir dist/server && node scripts/prerender.mjs",
+    "preview": "vite preview",
+    "generate-sitemaps": "node scripts/generate-sitemaps.mjs",
+    "generate-feed": "node scripts/generate-feed.mjs",
+    "generate-image-sitemap": "node scripts/generate-image-sitemap.mjs",
+    "generate-all-seo": "node scripts/generate-sitemaps.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-feed.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "0.344.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-helmet-async": "2.0.4",
+    "react-router-dom": "6.22.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

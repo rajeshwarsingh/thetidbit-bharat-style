@@ -1,0 +1,267 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Theme Transitions ---------- */
+* {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Exclude images and other elements that shouldn't transition */
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  transition-property: opacity, transform;
+}
+
+/* ---------- Premium micro-interactions ---------- */
+.bs-coupon-pop {
+  animation: bs-pop 360ms ease-out;
+}
+
+.bs-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 0%,
+    rgba(0, 0, 0, 0.08) 45%,
+    rgba(0, 0, 0, 0.04) 100%
+  );
+  background-size: 240% 100%;
+  animation: bs-skeleton 1100ms ease-in-out infinite;
+}
+
+.bs-pulse-soft {
+  animation: bs-pulse-soft 1400ms ease-in-out infinite;
+}
+
+.bs-reveal-up {
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  animation: bs-reveal-up 420ms ease-out forwards;
+}
+
+.bs-float {
+  animation: bs-float 2800ms ease-in-out infinite;
+}
+
+.bs-rating-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.bs-rating-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: bs-shimmer 1200ms ease-out 1;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-coupon-pop {
+    animation: none !important;
+  }
+  .bs-rating-shimmer::after {
+    animation: none !important;
+  }
+  .bs-skeleton,
+  .bs-pulse-soft,
+  .bs-reveal-up,
+  .bs-float {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@keyframes bs-skeleton {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+@keyframes bs-pulse-soft {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes bs-reveal-up {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes bs-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -6px, 0); }
+}
+
+/* ---------- Hero Ken Burns (subtle) ---------- */
+@keyframes bs-kenburns {
+  0% { transform: scale(1) translate3d(0, 0, 0); }
+  100% { transform: scale(1.04) translate3d(-1%, -1%, 0); }
+}
+.bs-kenburns {
+  transform-origin: center;
+  animation: bs-kenburns 14s ease-in-out infinite alternate;
+}
+@media (prefers-reduced-motion: reduce) {
+  .bs-kenburns { animation: none !important; transform: none !important; }
+}
+
+/* ---------- Seasonal animations (snow / flag) ---------- */
+@keyframes bs-snow-fall {
+  0% { transform: translate3d(var(--x), -18px, 0); opacity: 0; }
+  10% { opacity: .9; }
+  100% { transform: translate3d(calc(var(--x) + var(--drift)), 34px, 0); opacity: 0; }
+}
+@keyframes bs-snow-fall-long {
+  0% { transform: translate3d(var(--x), -22px, 0); opacity: 0; }
+  10% { opacity: .9; }
+  100% { transform: translate3d(calc(var(--x) + var(--drift)), var(--fallDistance), 0); opacity: 0; }
+}
+@keyframes bs-snow-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.bs-snowfall {
+  position: absolute;
+  inset: -6px -10px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.bs-snowflake {
+  position: absolute;
+  top: -16px;
+  left: 0;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.55);
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.05));
+  animation: bs-snow-fall var(--dur) linear infinite;
+}
+.bs-snowflake::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.35);
+  animation: bs-snow-spin var(--spin) linear infinite;
+}
+
+.bs-snow-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--snowTop, 64px); /* navbar height (mobile default) */
+  height: var(--bannerHeight);
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .bs-snow-banner {
+    top: var(--snowTopSm, var(--snowTop, 64px));
+  }
+}
+.bs-snow-banner .bs-snowflake {
+  animation: bs-snow-fall-long var(--dur) linear infinite;
+}
+
+@keyframes bs-flag-wave {
+  0% { transform: perspective(500px) rotateY(0deg) translateZ(0); }
+  50% { transform: perspective(500px) rotateY(-10deg) translateZ(0); }
+  100% { transform: perspective(500px) rotateY(0deg) translateZ(0); }
+}
+.bs-flag-wave {
+  transform-origin: left center;
+  animation: bs-flag-wave 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-snowflake,
+  .bs-snowflake::after,
+  .bs-flag-wave {
+    animation: none !important;
+  }
+}
+
+/* ---------- Butterfly Animation ---------- */
+@keyframes bs-butterfly-flap-left {
+  0%, 100% { transform: rotate(-20deg) scaleY(1); }
+  50% { transform: rotate(-50deg) scaleY(0.75); }
+}
+@keyframes bs-butterfly-flap-right {
+  0%, 100% { transform: rotate(20deg) scaleY(1); }
+  50% { transform: rotate(50deg) scaleY(0.75); }
+}
+@keyframes bs-butterfly-float {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  25% { transform: translateY(-10px) translateX(3px); }
+  50% { transform: translateY(-5px) translateX(0px); }
+  75% { transform: translateY(-12px) translateX(-3px); }
+}
+@keyframes bs-butterfly-glow {
+  0%, 100% { opacity: 0.9; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(1.2); }
+}
+
+.butterfly-container {
+  opacity: 0;
+  animation: bs-butterfly-fade-in 1.5s ease-out forwards;
+}
+
+@keyframes bs-butterfly-fade-in {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.butterfly-svg {
+  animation: bs-butterfly-float 2.5s ease-in-out infinite, bs-butterfly-glow 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.butterfly-left-wing {
+  transform-origin: 30px 50px;
+  animation: bs-butterfly-flap-left 0.25s ease-in-out infinite;
+}
+
+.butterfly-right-wing {
+  transform-origin: 70px 50px;
+  animation: bs-butterfly-flap-right 0.25s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .butterfly-container,
+  .butterfly-svg,
+  .butterfly-left-wing,
+  .butterfly-right-wing {
+    animation: none !important;
+  }
+  .butterfly-container {
+    opacity: 1;
+  }
+}
+
+
