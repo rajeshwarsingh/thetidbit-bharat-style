@@ -46,6 +46,13 @@ export const PRODUCT_CATEGORIES = [
   { id: "handbag", name: "Handbag", slug: "handbag" },
 ] as const;
 
+// Category Images for Shop by Category Section
+export const CATEGORY_IMAGES: Record<string, string> = {
+  "sling-bag": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472630/cata_xjhfve.png",
+  "sling-bag-rounded": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472631/category-rounded-sling_fh4hyy.png",
+  "handbag": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472622/ChatGPT_Image_Jan_15_2026_03_52_50_PM_zzhicn.png",
+};
+
 // GOOGLE ANALYTICS ID - Replace this with your actual Measurement ID (starts with G-)
 export const GA_TRACKING_ID = "G-6ZVW69DQG4"; 
 

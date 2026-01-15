@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
-import { PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory } from '../constants';
+import { PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory, CATEGORY_IMAGES } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
+import MarketplaceLinks from './MarketplaceLinks';
 
 const HomePage: React.FC = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -248,7 +249,7 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {PRODUCT_CATEGORIES.map((category) => {
               const categoryProduct = getProductByCategory(category.slug);
-              const categoryImage = categoryProduct.colors[0]?.images[0] || heroImage;
+              const categoryImage = CATEGORY_IMAGES[category.slug] || categoryProduct.colors[0]?.images[0] || heroImage;
 
               return (
                 <Link
@@ -371,6 +372,9 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Marketplace Links */}
+      <MarketplaceLinks />
 
       {/* Instagram CTA */}
       <InstagramCTA />
