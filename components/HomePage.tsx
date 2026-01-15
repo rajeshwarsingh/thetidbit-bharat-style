@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight, Star, Users } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
 import { PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory, CATEGORY_IMAGES } from '../constants';
@@ -12,27 +12,97 @@ import GiftingSection from './GiftingSection';
 import TrustBadges from './TrustBadges';
 import HomeTestimonials from './HomeTestimonials';
 
+// Limit to 3 slides only
+const SLIDER_BANNERS = HERO_BANNERS.slice(0, 3);
+
+// Slide content configuration
+const SLIDE_CONTENT = [
+  {
+    // Slide 1: Core Brand Promise
+    h1: "Eco-Friendly Handmade Jute Bags for Everyday Indian Women",
+    subtext: "Lightweight, durable & affordable — perfect for office, travel & gifting.",
+    primaryCTA: "Shop Best Sellers",
+    primaryCTALink: "/products",
+    secondaryCTA: "View Real Customer Photos",
+    secondaryCTALink: "/stories",
+    trustLine: "COD Available • Free Shipping Across India • Easy Returns",
+    badge: null,
+  },
+  {
+    // Slide 2: Social Proof & Trust
+    h1: "Loved by Real Women Across India",
+    subtext: "Thousands of customers trust TheTidbit for stylish, sustainable bags.",
+    primaryCTA: "See Customer Reviews",
+    primaryCTALink: "#reviews",
+    secondaryCTA: "Explore Collection",
+    secondaryCTALink: "/products",
+    trustLine: "Handcrafted in India 🇮🇳 | Eco-Friendly Materials",
+    badge: null,
+  },
+  {
+    // Slide 3: Use Case / Lifestyle
+    h1: "Perfect Bags for Office, Travel & Gifting",
+    subtext: "Designed for daily use — stylish, practical, and planet-friendly.",
+    primaryCTA: "Browse Handbags & Sling Bags",
+    primaryCTALink: "/products",
+    secondaryCTA: "Find Your Perfect Bag",
+    secondaryCTALink: "/products",
+    trustLine: null,
+    badge: "Great for Daily Use & Gifting 🎁",
+  },
+];
+
 const HomePage: React.FC = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
-  // Auto-rotate banners - first banner stays longer (8s vs 5s)
+  // Auto-rotate banners - 6-7 seconds interval
   useEffect(() => {
-    // First banner (index 0) stays for 8 seconds, others for 5 seconds
-    const delay = currentBannerIndex === 0 ? 8000 : 5000;
+    if (isPaused) return;
+    
+    const delay = 6500; // 6.5 seconds
     
     const interval = setInterval(() => {
-      setCurrentBannerIndex((prev) => (prev + 1) % HERO_BANNERS.length);
+      setCurrentBannerIndex((prev) => (prev + 1) % SLIDER_BANNERS.length);
     }, delay);
 
     return () => clearInterval(interval);
-  }, [currentBannerIndex]);
+  }, [currentBannerIndex, isPaused]);
 
   const goToNextBanner = () => {
-    setCurrentBannerIndex((prev) => (prev + 1) % HERO_BANNERS.length);
+    setCurrentBannerIndex((prev) => (prev + 1) % SLIDER_BANNERS.length);
   };
 
   const goToPrevBanner = () => {
-    setCurrentBannerIndex((prev) => (prev - 1 + HERO_BANNERS.length) % HERO_BANNERS.length);
+    setCurrentBannerIndex((prev) => (prev - 1 + SLIDER_BANNERS.length) % SLIDER_BANNERS.length);
+  };
+
+  // Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    
+    const distance = touchStartX.current - touchEndX.current;
+    const minSwipeDistance = 50;
+
+    if (distance > minSwipeDistance) {
+      goToNextBanner();
+    } else if (distance < -minSwipeDistance) {
+      goToPrevBanner();
+    }
+    
+    touchStartX.current = 0;
+    touchEndX.current = 0;
   };
 
   // Featured products (first 6 products, or use PRODUCT if ALL_PRODUCTS is empty)
@@ -51,7 +121,7 @@ const HomePage: React.FC = () => {
     p.category.some(c => c.toLowerCase().includes('handbag'))
   ).slice(0, 4);
 
-  const heroImage = HERO_BANNERS[currentBannerIndex] || PRODUCT.colors[0]?.images[0] || '';
+  const heroImage = SLIDER_BANNERS[currentBannerIndex] || PRODUCT.colors[0]?.images[0] || '';
 
   return (
     <>
@@ -63,99 +133,162 @@ const HomePage: React.FC = () => {
         image={heroImage}
       />
 
-      {/* Hero Section with Banner Carousel */}
-      <section className="relative overflow-hidden h-screen sm:h-auto sm:-mt-[100px]">
+      {/* Hero Section with CRO-Focused Slider */}
+      <section 
+        className="relative overflow-hidden h-screen sm:h-auto sm:-mt-[100px]"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         <div className="relative w-full h-full sm:aspect-[3/2] sm:min-h-[480px] sm:max-h-[900px]">
           {/* Banner Carousel */}
-          <div className="relative w-full h-full">
-            {HERO_BANNERS.map((banner, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-1000 ${
-                  index === currentBannerIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-              >
-                <img
-                  src={cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })}
-                  srcSet={`
-                    ${cloudinaryTransform(banner, { w: 1200, h: 800, c: 'fit', q: 'auto:best' })} 1200w,
-                    ${cloudinaryTransform(banner, { w: 1800, h: 1200, c: 'fit', q: 'auto:best' })} 1800w,
-                    ${cloudinaryTransform(banner, { w: 2400, h: 1600, c: 'fit', q: 'auto:best' })} 2400w,
-                    ${cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })} 3000w
-                  `}
-                  sizes="100vw"
-                  alt={`TheTidbit Hero Banner ${index + 1}`}
-                  className="w-full h-full object-cover sm:object-contain object-[75%_50%] sm:object-right bg-transparent sm:bg-white dark:sm:bg-stone-900"
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchpriority={index === 0 ? 'high' : 'low'}
-                />
-              </div>
-            ))}
+          <div 
+            ref={sliderRef}
+            className="relative w-full h-full"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {SLIDER_BANNERS.map((banner, index) => {
+              const content = SLIDE_CONTENT[index];
+              const isActive = index === currentBannerIndex;
+              
+              return (
+                <div
+                  key={index}
+                  className={`absolute inset-0 transition-opacity duration-1000 ${
+                    isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                >
+                  {/* Background Image */}
+                  <img
+                    src={cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })}
+                    srcSet={`
+                      ${cloudinaryTransform(banner, { w: 1200, h: 800, c: 'fit', q: 'auto:best' })} 1200w,
+                      ${cloudinaryTransform(banner, { w: 1800, h: 1200, c: 'fit', q: 'auto:best' })} 1800w,
+                      ${cloudinaryTransform(banner, { w: 2400, h: 1600, c: 'fit', q: 'auto:best' })} 2400w,
+                      ${cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })} 3000w
+                    `}
+                    sizes="100vw"
+                    alt={`TheTidbit Hero Banner ${index + 1}`}
+                    className="w-full h-full object-cover sm:object-contain object-[75%_50%] sm:object-right bg-transparent sm:bg-white dark:sm:bg-stone-900"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={index === 0 ? 'high' : 'low'}
+                  />
+                  
+                  {/* Desktop: Semi-transparent Dark Overlay (8-12%) */}
+                  <div className="hidden sm:block absolute inset-0 bg-black/10 z-10" />
+                  
+                  {/* Mobile: Light gradient overlay from bottom (so product is visible) */}
+                  <div className="sm:hidden absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-black/60 via-black/15 to-transparent z-10" />
+                  
+                  {/* Content Overlay - Desktop */}
+                  {isActive && (
+                    <div className="hidden sm:flex absolute inset-0 z-20 items-center">
+                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                        {/* Desktop: Left-aligned */}
+                        <div className={`w-full ${index === 1 ? 'sm:max-w-[45%]' : 'sm:max-w-[42%]'} md:max-w-[38%] lg:max-w-[35%] text-left`}>
+                          <div className="backdrop-blur-md bg-black/30 dark:bg-black/40 rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl">
+                            {/* Badge (if exists) */}
+                            {content.badge && (
+                              <div className="inline-flex items-center gap-1.5 text-xs text-white/90 mb-3 font-medium">
+                                <span>{content.badge}</span>
+                              </div>
+                            )}
+                            
+                            {/* Primary Headline */}
+                            <h1 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-2xl">
+                              {content.h1}
+                            </h1>
+                            
+                            {/* Subtext */}
+                            <p className="text-base text-white/95 mb-6 leading-relaxed drop-shadow-lg max-w-2xl">
+                              {content.subtext}
+                            </p>
+                            
+                            {/* CTA Buttons */}
+                            <div className="flex flex-row gap-3 mb-6">
+                              <Link
+                                to={content.primaryCTALink}
+                                onClick={(e) => {
+                                  if (content.primaryCTALink.startsWith('#')) {
+                                    e.preventDefault();
+                                    const element = document.querySelector(content.primaryCTALink);
+                                    element?.scrollIntoView({ behavior: 'smooth' });
+                                  }
+                                }}
+                                className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.02] text-base"
+                              >
+                                <ShoppingBag size={18} />
+                                {content.primaryCTA}
+                                <ArrowRight size={16} />
+                              </Link>
+                              <Link
+                                to={content.secondaryCTALink}
+                                className="inline-flex items-center justify-center gap-2 bg-transparent backdrop-blur-sm border-2 border-white/60 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all shadow-lg text-base"
+                              >
+                                {content.secondaryCTA}
+                                <ArrowRight size={16} />
+                              </Link>
+                            </div>
 
-            {/* Content Overlay - Desktop only */}
-            <div className="absolute inset-0 z-20 hidden sm:flex items-center">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                {/* Desktop: Full content with backdrop card */}
-                <div className="w-full max-w-[42%] md:max-w-[38%] lg:max-w-[35%]">
-                  <div className="backdrop-blur-md bg-black/30 dark:bg-black/40 rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl">
-                    {/* Handmade in India Badge */}
-                    <div className="inline-flex items-center gap-1.5 text-xs text-white/90 mb-3 font-medium">
-                      <Sparkles size={12} className="text-yellow-300" />
-                      <span>Handmade in India 🇮🇳</span>
-                    </div>
-                    
-                    {/* Primary Headline */}
-                    <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-2xl">
-                      Sustainable Jute Bags<br />
-                      <span className="text-yellow-100 drop-shadow-2xl">Handcrafted with Love</span>
-                    </h1>
-                    
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 mb-6">
-                      <Link
-                        to="/products"
-                        className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.02] text-sm sm:text-base"
-                      >
-                        <ShoppingBag size={18} />
-                        Shop Jute Bags
-                        <ArrowRight size={16} />
-                      </Link>
-                      <Link
-                        to={`/products/${PRODUCT.id}`}
-                        className="inline-flex items-center justify-center gap-2 bg-transparent backdrop-blur-sm border-2 border-white/60 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all shadow-lg text-sm sm:text-base"
-                      >
-                        Explore Collection
-                        <ArrowRight size={16} />
-                      </Link>
-                    </div>
-
-                    {/* Stats - Desktop only */}
-                    <div className="backdrop-blur-sm bg-white/5 border border-white/10 rounded-xl p-3 sm:p-4">
-                      <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                        <div className="flex flex-col items-center text-center">
-                          <div className="text-2xl sm:text-3xl font-bold text-white mb-1 leading-none">20+</div>
-                          <div className="text-[9px] sm:text-[10px] text-white/85 font-medium">Bags</div>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                          <div className="text-2xl sm:text-3xl font-bold text-white mb-1 leading-none">100%</div>
-                          <div className="text-[9px] sm:text-[10px] text-white/85 font-medium">Handmade</div>
-                        </div>
-                        <div className="flex flex-col items-center text-center">
-                          <div className="flex items-baseline gap-0.5 justify-center mb-1">
-                            <div className="text-2xl sm:text-3xl font-bold text-white leading-none">4.8</div>
-                            <span className="text-lg sm:text-xl text-yellow-300 leading-none">★</span>
+                            {/* Trust Line */}
+                            {content.trustLine && (
+                              <div className="text-sm text-white/90 font-medium drop-shadow-md">
+                                {content.trustLine}
+                              </div>
+                            )}
                           </div>
-                          <div className="text-[9px] sm:text-[10px] text-white/85 font-medium">Rating</div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  )}
 
-            {/* Carousel Controls - Mobile: Top right, Desktop: Bottom center */}
-            <div className="absolute top-2 right-4 sm:top-auto sm:right-auto sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 z-40 flex items-center gap-3 sm:gap-4 bg-black/30 dark:bg-stone-900/30 backdrop-blur-md px-3 py-2 rounded-full shadow-lg">
+                  {/* Content Overlay - Mobile */}
+                  {isActive && (
+                    <div className="sm:hidden absolute bottom-0 left-0 right-0 z-20 pb-4 px-4">
+                      <div className="backdrop-blur-sm bg-black/55 rounded-lg p-3.5 border border-white/20 shadow-2xl">
+                        {/* Mobile: Compact Headline */}
+                        <h1 className="font-serif text-base font-bold text-white mb-1.5 leading-tight drop-shadow-2xl line-clamp-2">
+                          {content.h1}
+                        </h1>
+                        
+                        {/* Mobile: Compact Subtext */}
+                        <p className="text-[11px] text-white/95 mb-2.5 leading-relaxed line-clamp-2">
+                          {content.subtext}
+                        </p>
+                        
+                        {/* Mobile: Single Primary CTA Button (Full Width) */}
+                        <Link
+                          to={content.primaryCTALink}
+                          onClick={(e) => {
+                            if (content.primaryCTALink.startsWith('#')) {
+                              e.preventDefault();
+                              const element = document.querySelector(content.primaryCTALink);
+                              element?.scrollIntoView({ behavior: 'smooth' });
+                            }
+                          }}
+                          className="w-full inline-flex items-center justify-center gap-1.5 bg-white text-stone-900 px-3 py-2 rounded-lg font-bold hover:bg-stone-50 transition-all shadow-lg text-xs"
+                        >
+                          <ShoppingBag size={14} />
+                          {content.primaryCTA}
+                          <ArrowRight size={12} />
+                        </Link>
+
+                        {/* Mobile: Trust Line (Compact) */}
+                        {content.trustLine && (
+                          <div className="text-[9px] text-white/85 font-medium drop-shadow-md mt-1.5 text-center leading-tight">
+                            {content.trustLine}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* Carousel Controls - Desktop only */}
+            <div className="absolute sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 z-40 hidden sm:flex items-center gap-4 bg-black/30 dark:bg-stone-900/30 backdrop-blur-md px-3 py-2 rounded-full shadow-lg">
               {/* Previous Button */}
               <button
                 onClick={goToPrevBanner}
@@ -167,7 +300,7 @@ const HomePage: React.FC = () => {
 
               {/* Dots Indicator - Hidden on mobile, shown on desktop */}
               <div className="hidden sm:flex gap-2">
-                {HERO_BANNERS.map((_, index) => (
+                {SLIDER_BANNERS.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentBannerIndex(index)}
@@ -193,7 +326,7 @@ const HomePage: React.FC = () => {
 
             {/* Mobile: Dots indicator at top center */}
             <div className="absolute top-4 left-1/2 -translate-x-1/2 sm:hidden z-30 flex gap-2">
-              {HERO_BANNERS.map((_, index) => (
+              {SLIDER_BANNERS.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentBannerIndex(index)}
@@ -210,8 +343,10 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Trust Badges */}
-      <TrustBadges />
+      {/* Trust Badges - Hidden on mobile */}
+      <div className="hidden sm:block">
+        <TrustBadges />
+      </div>
 
       {/* Categories Section */}
       <section className="py-16 bg-white dark:bg-stone-900">

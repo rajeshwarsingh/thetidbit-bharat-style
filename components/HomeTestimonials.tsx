@@ -7,7 +7,7 @@ const HomeTestimonials: React.FC = () => {
   const featuredReviews = REVIEWS.slice(0, 3);
 
   return (
-    <section className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-950 dark:to-stone-900">
+    <section id="reviews" className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-950 dark:to-stone-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-brand-green dark:text-brand-green/80 mb-4">
