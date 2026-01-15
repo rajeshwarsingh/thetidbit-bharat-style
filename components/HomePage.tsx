@@ -64,8 +64,8 @@ const HomePage: React.FC = () => {
       />
 
       {/* Hero Section with Banner Carousel */}
-      <section className="relative overflow-hidden sm:-mt-[100px]">
-        <div className="relative w-full aspect-[3/2] min-h-[480px] max-h-[900px]">
+      <section className="relative overflow-hidden h-screen sm:h-auto sm:-mt-[100px]">
+        <div className="relative w-full h-full sm:aspect-[3/2] sm:min-h-[480px] sm:max-h-[900px]">
           {/* Banner Carousel */}
           <div className="relative w-full h-full">
             {HERO_BANNERS.map((banner, index) => (
@@ -92,38 +92,11 @@ const HomePage: React.FC = () => {
               </div>
             ))}
 
-            {/* Content Overlay - Mobile: Bottom positioned, Desktop: Center left */}
-            <div className="absolute inset-0 z-20 flex items-end sm:items-center">
+            {/* Content Overlay - Desktop only */}
+            <div className="absolute inset-0 z-20 hidden sm:flex items-center">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                {/* Mobile: Compact floating card (keeps image clear) */}
-                <div className="w-full sm:hidden pb-5">
-                  <div className="inline-block max-w-[92%] bg-black/35 backdrop-blur-md rounded-2xl px-4 py-4 border border-white/15 shadow-2xl">
-                    {/* Badge - Mobile */}
-                    <div className="inline-flex items-center gap-1 text-[10px] text-white/90 mb-2 font-medium">
-                      <Sparkles size={10} className="text-yellow-300" />
-                      <span>Handmade in India 🇮🇳</span>
-                    </div>
-                    
-                    {/* Headline - Mobile: Smaller */}
-                    <h1 className="font-serif text-lg font-bold text-white mb-3 leading-tight drop-shadow-2xl">
-                      Sustainable Jute Bags<br />
-                      <span className="text-white drop-shadow-2xl">Handcrafted with Love</span>
-                    </h1>
-                    
-                    {/* CTA - Mobile: Single primary button */}
-                    <Link
-                      to="/products"
-                      className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-4 py-2.5 rounded-lg font-bold shadow-xl text-sm w-full"
-                    >
-                      <ShoppingBag size={16} />
-                      Shop Jute Bags
-                      <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-
                 {/* Desktop: Full content with backdrop card */}
-                <div className="hidden sm:block w-full max-w-[42%] md:max-w-[38%] lg:max-w-[35%]">
+                <div className="w-full max-w-[42%] md:max-w-[38%] lg:max-w-[35%]">
                   <div className="backdrop-blur-md bg-black/30 dark:bg-black/40 rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl">
                     {/* Handmade in India Badge */}
                     <div className="inline-flex items-center gap-1.5 text-xs text-white/90 mb-3 font-medium">
