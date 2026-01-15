@@ -8,6 +8,9 @@ import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
 import MarketplaceLinks from './MarketplaceLinks';
+import GiftingSection from './GiftingSection';
+import TrustBadges from './TrustBadges';
+import HomeTestimonials from './HomeTestimonials';
 
 const HomePage: React.FC = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -90,7 +93,7 @@ const HomePage: React.FC = () => {
             ))}
 
             {/* Content Overlay - Mobile: Bottom positioned, Desktop: Center left */}
-            <div className="absolute inset-0 z-20 hidden sm:flex items-center">
+            <div className="absolute inset-0 z-20 flex items-end sm:items-center">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 {/* Mobile: Compact floating card (keeps image clear) */}
                 <div className="w-full sm:hidden pb-5">
@@ -234,6 +237,9 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Trust Badges */}
+      <TrustBadges />
+
       {/* Categories Section */}
       <section className="py-16 bg-white dark:bg-stone-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -250,12 +256,16 @@ const HomePage: React.FC = () => {
             {PRODUCT_CATEGORIES.map((category) => {
               const categoryProduct = getProductByCategory(category.slug);
               const categoryImage = CATEGORY_IMAGES[category.slug] || categoryProduct.colors[0]?.images[0] || heroImage;
+              const categoryCount = ALL_PRODUCTS.filter(p => {
+                const lastCategory = p.category[p.category.length - 1];
+                return lastCategory.toLowerCase() === category.name.toLowerCase();
+              }).length;
 
               return (
                 <Link
                   key={category.id}
                   to={`/products/${categoryProduct.id}`}
-                  className="group relative overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 aspect-[4/3] hover:shadow-xl dark:hover:shadow-stone-900/50 transition-all"
+                  className="group relative overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 aspect-[4/3] hover:shadow-xl dark:hover:shadow-stone-900/50 transition-all border-2 border-transparent hover:border-brand-green/30"
                 >
                   <img
                     src={cloudinaryTransform(categoryImage, { w: 800 })}
@@ -263,16 +273,24 @@ const HomePage: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  
+                  {/* Badge */}
+                  <div className="absolute top-4 right-4 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-xs font-bold text-stone-900 dark:text-stone-100">
+                      {categoryCount} {categoryCount === 1 ? 'Product' : 'Products'}
+                    </span>
+                  </div>
+
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                    <h3 className="text-2xl font-serif font-bold text-white mb-2 drop-shadow-lg">
                       {category.name}
                     </h3>
-                    <p className="text-white/90 text-sm mb-3">
+                    <p className="text-white/90 text-sm mb-3 drop-shadow-md">
                       {categoryProduct.colors.length} {categoryProduct.colors.length === 1 ? 'color' : 'colors'} available
                     </p>
-                    <div className="inline-flex items-center gap-2 text-white font-semibold text-sm">
-                      Explore
+                    <div className="inline-flex items-center gap-2 text-white font-semibold text-sm bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg group-hover:bg-white/30 transition-all">
+                      Explore Collection
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -324,6 +342,12 @@ const HomePage: React.FC = () => {
         </section>
       )}
 
+      {/* Social Proof - Testimonials */}
+      <HomeTestimonials />
+
+      {/* Gifting Section */}
+      <GiftingSection />
+
       {/* Why Choose Us */}
       <section className="py-16 bg-white dark:bg-stone-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -331,10 +355,13 @@ const HomePage: React.FC = () => {
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
               Why Choose TheTidbit?
             </h2>
+            <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              We're committed to bringing you the finest handmade jute bags with exceptional quality and service
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
               <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🌱</span>
               </div>
@@ -346,7 +373,7 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
               <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">👩‍🎨</span>
               </div>
@@ -358,7 +385,7 @@ const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
               <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🚚</span>
               </div>
@@ -367,6 +394,42 @@ const HomePage: React.FC = () => {
               </h3>
               <p className="text-stone-600 dark:text-stone-400">
                 Free shipping on all prepaid orders across India
+              </p>
+            </div>
+
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
+              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">✨</span>
+              </div>
+              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
+                Premium Quality
+              </h3>
+              <p className="text-stone-600 dark:text-stone-400">
+                Durable materials and expert craftsmanship ensure long-lasting beauty
+              </p>
+            </div>
+
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
+              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">💝</span>
+              </div>
+              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
+                Perfect Gift
+              </h3>
+              <p className="text-stone-600 dark:text-stone-400">
+                Beautifully packaged and ready to gift to your loved ones
+              </p>
+            </div>
+
+            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
+              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-3xl">🔄</span>
+              </div>
+              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
+                Easy Returns
+              </h3>
+              <p className="text-stone-600 dark:text-stone-400">
+                10-day hassle-free return and exchange policy
               </p>
             </div>
           </div>
