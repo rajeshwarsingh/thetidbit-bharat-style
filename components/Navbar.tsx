@@ -124,6 +124,12 @@ const Navbar: React.FC = () => {
           {/* Desktop Nav Links - SEO Friendly Links */}
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
             <Link
+              to="/"
+              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+            >
+              Home
+            </Link>
+            <Link
               to="/products"
               className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/products' || location.pathname.startsWith('/products/') ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
             >
@@ -280,9 +286,24 @@ const Navbar: React.FC = () => {
         <div className="sm:hidden bg-white dark:bg-stone-900 border-t border-stone-100 dark:border-stone-700 absolute w-full left-0 shadow-lg transition-colors duration-300">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
+              to="/"
+              onClick={closeMenu}
+              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                location.pathname === '/' 
+                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
+                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
+              }`}
+            >
+              Home
+            </Link>
+            <Link
               to="/products"
               onClick={closeMenu}
-              className="block w-full text-left px-3 py-2 text-base font-medium text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800 rounded-md transition-colors"
+              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                location.pathname === '/products' || location.pathname.startsWith('/products/')
+                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
+                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
+              }`}
             >
               Products
             </Link>

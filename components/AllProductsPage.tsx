@@ -4,6 +4,15 @@ import { Filter, X, Grid, List } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
 import { ALL_PRODUCTS, PRODUCT_CATEGORIES, PRODUCT } from '../constants';
+import { cloudinaryTransform } from '../utils/cloudinary';
+
+// Helper function to convert slug to category name
+const slugToCategoryName = (slug: string): string => {
+  return slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
 
 const AllProductsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,11 +26,15 @@ const AllProductsPage: React.FC = () => {
   const filteredProducts = useMemo(() => {
     let products = ALL_PRODUCTS.length > 1 ? ALL_PRODUCTS : [PRODUCT];
 
-    // Filter by category
+    // Filter by category - match the last category item (specific category) exactly
     if (categoryFilter !== 'all') {
-      products = products.filter(p => 
-        p.category.some(c => c.toLowerCase().includes(categoryFilter.replace('-', ' ')))
-      );
+      const categoryName = slugToCategoryName(categoryFilter);
+      products = products.filter(p => {
+        // Get the last category item (the specific category like "Sling Bag", "Sling Bag Rounded", "Handbag")
+        const lastCategory = p.category[p.category.length - 1];
+        // Match exactly (case-insensitive) to avoid "Sling Bag" matching "Sling Bag Rounded"
+        return lastCategory.toLowerCase() === categoryName.toLowerCase();
+      });
     }
 
     // Filter by search query
@@ -30,6 +43,7 @@ const AllProductsPage: React.FC = () => {
       products = products.filter(p => 
         p.name.toLowerCase().includes(query) ||
         p.tagline.toLowerCase().includes(query) ||
+        p.features.some(f => f.toLowerCase().includes(query)) ||
         p.category.some(c => c.toLowerCase().includes(query))
       );
     }
@@ -140,33 +154,60 @@ const AllProductsPage: React.FC = () => {
             {/* Sidebar Filters (Desktop) */}
             <aside className="hidden md:block w-64 flex-shrink-0">
               <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 border border-stone-200 dark:border-stone-700 sticky top-24">
-                <h2 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-4">
-                  Categories
-                </h2>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-bold text-lg text-stone-900 dark:text-stone-100">
+                    Categories
+                  </h2>
+                  {(categoryFilter !== 'all' || searchQuery) && (
+                    <button
+                      onClick={() => {
+                        setSearchParams({});
+                        setShowFilters(false);
+                      }}
+                      className="text-xs text-brand-green dark:text-brand-green/80 hover:underline"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
                 <div className="space-y-2">
                   <button
                     onClick={() => handleCategoryChange('all')}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center justify-between ${
                       categoryFilter === 'all'
                         ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
                         : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
                     }`}
                   >
-                    All Products
+                    <span>All Products</span>
+                    <span className="text-xs bg-stone-200 dark:bg-stone-700 px-2 py-0.5 rounded-full">
+                      {ALL_PRODUCTS.length}
+                    </span>
                   </button>
-                  {PRODUCT_CATEGORIES.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => handleCategoryChange(category.slug)}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                        categoryFilter === category.slug
-                          ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
-                          : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
-                      }`}
-                    >
-                      {category.name}
-                    </button>
-                  ))}
+                  {PRODUCT_CATEGORIES.map((category) => {
+                    const categoryName = slugToCategoryName(category.slug);
+                    const categoryCount = ALL_PRODUCTS.filter(p => {
+                      const lastCategory = p.category[p.category.length - 1];
+                      return lastCategory.toLowerCase() === categoryName.toLowerCase();
+                    }).length;
+                    
+                    return (
+                      <button
+                        key={category.id}
+                        onClick={() => handleCategoryChange(category.slug)}
+                        className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center justify-between ${
+                          categoryFilter === category.slug
+                            ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
+                            : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
+                        }`}
+                      >
+                        <span>{category.name}</span>
+                        <span className="text-xs bg-stone-200 dark:bg-stone-700 px-2 py-0.5 rounded-full">
+                          {categoryCount}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </aside>
@@ -178,37 +219,64 @@ const AllProductsPage: React.FC = () => {
                 <div className="absolute right-0 top-0 bottom-0 w-64 bg-white dark:bg-stone-900 p-6 shadow-xl">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="font-bold text-lg text-stone-900 dark:text-stone-100">Filters</h2>
-                    <button
-                      onClick={() => setShowFilters(false)}
-                      className="text-stone-600 dark:text-stone-400"
-                    >
-                      <X size={24} />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {(categoryFilter !== 'all' || searchQuery) && (
+                        <button
+                          onClick={() => {
+                            setSearchParams({});
+                            setShowFilters(false);
+                          }}
+                          className="text-xs text-brand-green dark:text-brand-green/80 hover:underline"
+                        >
+                          Clear
+                        </button>
+                      )}
+                      <button
+                        onClick={() => setShowFilters(false)}
+                        className="text-stone-600 dark:text-stone-400"
+                      >
+                        <X size={24} />
+                      </button>
+                    </div>
                   </div>
                   <div className="space-y-2">
                     <button
                       onClick={() => handleCategoryChange('all')}
-                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                      className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center justify-between ${
                         categoryFilter === 'all'
                           ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
                           : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
                       }`}
                     >
-                      All Products
+                      <span>All Products</span>
+                      <span className="text-xs bg-stone-200 dark:bg-stone-700 px-2 py-0.5 rounded-full">
+                        {ALL_PRODUCTS.length}
+                      </span>
                     </button>
-                    {PRODUCT_CATEGORIES.map((category) => (
-                      <button
-                        key={category.id}
-                        onClick={() => handleCategoryChange(category.slug)}
-                        className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
-                          categoryFilter === category.slug
-                            ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
-                            : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
-                        }`}
-                      >
-                        {category.name}
-                      </button>
-                    ))}
+                    {PRODUCT_CATEGORIES.map((category) => {
+                      const categoryName = slugToCategoryName(category.slug);
+                      const categoryCount = ALL_PRODUCTS.filter(p => {
+                        const lastCategory = p.category[p.category.length - 1];
+                        return lastCategory.toLowerCase() === categoryName.toLowerCase();
+                      }).length;
+                      
+                      return (
+                        <button
+                          key={category.id}
+                          onClick={() => handleCategoryChange(category.slug)}
+                          className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center justify-between ${
+                            categoryFilter === category.slug
+                              ? 'bg-brand-green/10 dark:bg-brand-green/20 text-brand-green dark:text-brand-green/80 font-semibold'
+                              : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-700'
+                          }`}
+                        >
+                          <span>{category.name}</span>
+                          <span className="text-xs bg-stone-200 dark:bg-stone-700 px-2 py-0.5 rounded-full">
+                            {categoryCount}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -231,11 +299,86 @@ const AllProductsPage: React.FC = () => {
               ) : (
                 <div className={
                   viewMode === 'grid'
-                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6'
+                    ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
                     : 'space-y-6'
                 }>
                   {filteredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} showTag />
+                    viewMode === 'grid' ? (
+                      <ProductCard key={product.id} product={product} showTag />
+                    ) : (
+                      <Link
+                        key={product.id}
+                        to={`/products/${product.id}`}
+                        className="group block bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-md dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70 transition-all duration-300"
+                      >
+                        <div className="flex flex-col sm:flex-row">
+                          {/* Image */}
+                          <div className="relative w-full sm:w-48 h-48 sm:h-auto flex-shrink-0 overflow-hidden bg-stone-100 dark:bg-stone-900">
+                            <img
+                              src={cloudinaryTransform(product.colors[0]?.images[0] || '', { w: 400 })}
+                              alt={product.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              loading="lazy"
+                            />
+                          </div>
+                          {/* Content */}
+                          <div className="flex-1 p-6">
+                            <div className="flex items-start justify-between gap-4 mb-2">
+                              <div className="flex-1">
+                                <h3 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100 mb-1 group-hover:text-brand-green dark:group-hover:text-brand-green/80 transition-colors">
+                                  {product.name}
+                                </h3>
+                                <p className="text-sm text-stone-600 dark:text-stone-400 mb-3">
+                                  {product.tagline}
+                                </p>
+                              </div>
+                              {showTag && product.category.length > 0 && (
+                                <div className="bg-stone-100 dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-xs font-semibold px-3 py-1 rounded-full">
+                                  {product.category[product.category.length - 1]}
+                                </div>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-6 mb-4">
+                              <div>
+                                <div className="flex items-baseline gap-2">
+                                  <span className="text-2xl font-serif font-bold text-stone-900 dark:text-stone-100">
+                                    ₹{product.price}
+                                  </span>
+                                  {product.mrp > product.price && (
+                                    <span className="text-sm text-stone-500 dark:text-stone-400 line-through">
+                                      ₹{product.mrp}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-xs text-stone-500 dark:text-stone-400">
+                                  {product.colors.length} {product.colors.length === 1 ? 'color' : 'colors'}
+                                </span>
+                              </div>
+                            </div>
+                            <p className="text-sm text-stone-600 dark:text-stone-400 line-clamp-2 mb-4">
+                              {product.features.slice(0, 2).join('. ')}
+                            </p>
+                            <div className="flex items-center gap-2">
+                              {product.colors.slice(0, 6).map((color) => (
+                                <div
+                                  key={color.id}
+                                  className="w-6 h-6 rounded-full border border-stone-200 dark:border-stone-700"
+                                  style={{ backgroundColor: color.hex }}
+                                  title={color.name}
+                                />
+                              ))}
+                              {product.colors.length > 6 && (
+                                <span className="text-xs text-stone-500 dark:text-stone-400">
+                                  +{product.colors.length - 6} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    )
                   ))}
                 </div>
               )}
