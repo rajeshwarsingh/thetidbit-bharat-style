@@ -2,87 +2,54 @@ import React from 'react';
 import { ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { MARKETPLACE_LINKS } from '../constants';
 
-const AmazonLogo = () => (
-  <svg viewBox="0 0 200 60" className="h-10 w-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Dark charcoal background */}
-    <rect width="200" height="60" rx="4" fill="#131921"/>
-    {/* Amazon orange smile arrow - curved from bottom left to top right */}
-    <path d="M10 45 Q25 30, 40 30 Q55 30, 70 35 Q85 40, 100 35 Q115 30, 130 25 Q145 20, 160 15 Q175 10, 190 5" 
-          stroke="#FF9900" 
-          strokeWidth="8" 
-          fill="none" 
-          strokeLinecap="round" 
-          strokeLinejoin="round"/>
-    {/* Arrowhead */}
-    <path d="M185 8 L190 5 L187 10 Z" fill="#FF9900"/>
-  </svg>
-);
-
-const FlipkartLogo = () => (
-  <div className="flex items-center gap-2.5">
-    {/* Flipkart icon - Yellow rounded square with blue lowercase 'f' and red shopping bag accent */}
-    <svg viewBox="0 0 50 50" className="h-12 w-12 flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="50" height="50" rx="8" fill="#FFC200"/>
-      {/* Blue lowercase 'f' - stylized */}
-      <path d="M15 13h16v4h-6v4h6v4h-6v10h-4V13z" fill="#2874F0"/>
-      {/* Red shopping bag accent curve in top right */}
-      <path d="M35 12 Q38 10, 40 12 Q42 14, 40 16" 
-            stroke="#E91E63" 
-            strokeWidth="2.5" 
-            fill="none" 
-            strokeLinecap="round"/>
-    </svg>
-    {/* Flipkart text - Blue, bold, italic */}
-    <span className="font-bold text-2xl leading-none" style={{ color: '#2874F0', fontStyle: 'italic', transform: 'skewX(-4deg)' }}>Flipkart</span>
-  </div>
-);
-
-const MeeshoLogo = () => (
-  <div className="flex items-center gap-2.5">
-    {/* Meesho icon - Purple rounded square with orange stylized 'm' (two rounded symmetrical humps) */}
-    <svg viewBox="0 0 50 50" className="h-12 w-12 flex-shrink-0" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="50" height="50" rx="8" fill="#6B2C91"/>
-      {/* Orange stylized 'm' - two rounded symmetrical humps with soft edges */}
-      <path d="M10 20 Q10 15, 15 15 Q20 15, 20 20 L20 30 Q20 35, 15 35 Q10 35, 10 30 Z" fill="#FF6B35"/>
-      <path d="M20 20 Q20 15, 25 15 Q30 15, 30 20 L30 30 Q30 35, 25 35 Q20 35, 20 30 Z" fill="#FF6B35"/>
-      <path d="M30 20 L30 30 L35 30 L35 20 Z" fill="#FF6B35"/>
-    </svg>
-    {/* Meesho text - White, lowercase, bold */}
-    <span className="font-bold text-2xl leading-none lowercase" style={{ color: '#FFFFFF' }}>meesho</span>
-  </div>
+const MarketplaceLogo = ({ src, alt }: { src: string; alt: string }) => (
+  <img
+    src={src}
+    alt={alt}
+    className="h-10 sm:h-12 w-auto object-contain"
+    loading="lazy"
+    decoding="async"
+    referrerPolicy="no-referrer"
+  />
 );
 
 const MarketplaceLinks: React.FC = () => {
   const marketplaces = [
     {
       name: 'Amazon',
-      logo: <AmazonLogo />,
+      logo: (
+        <MarketplaceLogo
+          src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"
+          alt="Amazon logo"
+        />
+      ),
       url: MARKETPLACE_LINKS.amazon,
       color: '#232F3E',
-      bgColor: 'bg-[#FF9900]/10',
-      textColor: 'text-[#232F3E]',
       hoverBg: 'hover:bg-[#131921]',
-      borderColor: 'border-[#FF9900]/20',
     },
     {
       name: 'Flipkart',
-      logo: <FlipkartLogo />,
+      logo: (
+        <MarketplaceLogo
+          src="https://res.cloudinary.com/thetidbit23024/image/upload/v1768550284/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/logo/2_kr0mbs.svg"
+          alt="Flipkart logo"
+        />
+      ),
       url: MARKETPLACE_LINKS.flipkart,
       color: '#2874F0',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-[#2874F0]',
       hoverBg: 'hover:bg-[#1E5FD9]',
-      borderColor: 'border-blue-200',
     },
     {
       name: 'Meesho',
-      logo: <MeeshoLogo />,
+      logo: (
+        <MarketplaceLogo
+          src="https://res.cloudinary.com/thetidbit23024/image/upload/v1768550283/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/logo/1_m7ljon.svg"
+          alt="Meesho logo"
+        />
+      ),
       url: MARKETPLACE_LINKS.meesho,
       color: '#FF6B6B',
-      bgColor: 'bg-pink-50',
-      textColor: 'text-[#FF6B6B]',
       hoverBg: 'hover:bg-[#FF5252]',
-      borderColor: 'border-pink-200',
     },
   ];
 
@@ -126,10 +93,8 @@ const MarketplaceLinks: React.FC = () => {
               className="group relative bg-white dark:bg-stone-800/50 dark:backdrop-blur-sm rounded-2xl p-6 border-2 border-stone-200 dark:border-stone-700/50 hover:border-brand-green dark:hover:border-brand-green/50 transition-all duration-300 shadow-sm dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70"
             >
               {/* Logo Container */}
-              <div className={`${marketplace.bgColor} dark:bg-stone-800 p-4 rounded-xl mb-4 flex items-center justify-center min-h-[70px] border ${marketplace.borderColor} dark:border-stone-700/50`}>
-                <div className={`${marketplace.textColor} dark:text-stone-200 flex items-center justify-center`}>
-                  {marketplace.logo}
-                </div>
+              <div className="bg-white dark:bg-stone-900 p-4 rounded-xl mb-4 flex items-center justify-center min-h-[70px] border border-stone-200/80 dark:border-stone-700/60 shadow-inner">
+                {marketplace.logo}
               </div>
 
               {/* Content */}

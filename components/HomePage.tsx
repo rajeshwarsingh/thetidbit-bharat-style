@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight, Star, Users } from 'lucide-react';
+import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight, Star, Users, Leaf, Hand, PackageCheck, ShieldCheck } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
-import { PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory, CATEGORY_IMAGES } from '../constants';
+import { PRODUCT, HANDBAG_PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory, CATEGORY_IMAGES, AMAZON_PRODUCT_URL, SLING_BAG_PRODUCT_1 } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
@@ -122,6 +122,8 @@ const HomePage: React.FC = () => {
   ).slice(0, 4);
 
   const heroImage = SLIDER_BANNERS[currentBannerIndex] || PRODUCT.colors[0]?.images[0] || '';
+  const craftedFeatureImage =
+    'https://res.cloudinary.com/thetidbit23024/image/upload/v1768548513/yello_mate_rf99sg.png';
 
   return (
     <>
@@ -135,11 +137,11 @@ const HomePage: React.FC = () => {
 
       {/* Hero Section with CRO-Focused Slider */}
       <section 
-        className="relative overflow-hidden h-screen sm:h-auto sm:-mt-[100px]"
+        className="relative overflow-hidden h-[100dvh] min-h-[100dvh] sm:h-auto sm:min-h-0 sm:-mt-[100px] bg-white dark:bg-stone-900"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
-        <div className="relative w-full h-full sm:aspect-[3/2] sm:min-h-[480px] sm:max-h-[900px]">
+        <div className="relative w-full h-full min-h-[100dvh] sm:aspect-[3/2] sm:min-h-[480px] sm:max-h-[900px] bg-white dark:bg-stone-900">
           {/* Banner Carousel */}
           <div 
             ref={sliderRef}
@@ -170,7 +172,7 @@ const HomePage: React.FC = () => {
                     `}
                     sizes="100vw"
                     alt={`TheTidbit Hero Banner ${index + 1}`}
-                    className="w-full h-full object-cover sm:object-contain object-[75%_50%] sm:object-right bg-transparent sm:bg-white dark:sm:bg-stone-900"
+                    className="w-full h-full object-cover object-[75%_50%] sm:object-[70%_50%] bg-white dark:bg-stone-900"
                     loading={index === 0 ? 'eager' : 'lazy'}
                     fetchpriority={index === 0 ? 'high' : 'low'}
                   />
@@ -245,8 +247,8 @@ const HomePage: React.FC = () => {
 
                   {/* Content Overlay - Mobile */}
                   {isActive && (
-                    <div className="sm:hidden absolute bottom-0 left-0 right-0 z-20 pb-4 px-4">
-                      <div className="backdrop-blur-sm bg-black/55 rounded-lg p-3.5 border border-white/20 shadow-2xl">
+                    <div className="sm:hidden absolute bottom-6 left-0 right-0 z-20 px-4">
+                      <div className="bg-black/15 rounded-lg p-3.5 border border-white/20 shadow-2xl">
                         {/* Mobile: Compact Headline */}
                         <h1 className="font-serif text-base font-bold text-white mb-1.5 leading-tight drop-shadow-2xl line-clamp-2">
                           {content.h1}
@@ -405,6 +407,110 @@ const HomePage: React.FC = () => {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Amazon Feature Section */}
+      <section className="py-12 sm:py-16 bg-stone-50 dark:bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/70 text-amber-900 text-xs font-bold mb-4">
+                Amazon Favorite
+              </div>
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
+                Red Rounded Jute Bag — Now on Amazon
+              </h2>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-6">
+                The bestselling red rounded sling bag loved by our customers. Shop it directly on Amazon for quick delivery and trusted checkout.
+              </p>
+              <a
+                href={AMAZON_PRODUCT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-800 dark:hover:bg-stone-200 transition-all shadow-lg"
+              >
+                Buy on Amazon
+                <ArrowRight size={16} />
+              </a>
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-stone-900 shadow-xl border border-stone-200 dark:border-stone-700">
+                <img
+                  src={cloudinaryTransform(PRODUCT.colors[0]?.images[1] || PRODUCT.colors[0]?.images[0] || '', { w: 900 })}
+                  alt="TheTidbit red rounded jute bag"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-stone-900 dark:text-stone-100">
+                  Bestseller on Amazon
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Craft & Impact Section (Homepage-only) */}
+      <section className="py-14 sm:py-20 bg-jute-900 text-stone-100 dark:bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-widest mb-4">
+                Yellow Sling Highlight
+              </div>
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
+                Yellow Sling — Bright. Light. Ready for Every Day.
+              </h2>
+              <p className="text-base sm:text-lg text-stone-200 mb-6">
+                Our yellow sling bag is lightweight, durable, and easy to carry from morning to evening. 
+                Crafted for comfort with a cheerful pop of color that elevates any outfit.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
+                  <Leaf className="w-5 h-5 text-green-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Natural Jute</p>
+                    <p className="text-sm text-stone-200">Biodegradable, breathable, and planet-friendly.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
+                  <Hand className="w-5 h-5 text-amber-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Handmade Finish</p>
+                    <p className="text-sm text-stone-200">Artisan-crafted details you can feel.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
+                  <PackageCheck className="w-5 h-5 text-blue-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Plastic-Free Packaging</p>
+                    <p className="text-sm text-stone-200">Delivered in eco-conscious wraps.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
+                  <ShieldCheck className="w-5 h-5 text-purple-300 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Built to Last</p>
+                    <p className="text-sm text-stone-200">Durable stitching for daily use.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                <img
+                  src={cloudinaryTransform(craftedFeatureImage, { w: 1000 })}
+                  alt="TheTidbit yellow sling jute bag"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute top-4 left-4 bg-black/40 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+                  Yellow Sling Variant
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
