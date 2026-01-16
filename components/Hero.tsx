@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles } from 'lucide-react';
 import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
@@ -13,11 +13,51 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setAppliedCoupon }) => {
   const { openSlingTry } = useSlingTry();
-  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [selectedColor, setSelectedColor] = useState(() => {
+    const preferred = product.colors.find((color) =>
+      color.name.toLowerCase().includes('half round blue')
+    );
+    return preferred || product.colors[0];
+  });
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [couponInput, setCouponInput] = useState('');
   const [couponError, setCouponError] = useState('');
   const [couponJustApplied, setCouponJustApplied] = useState(false);
+  const orderedColors = useMemo(() => {
+    const colors = [...product.colors];
+    const yellowMateIndex = colors.findIndex((color) =>
+      color.name.toLowerCase().includes('yellow mate')
+    );
+    const halfRoundBlueIndex = colors.findIndex((color) =>
+      color.name.toLowerCase().includes('half round blue')
+    );
+    if (yellowMateIndex > -1) {
+      const [yellowMate] = colors.splice(yellowMateIndex, 1);
+      colors.unshift(yellowMate);
+    }
+    const newHalfRoundBlueIndex = colors.findIndex((color) =>
+      color.name.toLowerCase().includes('half round blue')
+    );
+    if (newHalfRoundBlueIndex > 1) {
+      const [halfRoundBlue] = colors.splice(newHalfRoundBlueIndex, 1);
+      colors.splice(1, 0, halfRoundBlue);
+    } else if (newHalfRoundBlueIndex === -1 && halfRoundBlueIndex > -1) {
+      const [halfRoundBlue] = product.colors.slice(halfRoundBlueIndex, halfRoundBlueIndex + 1);
+      if (halfRoundBlue) {
+        colors.splice(1, 0, halfRoundBlue);
+      }
+    }
+    return colors;
+  }, [product.colors]);
+
+  useEffect(() => {
+    const preferred = orderedColors.find((color) =>
+      color.name.toLowerCase().includes('half round blue')
+    );
+    if (preferred && preferred.name !== selectedColor.name) {
+      setSelectedColor(preferred);
+    }
+  }, [orderedColors, selectedColor.name]);
 
   // Calculate prices
   const currentPrice = appliedCoupon 
@@ -349,37 +389,46 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
 
             {/* Color Selector */}
             <div className="mt-6">
-              <p className="text-sm font-medium text-stone-900 dark:text-stone-100">Colour:</p>
-              <div className="mt-3 flex flex-wrap items-start gap-4">
-                {product.colors.map((color) => (
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-stone-900 dark:text-stone-100">Colour:</p>
+                <span className="text-xs text-stone-500 dark:text-stone-400">Tap a shade to preview</span>
+              </div>
+              <div className="mt-3 grid grid-cols-4 sm:grid-cols-6 gap-3 max-h-[150px] overflow-y-auto pr-1">
+                {orderedColors.map((color) => (
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color)}
-                    className="flex flex-col items-center gap-2 focus:outline-none"
+                    className="flex flex-col items-center gap-2 focus:outline-none group"
                     aria-label={`Select colour: ${color.name}`}
                     title={color.name}
                   >
                     <span
                       aria-hidden="true"
                       className={`
-                        relative h-12 w-12 rounded-full overflow-hidden border shadow-sm ring-offset-2 transition
-                        ${selectedColor.name === color.name ? 'ring-2 ring-stone-900 dark:ring-stone-100 border-stone-900/20 dark:border-stone-100/20' : 'border-stone-200 dark:border-stone-700 hover:ring-1 hover:ring-stone-300 dark:hover:ring-stone-600'}
+                        relative h-10 w-10 rounded-full overflow-hidden border shadow-sm ring-offset-2 transition
+                        ${selectedColor.name === color.name ? 'ring-2 ring-stone-900 dark:ring-stone-100 border-stone-900/20 dark:border-stone-100/20' : 'border-stone-200 dark:border-stone-700 group-hover:ring-1 group-hover:ring-stone-300 dark:group-hover:ring-stone-600'}
                       `}
                       style={{ backgroundColor: color.hex }}
                     >
                       <img
-                        src={cloudinaryTransform((color.images?.[1] || color.images?.[0]) as string, { w: 120 })}
-                        srcSet={cloudinarySrcSet((color.images?.[1] || color.images?.[0]) as string, [64, 96, 120])}
-                        sizes="48px"
+                        src={cloudinaryTransform((color.images?.[1] || color.images?.[0]) as string, { w: 96 })}
+                        srcSet={cloudinarySrcSet((color.images?.[1] || color.images?.[0]) as string, [48, 72, 96])}
+                        sizes="40px"
                         className="absolute inset-0 w-full h-full object-cover"
                         alt=""
                         loading="lazy"
                         decoding="async"
-                        width="48"
-                        height="48"
+                        width="40"
+                        height="40"
                       />
                     </span>
-                    <span className={`text-xs font-semibold ${selectedColor.name === color.name ? 'text-stone-900 dark:text-stone-100' : 'text-stone-600 dark:text-stone-400'}`}>
+                    <span
+                      className={`text-[10px] font-semibold text-center leading-tight ${
+                        selectedColor.name === color.name
+                          ? 'text-stone-900 dark:text-stone-100'
+                          : 'text-stone-600 dark:text-stone-400'
+                      }`}
+                    >
                       {color.name}
                     </span>
                   </button>
