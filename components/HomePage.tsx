@@ -247,7 +247,7 @@ const HomePage: React.FC = () => {
 
                   {/* Content Overlay - Mobile */}
                   {isActive && (
-                    <div className="sm:hidden absolute bottom-6 left-0 right-0 z-20 px-4">
+                    <div className="sm:hidden absolute bottom-[10%] left-0 right-0 z-20 px-4">
                       <div className="bg-black/15 rounded-lg p-3.5 border border-white/20 shadow-2xl">
                         {/* Mobile: Compact Headline */}
                         <h1 className="font-serif text-base font-bold text-white mb-1.5 leading-tight drop-shadow-2xl line-clamp-2">
