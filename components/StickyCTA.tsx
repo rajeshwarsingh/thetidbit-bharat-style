@@ -1,11 +1,13 @@
 import React from 'react';
 import { PRODUCT, WHATSAPP_NUMBER, COUPON_DISCOUNTS } from '../constants';
+import { ProductDetails } from '../types';
 
 interface StickyCTAProps {
   appliedCoupon: string | null;
+  product?: ProductDetails;
 }
 
-const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon }) => {
+const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon, product = PRODUCT }) => {
   const getDiscountMultiplier = (coupon: string | null): number => {
     if (!coupon) return 1;
     const discountPercent = COUPON_DISCOUNTS[coupon] || 0;
@@ -13,15 +15,20 @@ const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon }) => {
   };
 
   const currentPrice = appliedCoupon 
-    ? Math.round(PRODUCT.price * getDiscountMultiplier(appliedCoupon))
-    : PRODUCT.price;
+    ? Math.round(product.price * getDiscountMultiplier(appliedCoupon))
+    : product.price;
 
   const handleBuy = () => {
-     let message = `Hi TheTidbit, I want to buy the ${PRODUCT.name}.`;
+     let message = `Hi TheTidbit, I want to buy the ${product.name}.`;
      if (appliedCoupon) {
-       message += ` with coupon ${appliedCoupon} at ₹${currentPrice}`;
+       const discountPercent = COUPON_DISCOUNTS[appliedCoupon] || 0;
+       const discountAmount = product.price - currentPrice;
+       message += `\n\nCoupon Applied: ${appliedCoupon} (${discountPercent}% OFF)`;
+       message += `\nOriginal Price: ₹${product.price}`;
+       message += `\nDiscount: ₹${discountAmount}`;
+       message += `\nFinal Price: ₹${currentPrice}`;
      } else {
-       message += ` Price: ₹${currentPrice}`;
+       message += `\n\nPrice: ₹${currentPrice}`;
      }
      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
      window.open(url, '_blank', 'noopener,noreferrer');
@@ -46,9 +53,9 @@ const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon }) => {
             {appliedCoupon && <span className="text-xs bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 px-1.5 rounded font-medium">{COUPON_DISCOUNTS[appliedCoupon] || 0}% OFF</span>}
           </div>
           {appliedCoupon ? (
-            <p className="text-xs text-stone-500 dark:text-stone-400 line-through">₹{PRODUCT.price}</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400 line-through">₹{product.price}</p>
           ) : (
-            <p className="text-xs text-stone-500 dark:text-stone-400 line-through">₹{PRODUCT.mrp}</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400 line-through">₹{product.mrp}</p>
           )}
         </div>
         <button 

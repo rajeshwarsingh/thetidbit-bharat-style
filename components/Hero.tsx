@@ -119,9 +119,14 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
   const handleWhatsAppBuy = () => {
     let message = `Hi TheTidbit, I would like to buy the ${product.name} in ${selectedColor.name}.`;
     if (appliedCoupon) {
-      message += ` I have applied coupon ${appliedCoupon}. Price: ₹${currentPrice}.`;
+      const discountPercent = COUPON_DISCOUNTS[appliedCoupon] || 0;
+      const discountAmount = product.price - currentPrice;
+      message += `\n\nCoupon Applied: ${appliedCoupon} (${discountPercent}% OFF)`;
+      message += `\nOriginal Price: ₹${product.price}`;
+      message += `\nDiscount: ₹${discountAmount}`;
+      message += `\nFinal Price: ₹${currentPrice}`;
     } else {
-      message += ` Price: ₹${currentPrice}.`;
+      message += `\n\nPrice: ₹${currentPrice}`;
     }
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');

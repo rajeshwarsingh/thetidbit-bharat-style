@@ -158,7 +158,7 @@ const ProductDetailPage: React.FC = () => {
       <Reveal delayMs={240}><IndiaPride /></Reveal>
       <Reveal delayMs={280}><Reviews /></Reveal>
       <Reveal delayMs={320}><InstagramCTA /></Reveal>
-      <StickyCTA appliedCoupon={appliedCoupon} />
+      <StickyCTA appliedCoupon={appliedCoupon} product={currentProduct} />
       <DesktopWhatsAppCTA />
     </>
   );

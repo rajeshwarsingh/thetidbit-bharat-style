@@ -103,13 +103,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showTag = false }) =
         </div>
 
         {/* CTA Button */}
-        <button
-          onClick={(e) => e.preventDefault()}
-          className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2.5 px-4 rounded-xl font-bold text-sm hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center justify-center gap-2"
-        >
+        <div className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2.5 px-4 rounded-xl font-bold text-sm hover:bg-stone-800 dark:hover:bg-stone-200 transition-colors flex items-center justify-center gap-2 pointer-events-none">
           <ShoppingBag size={16} />
           View Details
-        </button>
+        </div>
       </div>
     </Link>
   );
