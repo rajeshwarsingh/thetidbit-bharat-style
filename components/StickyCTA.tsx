@@ -1,13 +1,19 @@
 import React from 'react';
-import { PRODUCT, WHATSAPP_NUMBER } from '../constants';
+import { PRODUCT, WHATSAPP_NUMBER, COUPON_DISCOUNTS } from '../constants';
 
 interface StickyCTAProps {
   appliedCoupon: string | null;
 }
 
 const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon }) => {
+  const getDiscountMultiplier = (coupon: string | null): number => {
+    if (!coupon) return 1;
+    const discountPercent = COUPON_DISCOUNTS[coupon] || 0;
+    return 1 - (discountPercent / 100);
+  };
+
   const currentPrice = appliedCoupon 
-    ? Math.round(PRODUCT.price * 0.95) 
+    ? Math.round(PRODUCT.price * getDiscountMultiplier(appliedCoupon))
     : PRODUCT.price;
 
   const handleBuy = () => {
@@ -37,7 +43,7 @@ const StickyCTA: React.FC<StickyCTAProps> = ({ appliedCoupon }) => {
             <p className="text-xl font-bold text-stone-900 dark:text-stone-100">
               <span className="text-xs font-medium text-stone-600 dark:text-stone-400 mr-1">Only</span>₹{currentPrice}
             </p>
-            {appliedCoupon && <span className="text-xs bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 px-1.5 rounded font-medium">5% OFF</span>}
+            {appliedCoupon && <span className="text-xs bg-green-100 dark:bg-green-950/40 text-green-700 dark:text-green-400 px-1.5 rounded font-medium">{COUPON_DISCOUNTS[appliedCoupon] || 0}% OFF</span>}
           </div>
           {appliedCoupon ? (
             <p className="text-xs text-stone-500 dark:text-stone-400 line-through">₹{PRODUCT.price}</p>

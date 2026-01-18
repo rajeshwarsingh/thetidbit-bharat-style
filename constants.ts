@@ -59,7 +59,15 @@ export const GA_TRACKING_ID = "G-6ZVW69DQG4";
 // Meta Pixel
 export const FB_PIXEL_ID = "1924712958256039";
 
-export const VALID_COUPONS = ["SANDY5", "OCEAN5", "NEWYEAR5"];
+export const VALID_COUPONS = ["SANDY5", "OCEAN5", "NEWYEAR5", "PALAK10"];
+
+// Coupon discount mapping: coupon code -> discount percentage
+export const COUPON_DISCOUNTS: Record<string, number> = {
+  "SANDY5": 5,
+  "OCEAN5": 5,
+  "NEWYEAR5": 5,
+  "PALAK10": 10,
+};
 
 // Header Badge (right side of navbar)
 // Swap this in future for festivals (e.g. "🪔 Diwali", "🎄", "🎉") without changing layout code.

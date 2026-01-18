@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles } from 'lucide-react';
-import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS } from '../constants';
+import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import { useSlingTry } from './SlingTryContext';
 import { ProductDetails } from '../types';
@@ -60,8 +60,14 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
   }, [orderedColors, selectedColor.name]);
 
   // Calculate prices
+  const getDiscountMultiplier = (coupon: string | null): number => {
+    if (!coupon) return 1;
+    const discountPercent = COUPON_DISCOUNTS[coupon] || 0;
+    return 1 - (discountPercent / 100);
+  };
+
   const currentPrice = appliedCoupon 
-    ? Math.round(product.price * 0.95) 
+    ? Math.round(product.price * getDiscountMultiplier(appliedCoupon))
     : product.price;
   
   const savings = product.mrp - currentPrice;
@@ -451,7 +457,7 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
                        </div>
                        <div>
                          <p className="text-sm font-bold text-green-800">Code {appliedCoupon} applied!</p>
-                         <p className="text-xs text-green-600">You saved extra 5%</p>
+                         <p className="text-xs text-green-600">You saved extra {COUPON_DISCOUNTS[appliedCoupon] || 0}%</p>
                        </div>
                     </div>
                     <button 
