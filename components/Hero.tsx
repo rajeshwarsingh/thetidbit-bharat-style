@@ -13,12 +13,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setAppliedCoupon }) => {
   const { openSlingTry } = useSlingTry();
-  const [selectedColor, setSelectedColor] = useState(() => {
-    const preferred = product.colors.find((color) =>
-      color.name.toLowerCase().includes('half round blue')
-    );
-    return preferred || product.colors[0];
-  });
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [couponInput, setCouponInput] = useState('');
   const [couponError, setCouponError] = useState('');
@@ -51,13 +46,9 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
   }, [product.colors]);
 
   useEffect(() => {
-    const preferred = orderedColors.find((color) =>
-      color.name.toLowerCase().includes('half round blue')
-    );
-    if (preferred && preferred.name !== selectedColor.name) {
-      setSelectedColor(preferred);
-    }
-  }, [orderedColors, selectedColor.name]);
+    setSelectedColor(orderedColors[0]);
+    setActiveImageIndex(0);
+  }, [product.id, orderedColors]);
 
   // Calculate prices
   const getDiscountMultiplier = (coupon: string | null): number => {

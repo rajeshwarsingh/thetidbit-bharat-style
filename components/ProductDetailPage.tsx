@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import Hero from './Hero';
 import Features from './Features';
@@ -23,6 +23,10 @@ const ProductDetailPage: React.FC = () => {
   const currentProduct = productId 
     ? ALL_PRODUCTS.find(p => p.id === productId) || PRODUCT
     : PRODUCT;
+
+  useEffect(() => {
+    setAppliedCoupon(null);
+  }, [productId]);
 
   // Product Schema for Google Rich Snippets
   const productSchema = {
@@ -140,7 +144,7 @@ const ProductDetailPage: React.FC = () => {
   // To support multiple products fully, you'd need to refactor Hero/Features/etc to accept product as prop
 
   return (
-    <>
+    <React.Fragment key={currentProduct.id}>
       <SEO 
         title={currentProduct.name}
         description={`${currentProduct.tagline}. ${currentProduct.features.join('. ')}. Free Delivery & Easy Returns.`}
@@ -160,7 +164,7 @@ const ProductDetailPage: React.FC = () => {
       <Reveal delayMs={320}><InstagramCTA /></Reveal>
       <StickyCTA appliedCoupon={appliedCoupon} product={currentProduct} />
       <DesktopWhatsAppCTA />
-    </>
+    </React.Fragment>
   );
 };
 
