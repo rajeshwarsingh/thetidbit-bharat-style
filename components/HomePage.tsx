@@ -1,663 +1,864 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ShoppingBag, Sparkles, ChevronLeft, ChevronRight, Star, Users, Leaf, Hand, PackageCheck, ShieldCheck } from 'lucide-react';
+import {
+  ArrowRight,
+  ShoppingBag,
+  Star,
+  Leaf,
+  Feather,
+  IndianRupee,
+  Briefcase,
+  Truck,
+  ShieldCheck,
+  RefreshCcw,
+  Quote,
+  Send,
+  Heart,
+  Camera,
+  CheckCircle2,
+} from 'lucide-react';
 import SEO from './SEO';
-import ProductCard from './ProductCard';
-import { PRODUCT, HANDBAG_PRODUCT, ALL_PRODUCTS, PRODUCT_CATEGORIES, SOCIAL_LINKS, HERO_BANNERS, getProductByCategory, CATEGORY_IMAGES, AMAZON_PRODUCT_URL, SLING_BAG_PRODUCT_1 } from '../constants';
+import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
-import MarketplaceLinks from './MarketplaceLinks';
-import GiftingSection from './GiftingSection';
-import TrustBadges from './TrustBadges';
-import HomeTestimonials from './HomeTestimonials';
+import MobileShopCTA from './MobileShopCTA';
 
-// Limit to 3 slides only
-const SLIDER_BANNERS = HERO_BANNERS.slice(0, 3);
+const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || '';
+const HERO_IMAGES_MOBILE = [
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771359882/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_54_19_AM_sctriv.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771360272/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_02_00_53_AM_rshrqh.png',
+];
 
-// Slide content configuration
-const SLIDE_CONTENT = [
+const BEST_SELLERS = ALL_PRODUCTS.slice(0, 4);
+
+const LOW_STOCK_MAP: Record<string, number> = {
+  [ALL_PRODUCTS[0]?.id || '']: 7,
+  [ALL_PRODUCTS[1]?.id || '']: 4,
+  [ALL_PRODUCTS[2]?.id || '']: 11,
+  [ALL_PRODUCTS[3]?.id || '']: 3,
+};
+
+const WHY_CHOOSE_ITEMS = [
   {
-    // Slide 1: Core Brand Promise
-    h1: "Eco-Friendly Handmade Jute Bags for Everyday Indian Women",
-    subtext: "Lightweight, durable & affordable — perfect for office, travel & gifting.",
-    primaryCTA: "Shop Best Sellers",
-    primaryCTALink: "/products",
-    secondaryCTA: "View Real Customer Photos",
-    secondaryCTALink: "/stories",
-    trustLine: "COD Available • Free Shipping Across India • Easy Returns",
-    badge: null,
+    icon: Leaf,
+    title: 'Eco-Friendly Jute Material',
+    description: '100% natural jute — biodegradable, breathable, and kind to the earth.',
+    color: 'text-emerald-600 dark:text-emerald-400',
+    bg: 'bg-emerald-50 dark:bg-emerald-950/30',
   },
   {
-    // Slide 2: Social Proof & Trust
-    h1: "Loved by Real Women Across India",
-    subtext: "Thousands of customers trust TheTidbit for stylish, sustainable bags.",
-    primaryCTA: "See Customer Reviews",
-    primaryCTALink: "#reviews",
-    secondaryCTA: "Explore Collection",
-    secondaryCTALink: "/products",
-    trustLine: "Handcrafted in India 🇮🇳 | Eco-Friendly Materials",
-    badge: null,
+    icon: Feather,
+    title: 'Lightweight & Durable',
+    description: 'Sturdy enough for daily use, yet light enough to carry all day long.',
+    color: 'text-sky-600 dark:text-sky-400',
+    bg: 'bg-sky-50 dark:bg-sky-950/30',
   },
   {
-    // Slide 3: Use Case / Lifestyle
-    h1: "Perfect Bags for Office, Travel & Gifting",
-    subtext: "Designed for daily use — stylish, practical, and planet-friendly.",
-    primaryCTA: "Browse Handbags & Sling Bags",
-    primaryCTALink: "/products",
-    secondaryCTA: "Find Your Perfect Bag",
-    secondaryCTALink: "/products",
-    trustLine: null,
-    badge: "Great for Daily Use & Gifting 🎁",
+    icon: Briefcase,
+    title: 'Designed for Indian Daily Use',
+    description: 'From office commutes to weekend outings — made for your real life.',
+    color: 'text-amber-600 dark:text-amber-400',
+    bg: 'bg-amber-50 dark:bg-amber-950/30',
+  },
+  {
+    icon: IndianRupee,
+    title: 'Affordable Without Compromise',
+    description: 'Premium handmade quality starting at just ₹499. Style shouldn\'t cost the earth.',
+    color: 'text-rose-600 dark:text-rose-400',
+    bg: 'bg-rose-50 dark:bg-rose-950/30',
   },
 ];
 
+const LIFESTYLE_TESTIMONIALS = [
+  {
+    image: ALL_PRODUCTS[0]?.colors[0]?.images[0] || '',
+    quote: '"I carry it everywhere — office, market, even temples!"',
+    name: 'Sneha R., Mumbai',
+  },
+  {
+    image: ALL_PRODUCTS[1]?.colors[0]?.images[0] || '',
+    quote: '"The quality is amazing for this price. My friends all want one!"',
+    name: 'Divya P., Bangalore',
+  },
+  {
+    image: ALL_PRODUCTS[2]?.colors[0]?.images[0] || '',
+    quote: '"Perfect size for everyday essentials. Love the boho look!"',
+    name: 'Kavitha M., Chennai',
+  },
+  {
+    image: ALL_PRODUCTS[3]?.colors[1]?.images[0] || ALL_PRODUCTS[0]?.colors[1]?.images[0] || '',
+    quote: '"Gifted this to my sister. She absolutely loved it!"',
+    name: 'Prachi S., Pune',
+  },
+];
+
+const CUSTOMER_REVIEWS = [
+  {
+    id: 1,
+    name: 'Ananya S.',
+    location: 'Mumbai',
+    rating: 5,
+    text: 'Absolutely in love with this bag! The embroidery is so detailed and it fits my phone, wallet, and keys perfectly. Feels great to use something eco-friendly.',
+    date: '2 days ago',
+    verified: true,
+    hasPhoto: true,
+    photo: ALL_PRODUCTS[0]?.colors[0]?.images[1] || '',
+  },
+  {
+    id: 2,
+    name: 'Priya M.',
+    location: 'Jaipur',
+    rating: 5,
+    text: 'Ordered the Pink one for college. It\'s super cute and lightweight. Got so many compliments already! Will definitely buy more colors.',
+    date: '1 week ago',
+    verified: true,
+    hasPhoto: false,
+    photo: '',
+  },
+  {
+    id: 3,
+    name: 'Riya K.',
+    location: 'Delhi',
+    rating: 5,
+    text: 'Good quality jute. The strap length is perfect for crossbody. Delivery was super fast. Highly recommend TheTidbit!',
+    date: '2 weeks ago',
+    verified: true,
+    hasPhoto: false,
+    photo: '',
+  },
+  {
+    id: 4,
+    name: 'Meera V.',
+    location: 'Hyderabad',
+    rating: 5,
+    text: 'Bought 3 bags for gifting during Diwali. Everyone was so impressed with the quality and the handmade feel. Such a thoughtful gift!',
+    date: '3 weeks ago',
+    verified: true,
+    hasPhoto: true,
+    photo: ALL_PRODUCTS[1]?.colors[0]?.images[0] || '',
+  },
+];
+
+const HERO_SLIDE_INTERVAL = 4000;
+
 const HomePage: React.FC = () => {
-  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
+  const [offerPhone, setOfferPhone] = useState('');
+  const [offerSubmitted, setOfferSubmitted] = useState(false);
+  const offerInputRef = useRef<HTMLInputElement>(null);
 
-  // Auto-rotate banners - 6-7 seconds interval
+  // Mobile hero slider state
+  const [heroSlide, setHeroSlide] = useState(0);
+  const touchStartX = useRef(0);
+  const touchDeltaX = useRef(0);
+  const heroAutoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const resetHeroAutoplay = useCallback(() => {
+    if (heroAutoplayRef.current) clearInterval(heroAutoplayRef.current);
+    heroAutoplayRef.current = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_IMAGES_MOBILE.length);
+    }, HERO_SLIDE_INTERVAL);
+  }, []);
+
   useEffect(() => {
-    if (isPaused) return;
-    
-    const delay = 6500; // 6.5 seconds
-    
-    const interval = setInterval(() => {
-      setCurrentBannerIndex((prev) => (prev + 1) % SLIDER_BANNERS.length);
-    }, delay);
+    resetHeroAutoplay();
+    return () => {
+      if (heroAutoplayRef.current) clearInterval(heroAutoplayRef.current);
+    };
+  }, [resetHeroAutoplay]);
 
-    return () => clearInterval(interval);
-  }, [currentBannerIndex, isPaused]);
-
-  const goToNextBanner = () => {
-    setCurrentBannerIndex((prev) => (prev + 1) % SLIDER_BANNERS.length);
-  };
-
-  const goToPrevBanner = () => {
-    setCurrentBannerIndex((prev) => (prev - 1 + SLIDER_BANNERS.length) % SLIDER_BANNERS.length);
-  };
-
-  // Swipe handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleHeroTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
-  };
+    touchDeltaX.current = 0;
+  }, []);
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
+  const handleHeroTouchMove = useCallback((e: React.TouchEvent) => {
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+  }, []);
 
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return;
-    
-    const distance = touchStartX.current - touchEndX.current;
-    const minSwipeDistance = 50;
-
-    if (distance > minSwipeDistance) {
-      goToNextBanner();
-    } else if (distance < -minSwipeDistance) {
-      goToPrevBanner();
+  const handleHeroTouchEnd = useCallback(() => {
+    const threshold = 50;
+    if (touchDeltaX.current < -threshold) {
+      setHeroSlide((prev) => (prev + 1) % HERO_IMAGES_MOBILE.length);
+      resetHeroAutoplay();
+    } else if (touchDeltaX.current > threshold) {
+      setHeroSlide((prev) => (prev - 1 + HERO_IMAGES_MOBILE.length) % HERO_IMAGES_MOBILE.length);
+      resetHeroAutoplay();
     }
-    
-    touchStartX.current = 0;
-    touchEndX.current = 0;
+  }, [resetHeroAutoplay]);
+
+  const handleOfferSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!offerPhone.trim()) return;
+
+    const message = `Hi TheTidbit! I'd like to claim my ₹100 off first order offer. My number: ${offerPhone}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    setOfferSubmitted(true);
+
+    if (typeof window !== 'undefined' && typeof window.gtag !== 'undefined') {
+      window.gtag('event', 'first_order_offer_submit', {
+        placement: 'homepage_offer_section',
+      });
+    }
   };
-
-  // Featured products (first 6 products, or use PRODUCT if ALL_PRODUCTS is empty)
-  const featuredProducts = ALL_PRODUCTS.length > 1 ? ALL_PRODUCTS.slice(0, 6) : [PRODUCT];
-  
-  // Get products by category
-  const slingBagProducts = ALL_PRODUCTS.filter(p => 
-    p.category.some(c => c.toLowerCase().includes('sling bag') && !c.toLowerCase().includes('rounded'))
-  ).slice(0, 4);
-  
-  const roundedSlingProducts = ALL_PRODUCTS.filter(p => 
-    p.category.some(c => c.toLowerCase().includes('sling bag rounded'))
-  ).slice(0, 4);
-  
-  const handbagProducts = ALL_PRODUCTS.filter(p => 
-    p.category.some(c => c.toLowerCase().includes('handbag'))
-  ).slice(0, 4);
-
-  const heroImage = SLIDER_BANNERS[currentBannerIndex] || PRODUCT.colors[0]?.images[0] || '';
-  const craftedFeatureImage =
-    'https://res.cloudinary.com/thetidbit23024/image/upload/v1768548513/yello_mate_rf99sg.png';
 
   return (
     <>
-      <SEO 
-        title="TheTidbit - Handmade Jute Bags | Sustainable Fashion"
-        description="Shop beautiful handmade jute bags from TheTidbit. Eco-friendly, artistic, and sustainable fashion. Sling bags, rounded sling bags, and handbags. Free delivery across India."
-        canonicalUrl="https://bharat.style/"
+      <SEO
+        title="TheTidbit — Handmade Jute Bags | Sustainable Indian Fashion"
+        description="Shop handmade jute bags from TheTidbit. Eco-friendly, stylish, and affordable — designed for everyday Indian women. Free shipping over ₹499. COD available."
+        canonicalUrl="https://thetidbit.in/"
         type="website"
-        image={heroImage}
+        image={HERO_IMAGE_DESKTOP}
       />
 
-      {/* Hero Section with CRO-Focused Slider */}
-      <section 
-        className="relative overflow-hidden h-[100dvh] min-h-[100dvh] sm:h-auto sm:min-h-0 sm:-mt-[100px] bg-white dark:bg-stone-900"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <div className="relative w-full h-full min-h-[100dvh] sm:aspect-[3/2] sm:min-h-[480px] sm:max-h-[900px] bg-white dark:bg-stone-900">
-          {/* Banner Carousel */}
-          <div 
-            ref={sliderRef}
-            className="relative w-full h-full"
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+      {/* ============================================ */}
+      {/* 1. HERO SECTION                              */}
+      {/* ============================================ */}
+      <section className="relative overflow-hidden bg-white dark:bg-stone-900">
+        {/* Desktop hero — full cinematic layout */}
+        <div className="hidden sm:flex relative min-h-[85vh] max-h-[900px] items-center">
+          <div className="absolute inset-0">
+            <img
+              src={cloudinaryTransform(HERO_IMAGE_DESKTOP, { w: 2400, h: 1600, c: 'fill', q: 'auto:best' })}
+              srcSet={`
+                ${cloudinaryTransform(HERO_IMAGE_DESKTOP, { w: 1200, h: 800, c: 'fill', q: 'auto:best' })} 1200w,
+                ${cloudinaryTransform(HERO_IMAGE_DESKTOP, { w: 1800, h: 1200, c: 'fill', q: 'auto:best' })} 1800w,
+                ${cloudinaryTransform(HERO_IMAGE_DESKTOP, { w: 2400, h: 1600, c: 'fill', q: 'auto:best' })} 2400w
+              `}
+              sizes="100vw"
+              alt="Modern Indian woman confidently carrying a handmade jute bag by TheTidbit"
+              className="w-full h-full object-cover object-[65%_40%]"
+              loading="eager"
+              fetchpriority="high"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+          </div>
+
+          <div className="relative z-10 w-full">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+              <div className="max-w-xl lg:max-w-2xl">
+                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
+                  <Leaf size={14} className="text-green-300" />
+                  <span className="text-xs font-semibold text-white/90 tracking-wide uppercase">
+                    Handcrafted & Sustainable
+                  </span>
+                </div>
+
+                <h1 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1.1] mb-5">
+                  Sustainable Style for{' '}
+                  <span className="text-emerald-300">Everyday Women</span>
+                </h1>
+
+                <p className="text-lg lg:text-xl text-white/90 leading-relaxed mb-8 max-w-lg">
+                  Handmade Jute Bags That Are Stylish, Affordable & Earth-Friendly
+                </p>
+
+                <div className="flex flex-wrap gap-4 mb-8">
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center gap-2.5 bg-white text-stone-900 px-7 py-3.5 rounded-xl font-bold text-base hover:bg-stone-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <ShoppingBag size={18} />
+                    Shop Now
+                  </Link>
+                  <a
+                    href="#best-sellers"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('best-sellers')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border-2 border-white/40 text-white px-7 py-3.5 rounded-xl font-bold text-base hover:bg-white/20 transition-all"
+                  >
+                    Best Sellers
+                    <ArrowRight size={16} />
+                  </a>
+                </div>
+
+                <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85 font-medium">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2 size={15} className="text-emerald-300" />
+                    Cash on Delivery
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Truck size={15} className="text-emerald-300" />
+                    Free Shipping Over ₹499
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <RefreshCcw size={15} className="text-emerald-300" />
+                    Easy Returns
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile hero — compact, product-forward layout with slider */}
+        <div className="sm:hidden">
+          {/* Hero slider — taller but not full screen, lets content peek below */}
+          <div
+            className="relative h-[72vh] min-h-[480px] max-h-[640px] overflow-hidden"
+            onTouchStart={handleHeroTouchStart}
+            onTouchMove={handleHeroTouchMove}
+            onTouchEnd={handleHeroTouchEnd}
           >
-            {SLIDER_BANNERS.map((banner, index) => {
-              const content = SLIDE_CONTENT[index];
-              const isActive = index === currentBannerIndex;
-              
-              return (
-                <div
-                  key={index}
-                  className={`absolute inset-0 transition-opacity duration-1000 ${
-                    isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-                >
-                  {/* Background Image */}
+            {/* Slide track */}
+            <div
+              className="flex h-full transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${heroSlide * 100}%)` }}
+            >
+              {HERO_IMAGES_MOBILE.map((img, idx) => (
+                <div key={idx} className="relative w-full h-full flex-shrink-0">
                   <img
-                    src={cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })}
+                    src={cloudinaryTransform(img, { w: 800, h: 1200, c: 'fill', q: 'auto:best' })}
                     srcSet={`
-                      ${cloudinaryTransform(banner, { w: 1200, h: 800, c: 'fit', q: 'auto:best' })} 1200w,
-                      ${cloudinaryTransform(banner, { w: 1800, h: 1200, c: 'fit', q: 'auto:best' })} 1800w,
-                      ${cloudinaryTransform(banner, { w: 2400, h: 1600, c: 'fit', q: 'auto:best' })} 2400w,
-                      ${cloudinaryTransform(banner, { w: 3000, h: 2000, c: 'fit', q: 'auto:best' })} 3000w
+                      ${cloudinaryTransform(img, { w: 480, h: 720, c: 'fill', q: 'auto:good' })} 480w,
+                      ${cloudinaryTransform(img, { w: 640, h: 960, c: 'fill', q: 'auto:good' })} 640w,
+                      ${cloudinaryTransform(img, { w: 800, h: 1200, c: 'fill', q: 'auto:best' })} 800w
                     `}
                     sizes="100vw"
-                    alt={`TheTidbit Hero Banner ${index + 1}`}
-                    className="w-full h-full object-cover object-[75%_50%] sm:object-[70%_50%] bg-white dark:bg-stone-900"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchpriority={index === 0 ? 'high' : 'low'}
+                    alt={
+                      idx === 0
+                        ? 'Modern Indian woman confidently carrying a handmade jute bag by TheTidbit'
+                        : idx === 1
+                        ? 'TheTidbit handmade jute bags — sustainable fashion for everyday Indian women'
+                        : 'Stylish handmade jute bags by TheTidbit — eco-friendly accessories for Indian women'
+                    }
+                    className="w-full h-full object-cover object-center"
+                    loading={idx === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={idx === 0 ? 'high' : 'auto'}
                   />
-                  
-                  {/* Desktop: Semi-transparent Dark Overlay (8-12%) */}
-                  <div className="hidden sm:block absolute inset-0 bg-black/10 z-10" />
-                  
-                  {/* Mobile: Light gradient overlay from bottom (so product is visible) */}
-                  <div className="sm:hidden absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-black/60 via-black/15 to-transparent z-10" />
-                  
-                  {/* Content Overlay - Desktop */}
-                  {isActive && (
-                    <div className="hidden sm:flex absolute inset-0 z-20 items-center">
-                      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                        {/* Desktop: Left-aligned */}
-                        <div className={`w-full ${index === 1 ? 'sm:max-w-[45%]' : 'sm:max-w-[42%]'} md:max-w-[38%] lg:max-w-[35%] text-left`}>
-                          <div className="backdrop-blur-md bg-black/30 dark:bg-black/40 rounded-2xl p-6 sm:p-8 border border-white/20 shadow-2xl">
-                            {/* Badge (if exists) */}
-                            {content.badge && (
-                              <div className="inline-flex items-center gap-1.5 text-xs text-white/90 mb-3 font-medium">
-                                <span>{content.badge}</span>
-                              </div>
-                            )}
-                            
-                            {/* Primary Headline */}
-                            <h1 className="font-serif text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-2xl">
-                              {content.h1}
-                            </h1>
-                            
-                            {/* Subtext */}
-                            <p className="text-base text-white/95 mb-6 leading-relaxed drop-shadow-lg max-w-2xl">
-                              {content.subtext}
-                            </p>
-                            
-                            {/* CTA Buttons */}
-                            <div className="flex flex-row gap-3 mb-6">
-                              <Link
-                                to={content.primaryCTALink}
-                                onClick={(e) => {
-                                  if (content.primaryCTALink.startsWith('#')) {
-                                    e.preventDefault();
-                                    const element = document.querySelector(content.primaryCTALink);
-                                    element?.scrollIntoView({ behavior: 'smooth' });
-                                  }
-                                }}
-                                className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.02] text-base"
-                              >
-                                <ShoppingBag size={18} />
-                                {content.primaryCTA}
-                                <ArrowRight size={16} />
-                              </Link>
-                              <Link
-                                to={content.secondaryCTALink}
-                                className="inline-flex items-center justify-center gap-2 bg-transparent backdrop-blur-sm border-2 border-white/60 text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-all shadow-lg text-base"
-                              >
-                                {content.secondaryCTA}
-                                <ArrowRight size={16} />
-                              </Link>
-                            </div>
-
-                            {/* Trust Line */}
-                            {content.trustLine && (
-                              <div className="text-sm text-white/90 font-medium drop-shadow-md">
-                                {content.trustLine}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Content Overlay - Mobile */}
-                  {isActive && (
-                    <div className="sm:hidden absolute bottom-[10%] left-0 right-0 z-20 px-4">
-                      <div className="bg-black/15 rounded-lg p-3.5 border border-white/20 shadow-2xl">
-                        {/* Mobile: Compact Headline */}
-                        <h1 className="font-serif text-base font-bold text-white mb-1.5 leading-tight drop-shadow-2xl line-clamp-2">
-                          {content.h1}
-                        </h1>
-                        
-                        {/* Mobile: Compact Subtext */}
-                        <p className="text-[11px] text-white/95 mb-2.5 leading-relaxed line-clamp-2">
-                          {content.subtext}
-                        </p>
-                        
-                        {/* Mobile: Single Primary CTA Button (Full Width) */}
-                        <Link
-                          to={content.primaryCTALink}
-                          onClick={(e) => {
-                            if (content.primaryCTALink.startsWith('#')) {
-                              e.preventDefault();
-                              const element = document.querySelector(content.primaryCTALink);
-                              element?.scrollIntoView({ behavior: 'smooth' });
-                            }
-                          }}
-                          className="w-full inline-flex items-center justify-center gap-1.5 bg-white text-stone-900 px-3 py-2 rounded-lg font-bold hover:bg-stone-50 transition-all shadow-lg text-xs"
-                        >
-                          <ShoppingBag size={14} />
-                          {content.primaryCTA}
-                          <ArrowRight size={12} />
-                        </Link>
-
-                        {/* Mobile: Trust Line (Compact) */}
-                        {content.trustLine && (
-                          <div className="text-[9px] text-white/85 font-medium drop-shadow-md mt-1.5 text-center leading-tight">
-                            {content.trustLine}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/5" />
                 </div>
-              );
-            })}
-
-            {/* Carousel Controls - Desktop only */}
-            <div className="absolute sm:bottom-6 sm:left-1/2 sm:-translate-x-1/2 z-40 hidden sm:flex items-center gap-4 bg-black/30 dark:bg-stone-900/30 backdrop-blur-md px-3 py-2 rounded-full shadow-lg">
-              {/* Previous Button */}
-              <button
-                onClick={goToPrevBanner}
-                className="p-2 sm:p-2 rounded-full bg-black/40 dark:bg-stone-900/40 backdrop-blur-md border border-white/40 dark:border-stone-700/40 text-white hover:bg-black/60 dark:hover:bg-stone-900/60 transition-all shadow-lg"
-                aria-label="Previous banner"
-              >
-                <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
-              </button>
-
-              {/* Dots Indicator - Hidden on mobile, shown on desktop */}
-              <div className="hidden sm:flex gap-2">
-                {SLIDER_BANNERS.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentBannerIndex(index)}
-                    className={`h-2 rounded-full transition-all ${
-                      index === currentBannerIndex
-                        ? 'w-8 bg-white'
-                        : 'w-2 bg-white/50 hover:bg-white/70'
-                    }`}
-                    aria-label={`Go to banner ${index + 1}`}
-                  />
-                ))}
-              </div>
-
-              {/* Next Button */}
-              <button
-                onClick={goToNextBanner}
-                className="p-2 sm:p-2 rounded-full bg-black/40 dark:bg-stone-900/40 backdrop-blur-md border border-white/40 dark:border-stone-700/40 text-white hover:bg-black/60 dark:hover:bg-stone-900/60 transition-all shadow-lg"
-                aria-label="Next banner"
-              >
-                <ChevronRight size={20} className="sm:w-6 sm:h-6" />
-              </button>
+              ))}
             </div>
 
-            {/* Mobile: Dots indicator at top center */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 sm:hidden z-30 flex gap-2">
-              {SLIDER_BANNERS.map((_, index) => (
+            {/* Dot indicators */}
+            <div className="absolute bottom-[120px] left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {HERO_IMAGES_MOBILE.map((_, idx) => (
                 <button
-                  key={index}
-                  onClick={() => setCurrentBannerIndex(index)}
-                  className={`h-1.5 rounded-full transition-all ${
-                    index === currentBannerIndex
-                      ? 'w-6 bg-white'
-                      : 'w-1.5 bg-white/50'
+                  key={idx}
+                  onClick={() => { setHeroSlide(idx); resetHeroAutoplay(); }}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    idx === heroSlide
+                      ? 'bg-white w-5'
+                      : 'bg-white/50'
                   }`}
-                  aria-label={`Go to banner ${index + 1}`}
+                  aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
             </div>
+
+            {/* Minimal overlay CTA at bottom of image */}
+            <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-16 bg-gradient-to-t from-black/60 to-transparent z-10">
+              <h1 className="font-serif text-[22px] font-bold text-white leading-tight mb-1">
+                Sustainable Style for{' '}
+                <span className="text-emerald-300">Everyday Women</span>
+              </h1>
+              <p className="text-[13px] text-white/80 mb-3.5">
+                Handmade Jute Bags — Starting at <span className="font-bold text-white">₹499</span>
+              </p>
+              <Link
+                to="/products"
+                className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-3 rounded-xl font-bold text-sm shadow-lg active:scale-[0.98] transition-transform"
+              >
+                <ShoppingBag size={16} />
+                Shop Now
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile category quick-links (like Zouk's category strip) */}
+          <div className="bg-white dark:bg-stone-900 px-4 py-4 border-b border-stone-100 dark:border-stone-800">
+            <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
+              {BEST_SELLERS.map((p) => {
+                const thumb = p.colors[0]?.images[1] || p.colors[0]?.images[0] || '';
+                return (
+                  <Link
+                    key={p.id}
+                    to={`/products/${p.id}`}
+                    className="flex-shrink-0 w-[72px] flex flex-col items-center gap-1.5 group"
+                  >
+                    <div className="w-[64px] h-[64px] rounded-2xl overflow-hidden bg-stone-100 dark:bg-stone-800 border-2 border-stone-100 dark:border-stone-700 group-active:border-brand-green transition-colors shadow-sm">
+                      <img
+                        src={cloudinaryTransform(thumb, { w: 160, h: 160, c: 'fill' })}
+                        alt={p.name}
+                        className="w-full h-full object-cover"
+                        loading="eager"
+                        decoding="async"
+                      />
+                    </div>
+                    <span className="text-[10px] font-semibold text-stone-700 dark:text-stone-300 text-center leading-tight line-clamp-2">
+                      {p.name.replace('Handmade Jute ', '').replace('Embroidered ', '')}
+                    </span>
+                  </Link>
+                );
+              })}
+              <Link
+                to="/products"
+                className="flex-shrink-0 w-[72px] flex flex-col items-center gap-1.5"
+              >
+                <div className="w-[64px] h-[64px] rounded-2xl bg-stone-100 dark:bg-stone-800 border-2 border-stone-100 dark:border-stone-700 flex items-center justify-center shadow-sm">
+                  <ArrowRight size={20} className="text-stone-500 dark:text-stone-400" />
+                </div>
+                <span className="text-[10px] font-semibold text-stone-700 dark:text-stone-300 text-center leading-tight">
+                  View All
+                </span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Mobile trust strip */}
+          <div className="bg-stone-50 dark:bg-stone-950 px-4 py-2.5 flex justify-between text-[11px] text-stone-600 dark:text-stone-400 font-semibold border-b border-stone-100 dark:border-stone-800">
+            <span className="flex items-center gap-1">
+              <CheckCircle2 size={12} className="text-emerald-500" />
+              COD Available
+            </span>
+            <span className="flex items-center gap-1">
+              <Truck size={12} className="text-emerald-500" />
+              Free Shipping
+            </span>
+            <span className="flex items-center gap-1">
+              <RefreshCcw size={12} className="text-emerald-500" />
+              Easy Returns
+            </span>
           </div>
         </div>
       </section>
 
-      {/* Trust Badges - Hidden on mobile */}
-      <div className="hidden sm:block">
-        <TrustBadges />
-      </div>
-
-      {/* Categories Section */}
-      <section className="py-16 bg-white dark:bg-stone-900">
+      {/* Trust Bar (desktop only — mobile has inline trust strip in hero flow) */}
+      <section className="hidden sm:block bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 py-4 sm:py-5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
-              Shop by Category
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
+            {[
+              { icon: Truck, label: 'Free Delivery', sub: 'Over ₹499', color: 'text-blue-600 dark:text-blue-400' },
+              { icon: ShieldCheck, label: 'Cash on Delivery', sub: 'Pay at your door', color: 'text-emerald-600 dark:text-emerald-400' },
+              { icon: RefreshCcw, label: 'Easy Returns', sub: '10-day policy', color: 'text-purple-600 dark:text-purple-400' },
+              { icon: Heart, label: 'Handmade in India', sub: 'Artisan crafted', color: 'text-rose-600 dark:text-rose-400' },
+            ].map((badge, i) => {
+              const Icon = badge.icon;
+              return (
+                <div key={i} className="flex items-center gap-3 sm:justify-center">
+                  <Icon size={20} className={badge.color} />
+                  <div>
+                    <p className="text-xs sm:text-sm font-bold text-stone-900 dark:text-stone-100 leading-tight">
+                      {badge.label}
+                    </p>
+                    <p className="text-[10px] sm:text-xs text-stone-500 dark:text-stone-400">{badge.sub}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* 2. BEST SELLERS SECTION                      */}
+      {/* ============================================ */}
+      <section id="best-sellers" className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+              Most Loved by Our Customers <span className="text-red-500">&#10084;&#65039;</span>
             </h2>
-            <p className="text-lg text-stone-600 dark:text-stone-400">
-              Explore our collection of handmade jute bags
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              Handpicked best sellers — loved by 1000+ women across India
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {PRODUCT_CATEGORIES.map((category) => {
-              const categoryProduct = getProductByCategory(category.slug);
-              const categoryImage = CATEGORY_IMAGES[category.slug] || categoryProduct.colors[0]?.images[0] || heroImage;
-              const categoryCount = ALL_PRODUCTS.filter(p => {
-                const lastCategory = p.category[p.category.length - 1];
-                return lastCategory.toLowerCase() === category.name.toLowerCase();
-              }).length;
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {BEST_SELLERS.map((product) => {
+              const primaryImage = product.colors[0]?.images[0] || '';
+              const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+              const lowStock = LOW_STOCK_MAP[product.id];
 
               return (
                 <Link
-                  key={category.id}
-                  to={`/products/${categoryProduct.id}`}
-                  className="group relative overflow-hidden rounded-2xl bg-stone-100 dark:bg-stone-800 aspect-[4/3] hover:shadow-xl dark:hover:shadow-stone-900/50 transition-all border-2 border-transparent hover:border-brand-green/30"
+                  key={product.id}
+                  to={`/products/${product.id}`}
+                  className="group block bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300 border border-stone-100 dark:border-stone-700"
                 >
-                  <img
-                    src={cloudinaryTransform(categoryImage, { w: 800 })}
-                    alt={category.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-4 right-4 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                    <span className="text-xs font-bold text-stone-900 dark:text-stone-100">
-                      {categoryCount} {categoryCount === 1 ? 'Product' : 'Products'}
-                    </span>
+                  {/* Image */}
+                  <div className="relative aspect-square overflow-hidden bg-stone-100 dark:bg-stone-900">
+                    <img
+                      src={cloudinaryTransform(primaryImage, { w: 600 })}
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+
+                    {/* Bestseller Badge */}
+                    <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 bg-amber-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-md flex items-center gap-1">
+                      <Star size={10} className="fill-white" />
+                      Bestseller
+                    </div>
+
+                    {/* Discount Badge */}
+                    {discount > 0 && (
+                      <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-red-600 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full shadow-md">
+                        {discount}% OFF
+                      </div>
+                    )}
+
+                    {/* Low Stock Indicator */}
+                    {lowStock && lowStock <= 12 && (
+                      <div className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 bg-red-50 dark:bg-red-950/70 text-red-700 dark:text-red-400 text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border border-red-200 dark:border-red-800 animate-pulse-soft">
+                        Only {lowStock} Left
+                      </div>
+                    )}
                   </div>
 
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-2xl font-serif font-bold text-white mb-2 drop-shadow-lg">
-                      {category.name}
+                  {/* Product Info */}
+                  <div className="p-3 sm:p-4">
+                    <h3 className="font-serif text-sm sm:text-base font-bold text-stone-900 dark:text-stone-100 mb-1 line-clamp-2 group-hover:text-brand-green dark:group-hover:text-brand-green/80 transition-colors leading-snug">
+                      {product.name}
                     </h3>
-                    <p className="text-white/90 text-sm mb-3 drop-shadow-md">
-                      {categoryProduct.colors.length} {categoryProduct.colors.length === 1 ? 'color' : 'colors'} available
-                    </p>
-                    <div className="inline-flex items-center gap-2 text-white font-semibold text-sm bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg group-hover:bg-white/30 transition-all">
-                      Explore Collection
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+
+                    {/* Star Rating */}
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <div className="flex items-center">
+                        {[0, 1, 2, 3, 4].map((i) => (
+                          <Star key={i} size={12} className="text-yellow-400 fill-yellow-400" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] sm:text-xs text-stone-500 dark:text-stone-400 font-medium">
+                        4.8 (120+)
+                      </span>
+                    </div>
+
+                    {/* Price */}
+                    <div className="flex items-baseline gap-1.5 sm:gap-2 mb-2">
+                      <span className="text-lg sm:text-xl font-serif font-bold text-stone-900 dark:text-stone-100">
+                        ₹{product.price}
+                      </span>
+                      {product.mrp > product.price && (
+                        <span className="text-xs sm:text-sm text-stone-400 line-through">₹{product.mrp}</span>
+                      )}
+                    </div>
+
+                    {/* Color Swatches */}
+                    <div className="flex items-center gap-1 sm:gap-1.5 mb-3">
+                      {product.colors.slice(0, 4).map((color) => (
+                        <div
+                          key={color.id}
+                          className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-stone-200 dark:border-stone-600"
+                          style={{ backgroundColor: color.hex }}
+                          title={color.name}
+                        />
+                      ))}
+                      {product.colors.length > 4 && (
+                        <span className="text-[10px] sm:text-xs text-stone-500 dark:text-stone-400 font-medium">
+                          +{product.colors.length - 4}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* CTA */}
+                    <div className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 pointer-events-none">
+                      <ShoppingBag size={14} />
+                      View Details
                     </div>
                   </div>
                 </Link>
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* Amazon Feature Section */}
-      <section className="py-12 sm:py-16 bg-stone-50 dark:bg-stone-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <div className="order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100/70 text-amber-900 text-xs font-bold mb-4">
-                Amazon Favorite
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
-                Red Rounded Jute Bag — Now on Amazon
-              </h2>
-              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-6">
-                The bestselling red rounded sling bag loved by our customers. Shop it directly on Amazon for quick delivery and trusted checkout.
-              </p>
-              <a
-                href={AMAZON_PRODUCT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-800 dark:hover:bg-stone-200 transition-all shadow-lg"
-              >
-                Buy on Amazon
-                <ArrowRight size={16} />
-              </a>
-            </div>
-            <div className="order-1 lg:order-2">
-              <div className="relative rounded-2xl overflow-hidden bg-white dark:bg-stone-900 shadow-xl border border-stone-200 dark:border-stone-700">
-                <img
-                  src={cloudinaryTransform(PRODUCT.colors[0]?.images[1] || PRODUCT.colors[0]?.images[0] || '', { w: 900 })}
-                  alt="TheTidbit red rounded jute bag"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-stone-900/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-bold text-stone-900 dark:text-stone-100">
-                  Bestseller on Amazon
-                </div>
-              </div>
-            </div>
+          <div className="text-center mt-8 sm:mt-10">
+            <Link
+              to="/products"
+              className="inline-flex items-center gap-2 text-stone-900 dark:text-stone-100 font-bold text-base hover:text-brand-green dark:hover:text-brand-green/80 transition-colors underline underline-offset-4 decoration-2 decoration-stone-300 dark:decoration-stone-600 hover:decoration-brand-green"
+            >
+              View All Products
+              <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Craft & Impact Section (Homepage-only) */}
-      <section className="py-14 sm:py-20 bg-jute-900 text-stone-100 dark:bg-stone-950">
+      {/* ============================================ */}
+      {/* 3. WHY CHOOSE THETIDBIT SECTION              */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-stone-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-bold uppercase tracking-widest mb-4">
-                Yellow Sling Highlight
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">
-                Yellow Sling — Bright. Light. Ready for Every Day.
-              </h2>
-              <p className="text-base sm:text-lg text-stone-200 mb-6">
-                Our yellow sling bag is lightweight, durable, and easy to carry from morning to evening. 
-                Crafted for comfort with a cheerful pop of color that elevates any outfit.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
-                  <Leaf className="w-5 h-5 text-green-300 mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Natural Jute</p>
-                    <p className="text-sm text-stone-200">Biodegradable, breathable, and planet-friendly.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
-                  <Hand className="w-5 h-5 text-amber-300 mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Handmade Finish</p>
-                    <p className="text-sm text-stone-200">Artisan-crafted details you can feel.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
-                  <PackageCheck className="w-5 h-5 text-blue-300 mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Plastic-Free Packaging</p>
-                    <p className="text-sm text-stone-200">Delivered in eco-conscious wraps.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 rounded-xl bg-white/5 border border-white/10 p-4">
-                  <ShieldCheck className="w-5 h-5 text-purple-300 mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Built to Last</p>
-                    <p className="text-sm text-stone-200">Durable stitching for daily use.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <img
-                  src={cloudinaryTransform(craftedFeatureImage, { w: 1000 })}
-                  alt="TheTidbit yellow sling jute bag"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute top-4 left-4 bg-black/40 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
-                  Yellow Sling Variant
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      {featuredProducts.length > 0 && (
-        <section className="py-16 bg-stone-50 dark:bg-stone-950">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
-                  Featured Products
-                </h2>
-                <p className="text-lg text-stone-600 dark:text-stone-400">
-                  Handpicked favorites from our collection
-                </p>
-              </div>
-              <Link
-                to="/products"
-                className="hidden sm:flex items-center gap-2 text-stone-900 dark:text-stone-100 font-semibold hover:text-brand-green dark:hover:text-brand-green/80 transition-colors"
-              >
-                View All
-                <ArrowRight size={18} />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} showTag />
-              ))}
-            </div>
-
-            <div className="mt-8 text-center sm:hidden">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 text-stone-900 dark:text-stone-100 font-semibold hover:text-brand-green dark:hover:text-brand-green/80 transition-colors"
-              >
-                View All Products
-                <ArrowRight size={18} />
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Social Proof - Testimonials */}
-      <HomeTestimonials />
-
-      {/* Gifting Section */}
-      <GiftingSection />
-
-      {/* Why Choose Us */}
-      <section className="py-16 bg-white dark:bg-stone-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
               Why Choose TheTidbit?
             </h2>
-            <p className="text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-              We're committed to bringing you the finest handmade jute bags with exceptional quality and service
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              We believe sustainable fashion should be beautiful, practical, and accessible to every woman
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🌱</span>
-              </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                100% Eco-Friendly
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                Made from natural jute, completely biodegradable and sustainable
-              </p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {WHY_CHOOSE_ITEMS.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={index}
+                  className="text-center p-6 sm:p-8 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all duration-300 border border-stone-100 dark:border-stone-700 group"
+                >
+                  <div
+                    className={`w-16 h-16 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <Icon size={28} className={item.color} />
+                  </div>
+                  <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">{item.title}</h3>
+                  <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">{item.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">👩‍🎨</span>
-              </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                Handcrafted by Artisans
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                Each piece is unique, made with love by skilled artisans in India
-              </p>
+      {/* ============================================ */}
+      {/* 4. LIFESTYLE / SOCIAL PROOF SECTION           */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 bg-pink-50 dark:bg-pink-950/30 text-pink-700 dark:text-pink-400 px-4 py-2 rounded-full mb-4">
+              <Camera size={16} />
+              <span className="text-sm font-semibold">Real Women, Real Style</span>
             </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+              Styled by Real Women
+            </h2>
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              See how women across India are styling their TheTidbit bags every day
+            </p>
+          </div>
 
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🚚</span>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+            {LIFESTYLE_TESTIMONIALS.map((item, index) => (
+              <div
+                key={index}
+                className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+              >
+                <img
+                  src={cloudinaryTransform(item.image, { w: 600, h: 800, c: 'fill' })}
+                  alt={`TheTidbit bag styled by ${item.name}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  loading="lazy"
+                  decoding="async"
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+                {/* Testimonial overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
+                  <p className="text-white text-xs sm:text-sm font-medium leading-snug mb-1.5 sm:mb-2 line-clamp-3">
+                    {item.quote}
+                  </p>
+                  <p className="text-white/70 text-[10px] sm:text-xs font-semibold">— {item.name}</p>
+                </div>
               </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                Free Delivery
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                Free shipping on all prepaid orders across India
-              </p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* 5. CUSTOMER REVIEWS SECTION                  */}
+      {/* ============================================ */}
+      <section id="reviews" className="py-14 sm:py-20 bg-white dark:bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 text-yellow-500 mb-3">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} size={20} className="fill-current" />
+              ))}
             </div>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+              Loved by <span className="text-brand-green dark:text-brand-green/80">1000+</span> Happy Customers
+            </h2>
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              Real reviews from real women who chose sustainable style
+            </p>
+          </div>
 
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">✨</span>
-              </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                Premium Quality
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                Durable materials and expert craftsmanship ensure long-lasting beauty
-              </p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto">
+            {CUSTOMER_REVIEWS.map((review) => (
+              <div
+                key={review.id}
+                className="bg-stone-50 dark:bg-stone-800/50 rounded-2xl p-5 sm:p-6 border border-stone-100 dark:border-stone-700 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all relative"
+              >
+                {/* Quote Icon */}
+                <div className="absolute top-4 right-4 text-stone-200 dark:text-stone-700">
+                  <Quote size={24} />
+                </div>
 
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">💝</span>
-              </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                Perfect Gift
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                Beautifully packaged and ready to gift to your loved ones
-              </p>
-            </div>
+                {/* Rating */}
+                <div className="flex items-center gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      className={`${
+                        i < review.rating ? 'text-yellow-400 fill-yellow-400' : 'text-stone-300 dark:text-stone-600'
+                      }`}
+                    />
+                  ))}
+                </div>
 
-            <div className="text-center p-6 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg transition-all border border-stone-100 dark:border-stone-700">
-              <div className="w-16 h-16 bg-brand-green/10 dark:bg-brand-green/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🔄</span>
+                {/* Review Text */}
+                <p className="text-stone-700 dark:text-stone-300 text-sm sm:text-base leading-relaxed mb-4 relative z-10">
+                  "{review.text}"
+                </p>
+
+                {/* Photo Review */}
+                {review.hasPhoto && review.photo && (
+                  <div className="mb-4 rounded-xl overflow-hidden border border-stone-200 dark:border-stone-700">
+                    <img
+                      src={cloudinaryTransform(review.photo, { w: 400, h: 300, c: 'fill' })}
+                      alt={`Photo review by ${review.name}`}
+                      className="w-full h-40 sm:h-48 object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                )}
+
+                {/* Author */}
+                <div className="flex items-center justify-between pt-3 border-t border-stone-200 dark:border-stone-700">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-brand-green/10 dark:bg-brand-green/20 flex items-center justify-center">
+                      <span className="text-sm font-bold text-brand-green dark:text-brand-green/80">
+                        {review.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm text-stone-900 dark:text-stone-100">{review.name}</p>
+                      <p className="text-[11px] text-stone-500 dark:text-stone-400 flex items-center gap-1">
+                        {review.location}
+                        {review.verified && (
+                          <>
+                            <span className="mx-0.5">·</span>
+                            <CheckCircle2 size={11} className="text-emerald-500" />
+                            <span className="text-emerald-600 dark:text-emerald-400">Verified</span>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-[11px] text-stone-400 dark:text-stone-500">{review.date}</span>
+                </div>
               </div>
-              <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">
-                Easy Returns
-              </h3>
-              <p className="text-stone-600 dark:text-stone-400">
-                10-day hassle-free return and exchange policy
-              </p>
+            ))}
+          </div>
+
+          {/* Social Proof Stats */}
+          <div className="mt-12 sm:mt-16 pt-10 border-t border-stone-200 dark:border-stone-700">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+              {[
+                { value: '1000+', label: 'Happy Customers' },
+                { value: '4.8★', label: 'Average Rating' },
+                { value: '98%', label: 'Would Recommend' },
+                { value: '5000+', label: 'Bags Sold' },
+              ].map((stat, i) => (
+                <div key={i}>
+                  <div className="text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100 mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs sm:text-sm text-stone-600 dark:text-stone-400">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Marketplace Links */}
-      <MarketplaceLinks />
+      {/* ============================================ */}
+      {/* 6. FIRST ORDER OFFER SECTION                 */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-20 bg-gradient-to-br from-emerald-50 via-white to-amber-50 dark:from-stone-950 dark:via-stone-900 dark:to-stone-950">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative bg-white dark:bg-stone-800 rounded-3xl shadow-xl dark:shadow-stone-900/50 border border-stone-200 dark:border-stone-700 overflow-hidden">
+            {/* Decorative accent */}
+            <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 via-brand-green to-emerald-600" />
 
-      {/* Instagram CTA */}
+            <div className="p-6 sm:p-10 lg:p-12 text-center">
+              <div className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 px-4 py-2 rounded-full mb-5 text-sm font-bold">
+                <span className="animate-pulse-soft">🎉</span>
+                Limited Time Offer
+              </div>
+
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+                Get <span className="text-emerald-600 dark:text-emerald-400">₹100 Off</span> on Your First Order
+              </h2>
+
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-8 max-w-lg mx-auto">
+                Join 1000+ women who chose sustainable style. Enter your WhatsApp number and get your exclusive discount code instantly.
+              </p>
+
+              {!offerSubmitted ? (
+                <form onSubmit={handleOfferSubmit} className="max-w-md mx-auto">
+                  <div className="flex gap-3">
+                    <div className="flex-1 relative">
+                      <div className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 text-sm font-medium">
+                        +91
+                      </div>
+                      <input
+                        ref={offerInputRef}
+                        type="tel"
+                        value={offerPhone}
+                        onChange={(e) => setOfferPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                        placeholder="Enter WhatsApp number"
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl border-2 border-stone-200 dark:border-stone-600 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 focus:border-emerald-500 dark:focus:border-emerald-400 focus:outline-none transition-colors text-base placeholder:text-stone-400"
+                        required
+                        pattern="[0-9]{10}"
+                        title="Enter 10-digit mobile number"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600 text-white px-6 py-3.5 rounded-xl font-bold shadow-lg shadow-emerald-200 dark:shadow-emerald-900/50 hover:shadow-xl transition-all active:scale-[0.98] flex items-center gap-2 whitespace-nowrap"
+                    >
+                      <Send size={16} />
+                      <span className="hidden sm:inline">Claim Offer</span>
+                      <span className="sm:hidden">Claim</span>
+                    </button>
+                  </div>
+                  <p className="text-xs text-stone-400 dark:text-stone-500 mt-3">
+                    We'll send your discount code on WhatsApp. No spam, ever.
+                  </p>
+                </form>
+              ) : (
+                <div className="max-w-md mx-auto bg-emerald-50 dark:bg-emerald-950/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-800">
+                  <CheckCircle2 size={32} className="text-emerald-600 dark:text-emerald-400 mx-auto mb-3" />
+                  <p className="font-bold text-emerald-800 dark:text-emerald-300 text-lg mb-1">
+                    You're all set!
+                  </p>
+                  <p className="text-sm text-emerald-700 dark:text-emerald-400">
+                    Check your WhatsApp for the exclusive discount code. Happy shopping!
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* 7. INSTAGRAM & COMMUNITY                     */}
+      {/* ============================================ */}
       <InstagramCTA />
 
-      {/* India Pride */}
+      {/* ============================================ */}
+      {/* 8. PROUDLY INDIAN                            */}
+      {/* ============================================ */}
       <IndiaPride />
+
+      {/* ============================================ */}
+      {/* MOBILE STICKY SHOP CTA                       */}
+      {/* ============================================ */}
+      <MobileShopCTA />
     </>
   );
 };

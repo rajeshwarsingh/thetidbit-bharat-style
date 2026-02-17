@@ -11,6 +11,7 @@ import MetaPixel from './components/MetaPixel';
 import SlingTryModal from './components/SlingTryModal';
 import { SlingTryProvider } from './components/SlingTryContext';
 import { ThemeProvider } from './components/ThemeContext';
+import WhatsAppFloatingButton from './components/WhatsAppFloatingButton';
 // import Butterfly from './components/Butterfly';
 import NewYearCelebration from './components/NewYearCelebration';
 
@@ -74,10 +75,8 @@ export function AppFrame({ enableAnalytics = true }: { enableAnalytics?: boolean
           iframeSrc="https://slingtry-ai-virtual-try-on-955247528706.us-west1.run.app/"
         />
         
-        {/* Beautiful Butterfly Animations - Male and Female butterflies */}
-        {/* Temporarily disabled */}
-        {/* <Butterfly delay={2000} id={0} gender="male" /> */}
-        {/* <Butterfly delay={4000} id={1} gender="female" /> */}
+        {/* WhatsApp Floating Chat Button */}
+        <WhatsAppFloatingButton />
         
         {/* New Year Celebration - Shows on first visit */}
         <NewYearCelebration />

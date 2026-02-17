@@ -39,10 +39,30 @@ module.exports = {
           '0%': { transform: 'translateX(-120%)' },
           '100%': { transform: 'translateX(120%)' },
         },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+        'bounce-gentle': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-4px)' },
+        },
       },
       animation: {
         'bs-pop': 'bs-pop 360ms ease-out',
         'bs-shimmer-once': 'bs-shimmer 1200ms ease-out 1',
+        'fade-in-up': 'fade-in-up 600ms ease-out forwards',
+        'fade-in': 'fade-in 500ms ease-out forwards',
+        'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+        'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
       },
     },
   },
