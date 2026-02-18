@@ -18,7 +18,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import SEO from './SEO';
-import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES } from '../constants';
+import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES, MARKETPLACE_LINKS } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
@@ -29,11 +29,29 @@ const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || ''
 const HERO_IMAGES_MOBILE = [
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png',
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771389271/thetidbit-homepage-hero/mobile_banner1_oavmhg.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771427669/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/ChatGPT_Image_Feb_18_2026_08_43_52_PM_dhtwzg.png',
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771359882/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_54_19_AM_sctriv.png',
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771360272/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_02_00_53_AM_rshrqh.png',
 ];
 
 const BEST_SELLERS = ALL_PRODUCTS.slice(0, 4);
+
+// Product usage / lifestyle section (Smart for Office, etc.)
+const USAGE_FALLBACK = 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png';
+const USAGE_CARDS = [
+  { title: 'Smart for Office', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424522/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_51_50_PM_hhzozc.png' },
+  { title: 'Perfect for Shopping', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424510/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_31_PM_wzylky.png' },
+  { title: 'Ideal for Gifting', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424509/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_25_PM_laxnfj.png' },
+].map((c) => ({ ...c, image: c.image || USAGE_FALLBACK }));
+
+const MARKETPLACE_LOGOS = [
+  { name: 'Amazon', url: MARKETPLACE_LINKS.amazon, logoSrc: 'https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg' },
+  { name: 'Flipkart', url: MARKETPLACE_LINKS.flipkart, logoSrc: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1768550284/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/logo/2_kr0mbs.svg' },
+  { name: 'Meesho', url: MARKETPLACE_LINKS.meesho, logoSrc: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1768550283/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/logo/1_m7ljon.svg' },
+];
+
+const BESTSELLER_SECTION_IMAGE =
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771426858/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/best_seller_banner_rmv9nz.png';
 
 const LOW_STOCK_MAP: Record<string, number> = {
   [ALL_PRODUCTS[0]?.id || '']: 7,
@@ -531,6 +549,114 @@ const HomePage: React.FC = () => {
             <p className="text-[11px] font-bold text-amber-700 dark:text-amber-400 tracking-wide">
               Limited Handmade Stock Available
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ——— Product usage / lifestyle (3 cards) ——— */}
+      <section className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950" aria-labelledby="usage-heading">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 id="usage-heading" className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-2">
+              One Bag. Every Day.
+            </h2>
+            <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
+              Office, shopping, or gifting — one simple companion for how you live.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {USAGE_CARDS.map(({ title, image }) => (
+              <div
+                key={title}
+                className="group flex flex-col bg-white dark:bg-stone-900 rounded-2xl overflow-hidden border border-stone-100 dark:border-stone-700 shadow-sm hover:shadow-lg dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-stone-100 dark:bg-stone-800">
+                  <img
+                    src={cloudinaryTransform(image, { w: 800 })}
+                    alt={title}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="h-px w-full bg-stone-200 dark:bg-stone-600 shrink-0" aria-hidden="true" />
+                <div className="h-14 sm:h-16 flex items-center justify-center bg-stone-800 dark:bg-stone-700 shrink-0">
+                  <p className="text-white font-medium text-base sm:text-lg text-center px-3">
+                    {title}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ——— Seen In + Our Bestsellers visual section (new) ——— */}
+      <section className="py-12 sm:py-16 bg-gradient-to-b from-[#f3e9dc] to-[#efe3d3] dark:from-stone-900 dark:to-stone-950 border-y border-stone-200/80 dark:border-stone-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl sm:rounded-3xl border border-stone-200/90 dark:border-stone-700/80 bg-[#f9f1e6]/95 dark:bg-stone-800/60 shadow-[0_14px_40px_-22px_rgba(20,20,20,0.45)] overflow-hidden">
+            <div className="px-4 sm:px-8 lg:px-10 pt-7 sm:pt-9 pb-6 border-b border-stone-300/70 dark:border-stone-700/80">
+              <p className="text-center text-[11px] sm:text-xs uppercase tracking-[0.18em] text-stone-500 dark:text-stone-400 mb-4 font-semibold">
+                Seen In
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5">
+                {MARKETPLACE_LOGOS.map(({ name, url, logoSrc }) => (
+                  <a
+                    key={name}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`The Tidbit on ${name}`}
+                    className="group inline-flex items-center justify-center h-12 sm:h-14 px-4 sm:px-5 rounded-xl sm:rounded-2xl bg-white/95 dark:bg-stone-900/85 border border-stone-200 dark:border-stone-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+                  >
+                    <img
+                      src={logoSrc}
+                      alt={name}
+                      className="h-5 sm:h-6 w-auto object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="px-4 sm:px-8 lg:px-10 py-7 sm:py-9">
+              <div className="text-center mb-5 sm:mb-7">
+                <h3 className="font-serif text-[30px] sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight">
+                  Our Bestsellers
+                </h3>
+                <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 mt-2">
+                  Most-loved handmade picks for everyday Indian women.
+                </p>
+              </div>
+
+              <div className="relative overflow-hidden rounded-xl sm:rounded-2xl border border-stone-300/80 dark:border-stone-700 bg-stone-100 dark:bg-stone-900 shadow-md">
+                <img
+                  src={cloudinaryTransform(BESTSELLER_SECTION_IMAGE, { w: 2400, q: 'auto:best' })}
+                  alt="TheTidbit bestsellers showcase"
+                  className="w-full h-auto object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-t from-black/45 via-black/20 to-transparent" />
+                <div className="absolute left-4 sm:left-6 bottom-3.5 sm:bottom-5 text-white">
+                  <p className="text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white/80 font-semibold">
+                    Limited Handmade Stock
+                  </p>
+                  <p className="font-serif text-lg sm:text-2xl font-semibold">Starting at ₹499</p>
+                </div>
+              </div>
+
+              <div className="flex justify-center mt-6 sm:mt-8">
+                <Link
+                  to="/products"
+                  className="inline-flex items-center justify-center min-w-[190px] px-7 py-3 rounded-xl bg-stone-900 hover:bg-stone-800 dark:bg-stone-100 dark:hover:bg-white text-white dark:text-stone-900 text-base sm:text-lg font-semibold shadow-lg transition-colors"
+                >
+                  Shop Bestsellers
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

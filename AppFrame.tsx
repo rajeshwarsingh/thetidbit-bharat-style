@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import HomePage from './components/HomePage';
+import HomeOnePage from './components/HomeOnePage';
 import ProductDetailPage from './components/ProductDetailPage';
 import AllProductsPage from './components/AllProductsPage';
 import Footer from './components/Footer';
@@ -54,6 +55,7 @@ export function AppFrame({ enableAnalytics = true }: { enableAnalytics?: boolean
             >
               <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/home-one" element={<HomeOnePage />} />
                 <Route path="/products" element={<AllProductsPage />} />
                 <Route path="/products/:productId" element={<ProductDetailPage />} />
                 <Route path="/story" element={<BlogPage />} />

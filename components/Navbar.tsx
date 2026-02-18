@@ -130,6 +130,12 @@ const Navbar: React.FC = () => {
               Home
             </Link>
             <Link
+              to="/home-one"
+              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/home-one' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+            >
+              Brand
+            </Link>
+            <Link
               to="/products"
               className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/products' || location.pathname.startsWith('/products/') ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
             >
@@ -295,6 +301,17 @@ const Navbar: React.FC = () => {
               }`}
             >
               Home
+            </Link>
+            <Link
+              to="/home-one"
+              onClick={closeMenu}
+              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                location.pathname === '/home-one' 
+                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
+                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
+              }`}
+            >
+              Brand
             </Link>
             <Link
               to="/products"
