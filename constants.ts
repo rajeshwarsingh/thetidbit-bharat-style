@@ -6,6 +6,15 @@ export const LOGO_URL = "https://res.cloudinary.com/thetidbit23024/image/upload/
 export const ARTISAN_STORY_IMAGE = "https://res.cloudinary.com/thetidbit23024/image/upload/v1765956721/Dec_17_2025_01_01_22_PM_sdkox1.png";
 export const ARTISAN_SPOTLIGHT_IMAGE = "https://res.cloudinary.com/thetidbit23024/image/upload/v1765957946/ChatGPT_Image_Dec_17_2025_01_22_13_PM_ymwkfv.png";
 export const MISSION_IMAGE = "https://res.cloudinary.com/thetidbit23024/image/upload/v1765963603/generated-image_stxalr.jpg";
+
+// Founder (Expert) section – set image to your founder photo Cloudinary URL
+export const FOUNDER = {
+  image: "https://res.cloudinary.com/thetidbit23024/image/upload/v1765963603/generated-image_stxalr.jpg",
+  name: "Founder Name",
+  title: "Founder & Expert",
+  quote: "Thank you for trusting TheTidbit. Every bag we make is crafted with care by Indian artisans. We're here to bring you sustainable, beautiful handcrafted pieces you'll love.",
+};
+
 export const AMAZON_PRODUCT_URL = "https://www.amazon.in/dp/B0DWGWX248?th=1";
 export const AMAZON_STORE_URL = "https://www.amazon.in/stores/VisitTHETIDBIT/page/13388266-8AB4-473E-8B9B-58BB90AC3114?lp_asin=B0DY2M7HHZ&ref_=ast_bln";
 
@@ -39,10 +48,11 @@ export const HERO_BANNERS = [
   "https://res.cloudinary.com/thetidbit23024/image/upload/v1768422516/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/3_oykj9w.png",
 ];
 
-// Product Categories
+// Product Categories (4 bag categories for home page section-per-category)
 export const PRODUCT_CATEGORIES = [
-  { id: "sling-bag", name: "Sling Bag", slug: "sling-bag" },
   { id: "sling-bag-rounded", name: "Sling Bag Rounded", slug: "sling-bag-rounded" },
+  { id: "sling-bag", name: "Sling Bag", slug: "sling-bag" },
+  { id: "woven-sling", name: "Woven Sling", slug: "woven-sling" },
   { id: "handbag", name: "Handbag", slug: "handbag" },
 ] as const;
 
@@ -234,26 +244,6 @@ export const PRODUCT: ProductDetails = {
         MODEL_PINK, 
         PRODUCT_PINK,
         FLATLAY_PINK
-      ]
-    },
-    { 
-      name: "Classic Black", 
-      hex: "#000000", 
-      id: "black",
-      images: [
-        MODEL_RED, // Placeholder - update with actual black images
-        PRODUCT_RED,
-        FLATLAY_RED
-      ]
-    },
-    { 
-      name: "Natural Beige", 
-      hex: "#D4A574", 
-      id: "beige",
-      images: [
-        MODEL_ORANGE, // Placeholder - update with actual beige images
-        PRODUCT_ORANGE,
-        FLATLAY_ORANGE
       ]
     },
     { 

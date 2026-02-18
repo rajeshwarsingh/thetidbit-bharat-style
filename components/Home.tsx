@@ -9,6 +9,7 @@ import Reviews from './Reviews';
 import StickyCTA from './StickyCTA';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
+import FounderExpert from './FounderExpert';
 import Reveal from './Reveal';
 import DesktopWhatsAppCTA from './DesktopWhatsAppCTA';
 import SEO from './SEO';
@@ -150,6 +151,7 @@ const Home: React.FC = () => {
       <Reveal delayMs={160}><AmazonTrust /></Reveal>
       <Reveal delayMs={200}><Story /></Reveal>
       <Reveal delayMs={240}><IndiaPride /></Reveal>
+      <Reveal delayMs={260}><FounderExpert /></Reveal>
       <Reveal delayMs={280}><Reviews /></Reveal>
       <Reveal delayMs={320}><InstagramCTA /></Reveal>
       <StickyCTA appliedCoupon={appliedCoupon} />

@@ -18,11 +18,12 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import SEO from './SEO';
-import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES } from '../constants';
+import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
 import MobileShopCTA from './MobileShopCTA';
+import MarketplaceLinks from './MarketplaceLinks';
 
 const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || '';
 const HERO_IMAGES_MOBILE = [
@@ -39,6 +40,42 @@ const LOW_STOCK_MAP: Record<string, number> = {
   [ALL_PRODUCTS[1]?.id || '']: 4,
   [ALL_PRODUCTS[2]?.id || '']: 11,
   [ALL_PRODUCTS[3]?.id || '']: 3,
+};
+
+// Get category display name from slug (e.g. "sling-bag-rounded" -> "Sling Bag Rounded")
+const slugToCategoryName = (slug: string): string =>
+  slug.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+// Products per category (filter only)
+const getProductsByCategory = (categorySlug: string) => {
+  const categoryName = slugToCategoryName(categorySlug);
+  return ALL_PRODUCTS.filter((p) => {
+    const last = p.category[p.category.length - 1];
+    return last && last.toLowerCase() === categoryName.toLowerCase();
+  });
+};
+
+// Show 4–6 cards per category; Handbag: 2 rows only (12 items in 6-col grid). Use color variants; no mixing.
+type CategoryDisplayItem = { product: typeof ALL_PRODUCTS[number]; colorIndex: number };
+
+const HANDBAG_TWO_ROWS = 12; // 2 rows × 6 cols on xl
+
+const getCategoryDisplayItems = (categorySlug: string): CategoryDisplayItem[] => {
+  const products = getProductsByCategory(categorySlug);
+  const items: CategoryDisplayItem[] = [];
+  const isHandbag = categorySlug === 'handbag';
+  const targetMin = 4;
+  const targetMax = isHandbag ? HANDBAG_TWO_ROWS : 6;
+
+  for (const p of products) {
+    if (!p.colors?.length) continue;
+    for (let c = 0; c < p.colors.length && items.length < targetMax; c++) {
+      items.push({ product: p, colorIndex: c });
+    }
+    if (items.length >= targetMax) break;
+  }
+
+  return (items.length < targetMin && !isHandbag ? items : items.slice(0, targetMax));
 };
 
 const WHY_CHOOSE_ITEMS = [
@@ -74,22 +111,22 @@ const WHY_CHOOSE_ITEMS = [
 
 const LIFESTYLE_TESTIMONIALS = [
   {
-    image: ALL_PRODUCTS[0]?.colors[0]?.images[0] || '',
+    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394105/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer1_n3htyo.png',
     quote: '"I carry it everywhere — office, market, even temples!"',
     name: 'Sneha R., Mumbai',
   },
   {
-    image: ALL_PRODUCTS[1]?.colors[0]?.images[0] || '',
+    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394104/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer2_hn1rp3.png',
     quote: '"The quality is amazing for this price. My friends all want one!"',
     name: 'Divya P., Bangalore',
   },
   {
-    image: ALL_PRODUCTS[2]?.colors[0]?.images[0] || '',
+    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394375/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer3_szdndx.png',
     quote: '"Perfect size for everyday essentials. Love the boho look!"',
     name: 'Kavitha M., Chennai',
   },
   {
-    image: ALL_PRODUCTS[3]?.colors[1]?.images[0] || ALL_PRODUCTS[0]?.colors[1]?.images[0] || '',
+    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394374/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer4_tinjfu.png',
     quote: '"Gifted this to my sister. She absolutely loved it!"',
     name: 'Prachi S., Pune',
   },
@@ -105,7 +142,7 @@ const CUSTOMER_REVIEWS = [
     date: '2 days ago',
     verified: true,
     hasPhoto: true,
-    photo: ALL_PRODUCTS[0]?.colors[0]?.images[1] || '',
+    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396787/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/1_Happy_Customers_m8zhdo.png',
   },
   {
     id: 2,
@@ -115,8 +152,8 @@ const CUSTOMER_REVIEWS = [
     text: 'Ordered the Pink one for college. It\'s super cute and lightweight. Got so many compliments already! Will definitely buy more colors.',
     date: '1 week ago',
     verified: true,
-    hasPhoto: false,
-    photo: '',
+    hasPhoto: true,
+    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396784/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/2_happy_customer_rtiftm.png',
   },
   {
     id: 3,
@@ -126,8 +163,8 @@ const CUSTOMER_REVIEWS = [
     text: 'Good quality jute. The strap length is perfect for crossbody. Delivery was super fast. Highly recommend TheTidbit!',
     date: '2 weeks ago',
     verified: true,
-    hasPhoto: false,
-    photo: '',
+    hasPhoto: true,
+    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396786/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/3-_happy_customer_qnlt00.png',
   },
   {
     id: 4,
@@ -138,11 +175,20 @@ const CUSTOMER_REVIEWS = [
     date: '3 weeks ago',
     verified: true,
     hasPhoto: true,
-    photo: ALL_PRODUCTS[1]?.colors[0]?.images[0] || '',
+    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396784/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/4_happy_customer_cwlwg2.png',
   },
 ];
 
 const HERO_SLIDE_INTERVAL = 6000;
+
+// Founder / Our Story — replace with your details and image URL
+const FOUNDER = {
+  name: 'Our Founder',
+  image:
+    'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394105/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer1_n3htyo.png',
+  // Optional: short quote to show under the image or in the section
+  quote: 'Sustainable style that doesn\'t cost the earth.',
+};
 
 const HomePage: React.FC = () => {
   const [offerPhone, setOfferPhone] = useState('');
@@ -642,6 +688,106 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ============================================ */}
+      {/* SHOP BY CATEGORY — one section per category   */}
+      {/* ============================================ */}
+      {PRODUCT_CATEGORIES.map((cat) => {
+        const displayItems = getCategoryDisplayItems(cat.slug);
+        if (displayItems.length === 0) return null;
+        return (
+          <section
+            key={cat.id}
+            id={`category-${cat.slug}`}
+            className="py-14 sm:py-20 bg-white dark:bg-stone-900"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8 sm:mb-10">
+                <div>
+                  <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 dark:text-stone-100">
+                    {cat.name}
+                  </h2>
+                  <p className="text-sm sm:text-base text-stone-500 dark:text-stone-400 mt-1">
+                    Handmade jute bags in this style — {displayItems.length} options
+                  </p>
+                </div>
+                <Link
+                  to={`/products?category=${cat.slug}`}
+                  className="inline-flex items-center gap-2 text-brand-green dark:text-brand-green/80 font-semibold text-sm hover:underline"
+                >
+                  View all in {cat.name}
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 sm:gap-5">
+                {displayItems.map(({ product, colorIndex }) => {
+                  const color = product.colors[colorIndex];
+                  const primaryImage = color?.images[0] || color?.images[1] || product.colors[0]?.images[0] || '';
+                  const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
+                  const lowStock = LOW_STOCK_MAP[product.id];
+                  const colorName = color?.name ?? '';
+                  const itemKey = `${product.id}-${colorIndex}`;
+                  const productUrl = color?.id ? `/products/${product.id}?color=${encodeURIComponent(color.id)}` : `/products/${product.id}`;
+                  return (
+                    <Link
+                      key={itemKey}
+                      to={productUrl}
+                      className="group block bg-stone-50 dark:bg-stone-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300 border border-stone-100 dark:border-stone-700"
+                    >
+                      <div className="relative aspect-square overflow-hidden bg-stone-100 dark:bg-stone-900">
+                        <img
+                          src={cloudinaryTransform(primaryImage, { w: 600 })}
+                          alt={colorName ? `${product.name} — ${colorName}` : product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        {discount > 0 && (
+                          <div className="absolute top-2 left-2 bg-red-600 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full shadow-md">
+                            {discount}% OFF
+                          </div>
+                        )}
+                        {colorName && (
+                          <div className="absolute top-2 right-2 bg-white/90 dark:bg-stone-800/90 backdrop-blur-sm text-stone-800 dark:text-stone-200 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full">
+                            {colorName}
+                          </div>
+                        )}
+                        {lowStock != null && lowStock <= 12 && (
+                          <div className="absolute bottom-2 left-2 bg-red-50 dark:bg-red-950/70 text-red-700 dark:text-red-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-200 dark:border-red-800">
+                            Only {lowStock} Left
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-3 sm:p-4">
+                        <h3 className="font-serif text-sm sm:text-base font-bold text-stone-900 dark:text-stone-100 line-clamp-2 group-hover:text-brand-green dark:group-hover:text-brand-green/80 transition-colors leading-snug">
+                          {product.name}
+                        </h3>
+                        {colorName && (
+                          <p className="text-[11px] sm:text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+                            {colorName}
+                          </p>
+                        )}
+                        <div className="flex items-baseline gap-1.5 mt-1.5 mb-2">
+                          <span className="text-base sm:text-lg font-serif font-bold text-stone-900 dark:text-stone-100">
+                            ₹{product.price}
+                          </span>
+                          {product.mrp > product.price && (
+                            <span className="text-xs text-stone-400 line-through">₹{product.mrp}</span>
+                          )}
+                        </div>
+                        <div className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5">
+                          <ShoppingBag size={14} />
+                          View Details
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* ============================================ */}
       {/* 3. WHY CHOOSE THETIDBIT SECTION              */}
       {/* ============================================ */}
       <section className="py-14 sm:py-20 bg-white dark:bg-stone-900">
@@ -673,6 +819,63 @@ const HomePage: React.FC = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* OUR STORY — Founder & How It Started          */}
+      {/* ============================================ */}
+      <section id="our-story" className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Founder image */}
+            <div className="relative order-2 lg:order-1">
+              <div className="aspect-[4/5] max-h-[560px] rounded-2xl overflow-hidden bg-stone-200 dark:bg-stone-800 shadow-xl">
+                <img
+                  src={cloudinaryTransform(
+                    'https://res.cloudinary.com/thetidbit23024/image/upload/v1771402371/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/ChatGPT_Image_Feb_18_2026_01_41_42_PM_vqjxsc.png',
+                    { w: 600, h: 750, c: 'fill', q: 'auto:good' }
+                  )}
+                  alt="Founder of TheTidbit — sustainable jute bags for everyday women"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="absolute -bottom-3 -right-3 w-24 h-24 sm:w-28 sm:h-28 rounded-2xl border-4 border-white dark:border-stone-800 shadow-lg bg-emerald-100 dark:bg-emerald-950/50 flex items-center justify-center">
+                <Leaf size={40} className="text-emerald-600 dark:text-emerald-400 sm:w-12 sm:h-12" />
+              </div>
+            </div>
+
+            {/* Story content */}
+            <div className="order-1 lg:order-2">
+              <div className="inline-flex items-center gap-2 bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 px-4 py-2 rounded-full mb-5 text-sm font-semibold">
+                Our Story
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-4">
+                How TheTidbit <span className="text-brand-green dark:text-brand-green/80">Started</span>
+              </h2>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
+                TheTidbit began with a simple idea: what if everyday women could carry bags that were stylish, affordable, and kind to the planet? We wanted to move away from fast fashion and plastic — and bring back the warmth of handmade, natural jute.
+              </p>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 leading-relaxed mb-4">
+                We partnered with skilled artisans across India to create bags designed for real life — office, college, travel, and gifting. Every piece is made with care, using sustainable jute that’s durable, breathable, and 100% biodegradable.
+              </p>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 leading-relaxed mb-6">
+                Today, we’re proud to be part of the daily style of thousands of women. Our mission stays the same: sustainable style that doesn’t cost the earth — or your wallet.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <span className="inline-flex items-center gap-1.5 bg-white dark:bg-stone-800 px-4 py-2 rounded-full text-sm font-semibold text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700">
+                  <Leaf size={16} className="text-emerald-500" />
+                  Handmade in India
+                </span>
+                <span className="inline-flex items-center gap-1.5 bg-white dark:bg-stone-800 px-4 py-2 rounded-full text-sm font-semibold text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700">
+                  <Heart size={16} className="text-rose-500" />
+                  For Everyday Women
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -833,6 +1036,11 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* ============================================ */}
+      {/* SHOP ON AMAZON, FLIPKART & MEESHO — trust    */}
+      {/* ============================================ */}
+      <MarketplaceLinks />
 
       {/* ============================================ */}
       {/* 6. FIRST ORDER OFFER SECTION                 */}

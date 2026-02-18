@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles } from 'lucide-react';
 import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
@@ -9,10 +10,13 @@ interface HeroProps {
   product?: ProductDetails;
   appliedCoupon: string | null;
   setAppliedCoupon: (code: string | null) => void;
+  /** Optional color id from URL (?color=) so link opens with this color selected; shareable. */
+  initialColorId?: string | null;
 }
 
-const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setAppliedCoupon }) => {
+const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setAppliedCoupon, initialColorId }) => {
   const { openSlingTry } = useSlingTry();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [couponInput, setCouponInput] = useState('');
@@ -45,10 +49,18 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
     return colors;
   }, [product.colors]);
 
+  // Sync selected color when product or URL color changes: prefer ?color= if valid
   useEffect(() => {
-    setSelectedColor(orderedColors[0]);
     setActiveImageIndex(0);
-  }, [product.id, orderedColors]);
+    if (initialColorId) {
+      const byId = product.colors.find((c) => c.id === initialColorId);
+      if (byId) {
+        setSelectedColor(byId);
+        return;
+      }
+    }
+    setSelectedColor(orderedColors[0]);
+  }, [product.id, orderedColors, initialColorId]);
 
   // Calculate prices
   const getDiscountMultiplier = (coupon: string | null): number => {
@@ -399,7 +411,14 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
                 {orderedColors.map((color) => (
                   <button
                     key={color.name}
-                    onClick={() => setSelectedColor(color)}
+                    onClick={() => {
+                      setSelectedColor(color);
+                      setSearchParams((prev) => {
+                        const next = new URLSearchParams(prev);
+                        next.set('color', color.id);
+                        return next;
+                      }, { replace: true });
+                    }}
                     className="flex flex-col items-center gap-2 focus:outline-none group"
                     aria-label={`Select colour: ${color.name}`}
                     title={color.name}

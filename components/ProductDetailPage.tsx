@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import Hero from './Hero';
 import Features from './Features';
 import ColorPalette from './ColorPalette';
@@ -17,7 +17,11 @@ import { PRODUCT, ALL_PRODUCTS, LOGO_URL } from '../constants';
 
 const ProductDetailPage: React.FC = () => {
   const { productId } = useParams<{ productId: string }>();
+  const [searchParams] = useSearchParams();
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+
+  // Optional color from URL: ?color=<colorId> so links can open with that color selected (shareable)
+  const initialColorId = searchParams.get('color');
 
   // Find product by ID, fallback to main PRODUCT
   const currentProduct = productId 
@@ -153,7 +157,7 @@ const ProductDetailPage: React.FC = () => {
         image={currentProduct.colors[0].images[0]}
         schema={[productSchema, breadcrumbSchema, faqSchema]}
       />
-      <Hero product={currentProduct} appliedCoupon={appliedCoupon} setAppliedCoupon={setAppliedCoupon} />
+      <Hero product={currentProduct} appliedCoupon={appliedCoupon} setAppliedCoupon={setAppliedCoupon} initialColorId={initialColorId} />
       <Reveal delayMs={0}><Features /></Reveal>
       <Reveal delayMs={80}><ColorPalette product={currentProduct} /></Reveal>
       <Reveal delayMs={120}><ProductDetails product={currentProduct} /></Reveal>
