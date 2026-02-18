@@ -18,7 +18,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import SEO from './SEO';
-import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS } from '../constants';
+import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
@@ -378,40 +378,50 @@ const HomePage: React.FC = () => {
             </div>
           </div>
 
-          {/* Mobile category quick-links (like Zouk's category strip) */}
-          <div className="bg-white dark:bg-stone-900 px-4 py-4 border-b border-stone-100 dark:border-stone-800">
-            <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-hide">
+          {/* Mobile category quick-links — use CATEGORY_CARD_IMAGES for consistent category card images */}
+          <div className="bg-white dark:bg-stone-900 px-3 py-3 border-b border-stone-100 dark:border-stone-800">
+            <div className="grid grid-cols-5 gap-1">
               {BEST_SELLERS.map((p) => {
-                const thumb = p.colors[0]?.images[1] || p.colors[0]?.images[0] || '';
+                const cardImage =
+                  CATEGORY_CARD_IMAGES[p.id] ||
+                  (() => {
+                    const preferredColor = p.colors.find((c) => c.id === 'yellow-mate');
+                    const colorForThumb = preferredColor || p.colors[0];
+                    return colorForThumb?.images[1] || colorForThumb?.images[0] || '';
+                  })();
+                const thumb = cardImage;
+                const displayName = p.name
+                  .replace('Handmade Jute ', '')
+                  .replace('Embroidered ', '');
                 return (
                   <Link
                     key={p.id}
                     to={`/products/${p.id}`}
-                    className="flex-shrink-0 w-[72px] flex flex-col items-center gap-1.5 group"
+                    className="flex flex-col items-center gap-1 group"
                   >
-                    <div className="w-[64px] h-[64px] rounded-2xl overflow-hidden bg-stone-100 dark:bg-stone-800 border-2 border-stone-100 dark:border-stone-700 group-active:border-brand-green transition-colors shadow-sm">
+                    <div className="w-[56px] h-[56px] rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800 border border-stone-100 dark:border-stone-700 group-active:border-brand-green transition-colors shadow-sm">
                       <img
-                        src={cloudinaryTransform(thumb, { w: 160, h: 160, c: 'fill' })}
+                        src={cloudinaryTransform(thumb, { w: 128, h: 128, c: 'fill' })}
                         alt={p.name}
                         className="w-full h-full object-cover"
                         loading="eager"
                         decoding="async"
                       />
                     </div>
-                    <span className="text-[10px] font-semibold text-stone-700 dark:text-stone-300 text-center leading-tight line-clamp-2">
-                      {p.name.replace('Handmade Jute ', '').replace('Embroidered ', '')}
+                    <span className="text-[9px] font-semibold text-stone-600 dark:text-stone-300 text-center leading-tight line-clamp-1">
+                      {displayName}
                     </span>
                   </Link>
                 );
               })}
               <Link
                 to="/products"
-                className="flex-shrink-0 w-[72px] flex flex-col items-center gap-1.5"
+                className="flex flex-col items-center gap-1"
               >
-                <div className="w-[64px] h-[64px] rounded-2xl bg-stone-100 dark:bg-stone-800 border-2 border-stone-100 dark:border-stone-700 flex items-center justify-center shadow-sm">
-                  <ArrowRight size={20} className="text-stone-500 dark:text-stone-400" />
+                <div className="w-[56px] h-[56px] rounded-xl bg-stone-100 dark:bg-stone-800 border border-stone-100 dark:border-stone-700 flex items-center justify-center shadow-sm">
+                  <ArrowRight size={18} className="text-stone-500 dark:text-stone-400" />
                 </div>
-                <span className="text-[10px] font-semibold text-stone-700 dark:text-stone-300 text-center leading-tight">
+                <span className="text-[9px] font-semibold text-stone-600 dark:text-stone-300 text-center leading-tight">
                   View All
                 </span>
               </Link>

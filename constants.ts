@@ -50,7 +50,20 @@ export const PRODUCT_CATEGORIES = [
 export const CATEGORY_IMAGES: Record<string, string> = {
   "sling-bag": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472630/cata_xjhfve.png",
   "sling-bag-rounded": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472631/category-rounded-sling_fh4hyy.png",
-  "handbag": "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472622/ChatGPT_Image_Jan_15_2026_03_52_50_PM_zzhicn.png",
+  "handbag": "https://res.cloudinary.com/thetidbit23024/image/upload/f_auto,q_auto:good,w_900/v1768466459/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_bgmq1w.png",
+};
+
+// Dedicated images for the 4 category cards on homepage (Round Sling, Classic Sling, Woven Sling, Handbags)
+// Keyed by product id so the same image is always used for each category card.
+export const CATEGORY_CARD_IMAGES: Record<string, string> = {
+  "jute-round-sling-001":
+    "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472631/category-rounded-sling_fh4hyy.png",
+  "jute-sling-bag-001":
+    "https://res.cloudinary.com/thetidbit23024/image/upload/v1768472630/cata_xjhfve.png",
+  "jute-sling-bag-002":
+    "https://res.cloudinary.com/thetidbit23024/image/upload/v1768468609/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_gvozcu.png",
+  "jute-handbag-001":
+    "https://res.cloudinary.com/thetidbit23024/image/upload/f_auto,q_auto:good,w_900/v1768466459/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_bgmq1w.png",
 };
 
 // GOOGLE ANALYTICS ID - Replace this with your actual Measurement ID (starts with G-)
