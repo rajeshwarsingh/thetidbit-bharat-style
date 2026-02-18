@@ -16,6 +16,7 @@ import {
   Heart,
   Camera,
   CheckCircle2,
+  Gift,
 } from 'lucide-react';
 import SEO from './SEO';
 import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES, MARKETPLACE_LINKS } from '../constants';
@@ -152,6 +153,29 @@ const WHY_CHOOSE_ITEMS = [
   },
 ];
 
+const EVERYDAY_LIFE_BLOCKS = [
+  {
+    icon: Briefcase,
+    title: 'Smart for Office',
+    description: 'Carries your essentials without looking bulky.',
+  },
+  {
+    icon: ShoppingBag,
+    title: 'Perfect for Shopping',
+    description: 'Lightweight and easy to carry all day.',
+  },
+  {
+    icon: Gift,
+    title: 'Ideal for Gifting',
+    description: 'Safe, elegant and meaningful.',
+  },
+  {
+    icon: Feather,
+    title: 'Everyday Lightweight Companion',
+    description: 'Designed for real daily use.',
+  },
+];
+
 const LIFESTYLE_TESTIMONIALS = [
   {
     image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394105/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer1_n3htyo.png',
@@ -172,6 +196,24 @@ const LIFESTYLE_TESTIMONIALS = [
     image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394374/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer4_tinjfu.png',
     quote: '"Gifted this to my sister. She absolutely loved it!"',
     name: 'Prachi S., Pune',
+  },
+];
+
+const INDIA_TESTIMONIAL_CARDS = [
+  {
+    id: 'neha-pune',
+    text: 'Lightweight and perfect for daily use.',
+    author: 'Neha, Pune',
+  },
+  {
+    id: 'ritu-delhi',
+    text: 'Got it as a gift and she loved it!',
+    author: 'Ritu, Delhi',
+  },
+  {
+    id: 'sneha-mumbai',
+    text: 'Looks simple but very classy.',
+    author: 'Sneha, Mumbai',
   },
 ];
 
@@ -597,6 +639,8 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      
+
       {/* ——— Product usage / lifestyle (3 cards) ——— */}
       <section className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950" aria-labelledby="usage-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1004,6 +1048,44 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ============================================ */}
+      {/* MADE FOR YOUR EVERYDAY LIFE                  */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100">
+              Made for Your Everyday Life
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {EVERYDAY_LIFE_BLOCKS.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="flex gap-4 p-4 sm:p-5 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-100 dark:border-stone-700/80"
+                >
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-600 flex items-center justify-center">
+                    <Icon size={20} className="text-stone-600 dark:text-stone-400" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-stone-900 dark:text-stone-100 text-sm sm:text-base mb-1 flex items-center gap-1.5">
+                      <CheckCircle2 size={14} className="flex-shrink-0 text-emerald-500" />
+                      {item.title}
+                    </p>
+                    <p className="text-sm text-stone-600 dark:text-stone-400 leading-snug">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
       {/* OUR STORY — Founder & How It Started          */}
       {/* ============================================ */}
       <section id="our-story" className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
@@ -1109,7 +1191,38 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ============================================ */}
-      {/* 5. CUSTOMER REVIEWS SECTION                  */}
+      {/* 5. QUICK TESTIMONIALS                        */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-18 bg-[#fdfaf6] dark:bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+              Loved by Women Across India ❤️
+            </h2>
+            <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400">
+              Simple, real feedback from everyday customers
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+            {INDIA_TESTIMONIAL_CARDS.map((item) => (
+              <article
+                key={item.id}
+                className="rounded-2xl bg-white/90 dark:bg-stone-800 border border-stone-200/80 dark:border-stone-700 p-5 sm:p-6 shadow-sm"
+              >
+                <p className="text-sm font-semibold text-amber-500 mb-3">⭐️⭐️⭐️⭐️⭐️</p>
+                <p className="text-base text-stone-800 dark:text-stone-200 leading-relaxed mb-4">
+                  "{item.text}"
+                </p>
+                <p className="text-sm font-medium text-stone-600 dark:text-stone-400">— {item.author}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
+      {/* 6. CUSTOMER REVIEWS SECTION                  */}
       {/* ============================================ */}
       <section id="reviews" className="py-14 sm:py-20 bg-white dark:bg-stone-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

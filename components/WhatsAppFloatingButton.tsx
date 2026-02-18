@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import React from 'react';
 import { WHATSAPP_NUMBER } from '../constants';
 
 const PREFILLED_MESSAGE = "Hi TheTidbit! I'm browsing your jute bag collection and would love some help.";
+
+const HOVER_LABEL = 'Need help? Chat with us';
 
 const WhatsAppIcon: React.FC<{ size?: number }> = ({ size = 22 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -11,24 +12,6 @@ const WhatsAppIcon: React.FC<{ size?: number }> = ({ size = 22 }) => (
 );
 
 const WhatsAppFloatingButton: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (!isVisible) return;
-    const tooltipTimer = setTimeout(() => setShowTooltip(true), 6000);
-    const hideTimer = setTimeout(() => setShowTooltip(false), 12000);
-    return () => {
-      clearTimeout(tooltipTimer);
-      clearTimeout(hideTimer);
-    };
-  }, [isVisible]);
-
   const handleClick = () => {
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(PREFILLED_MESSAGE)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -37,26 +20,24 @@ const WhatsAppFloatingButton: React.FC = () => {
     }
   };
 
-  if (!isVisible) return null;
-
   return (
-    <div className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-50 flex items-end gap-3">
-      {showTooltip && (
-        <div className="animate-fade-in hidden sm:flex items-center bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-200 text-sm font-medium px-4 py-2.5 rounded-xl shadow-xl border border-stone-200 dark:border-stone-700 max-w-[200px]">
-          <span>Need help? Chat with us!</span>
-          <button
-            onClick={() => setShowTooltip(false)}
-            className="ml-2 text-stone-400 hover:text-stone-600 dark:hover:text-stone-300"
-            aria-label="Close tooltip"
-          >
-            <X size={14} />
-          </button>
-        </div>
-      )}
+    <div
+      className="fixed bottom-6 right-4 sm:bottom-8 sm:right-6 z-50 flex flex-col items-end gap-2 group"
+      role="group"
+    >
+      {/* Label: always visible on mobile, on hover on desktop */}
+      <span
+        className="inline-block px-3 py-1.5 rounded-lg bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-200 text-xs font-medium shadow-lg border border-stone-200 dark:border-stone-700 whitespace-nowrap opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+        aria-hidden
+      >
+        {HOVER_LABEL}
+      </span>
       <button
+        type="button"
         onClick={handleClick}
-        className="group bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 p-3 sm:p-3.5"
+        className="bg-[#25D366] hover:bg-[#20BD5A] text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 p-3 sm:p-3.5"
         aria-label="Chat with us on WhatsApp"
+        title={HOVER_LABEL}
       >
         <WhatsAppIcon size={24} />
       </button>
