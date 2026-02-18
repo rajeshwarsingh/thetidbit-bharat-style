@@ -162,7 +162,7 @@ const FLATLAY_ORANGE = "https://res.cloudinary.com/thetidbit23024/image/upload/v
 export const PRODUCT: ProductDetails = {
   id: "jute-round-sling-001",
   brand: "TheTidbit",
-  name: "Handmade Jute Embroidered Round Sling Bag",
+  name: "Handmade Jute Embroidered Round Sling",
   tagline: "Eco-Friendly • Artistic • Boho-Inspired Crossbody Bag",
   price: 499,
   mrp: 1199,
@@ -270,7 +270,7 @@ export const PRODUCT: ProductDetails = {
 export const SLING_BAG_PRODUCT_1: ProductDetails = {
   id: "jute-sling-bag-001",
   brand: "TheTidbit",
-  name: "Handmade Jute Classic Sling Bag",
+  name: "Handmade Jute Classic Sling",
   tagline: "Eco-Friendly • Handmade • Classic Crossbody Bag",
   price: 599,
   mrp: 1199,
@@ -380,7 +380,7 @@ export const SLING_BAG_PRODUCT_1: ProductDetails = {
 export const SLING_BAG_PRODUCT_2: ProductDetails = {
   id: "jute-sling-bag-002",
   brand: "TheTidbit",
-  name: "Handmade Jute Woven Sling Bag",
+  name: "Handmade Jute Woven Sling",
   tagline: "Eco-Friendly • Handmade • Woven Design Crossbody Bag",
   price: 649,
   mrp: 1299,
@@ -438,7 +438,7 @@ export const SLING_BAG_PRODUCT_2: ProductDetails = {
 export const HANDBAG_PRODUCT: ProductDetails = {
   id: "jute-handbag-001",
   brand: "TheTidbit",
-  name: "Handmade Jute Handbag with Fringe Design",
+  name: "Handmade Jute Handbags",
   tagline: "Eco-Friendly • Handmade • Stylish Shoulder Bag",
   price: 799,
   mrp: 1299,

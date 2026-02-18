@@ -27,6 +27,7 @@ import MobileShopCTA from './MobileShopCTA';
 const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || '';
 const HERO_IMAGES_MOBILE = [
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771389271/thetidbit-homepage-hero/mobile_banner1_oavmhg.png',
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771359882/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_54_19_AM_sctriv.png',
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1771360272/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_02_00_53_AM_rshrqh.png',
 ];
@@ -141,7 +142,7 @@ const CUSTOMER_REVIEWS = [
   },
 ];
 
-const HERO_SLIDE_INTERVAL = 4000;
+const HERO_SLIDE_INTERVAL = 6000;
 
 const HomePage: React.FC = () => {
   const [offerPhone, setOfferPhone] = useState('');
@@ -352,21 +353,27 @@ const HomePage: React.FC = () => {
               ))}
             </div>
 
-            {/* Minimal overlay CTA at bottom of image */}
-            <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-16 bg-gradient-to-t from-black/60 to-transparent z-10">
-              <h1 className="font-serif text-[22px] font-bold text-white leading-tight mb-1">
-                Sustainable Style for{' '}
-                <span className="text-emerald-300">Everyday Women</span>
+            {/* Overlay CTA — emotional, usage-driven */}
+            <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10">
+              <h1 className="font-serif text-[22px] font-bold text-white leading-tight mb-1.5">
+                Made for Your{' '}
+                <span className="text-emerald-300">Daily Life</span>
               </h1>
-              <p className="text-[13px] text-white/80 mb-3.5">
-                Handmade Jute Bags — Starting at <span className="font-bold text-white">₹499</span>
+              <p className="text-[13px] text-white/70 tracking-wide mb-2">
+                Office &nbsp;•&nbsp; College &nbsp;•&nbsp; Daily Outings &nbsp;•&nbsp; Gifting
+              </p>
+              <p className="text-[17px] font-bold text-white mb-1.5">
+                Starting at <span className="text-emerald-300">₹499</span>
+              </p>
+              <p className="text-[11px] text-white/60 mb-3.5 tracking-wide">
+                Handmade Pieces &nbsp;•&nbsp; Limited Availability
               </p>
               <Link
                 to="/products"
                 className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-3 rounded-xl font-bold text-sm shadow-lg active:scale-[0.98] transition-transform"
               >
                 <ShoppingBag size={16} />
-                Shop Now
+                Find Your Everyday Bag
               </Link>
             </div>
           </div>
@@ -415,16 +422,59 @@ const HomePage: React.FC = () => {
           <div className="bg-stone-50 dark:bg-stone-950 px-4 py-2.5 flex justify-between text-[11px] text-stone-600 dark:text-stone-400 font-semibold border-b border-stone-100 dark:border-stone-800">
             <span className="flex items-center gap-1">
               <CheckCircle2 size={12} className="text-emerald-500" />
-              COD Available
+              100% Plastic-Free
             </span>
             <span className="flex items-center gap-1">
-              <Truck size={12} className="text-emerald-500" />
-              Free Shipping
+              <CheckCircle2 size={12} className="text-emerald-500" />
+              COD Available
             </span>
             <span className="flex items-center gap-1">
               <RefreshCcw size={12} className="text-emerald-500" />
               Easy Returns
             </span>
+          </div>
+
+          {/* Emotional section */}
+          <div className="bg-white dark:bg-stone-900 px-5 py-6 text-center border-b border-stone-100 dark:border-stone-800">
+            <h2 className="font-serif text-lg font-bold text-stone-900 dark:text-stone-100 mb-2">
+              Carry Confidence. Carry Comfort.
+            </h2>
+            <p className="text-[13px] text-stone-500 dark:text-stone-400 leading-relaxed max-w-xs mx-auto">
+              Not just a bag —<br />
+              a simple everyday companion for women who move, work, travel, and live fully.
+            </p>
+          </div>
+
+          {/* Use-case section */}
+          <div className="bg-stone-50 dark:bg-stone-950 px-5 py-5 border-b border-stone-100 dark:border-stone-800">
+            <h3 className="text-sm font-bold text-stone-800 dark:text-stone-200 text-center mb-3">
+              One Bag. Every Day.
+            </h3>
+            <div className="grid grid-cols-2 gap-2">
+              {['Office Ready', 'College Friendly', 'Travel Light', 'Perfect for Gifting'].map((item) => (
+                <div key={item} className="flex items-center gap-2 bg-white dark:bg-stone-800 rounded-lg px-3 py-2.5 border border-stone-100 dark:border-stone-700">
+                  <CheckCircle2 size={14} className="text-emerald-500 flex-shrink-0" />
+                  <span className="text-[12px] font-semibold text-stone-700 dark:text-stone-300">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Brand authenticity strip */}
+          <div className="bg-white dark:bg-stone-900 px-5 py-5 text-center border-b border-stone-100 dark:border-stone-800">
+            <p className="text-[11px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1.5">
+              Proudly Handmade in India
+            </p>
+            <p className="text-[12px] text-stone-500 dark:text-stone-400 leading-relaxed max-w-xs mx-auto">
+              Crafted by skilled artisans using sustainable jute — bringing together simplicity, durability, and everyday beauty.
+            </p>
+          </div>
+
+          {/* Micro urgency strip */}
+          <div className="bg-amber-50 dark:bg-amber-950/30 px-4 py-2.5 text-center border-b border-amber-100 dark:border-amber-900/50">
+            <p className="text-[11px] font-bold text-amber-700 dark:text-amber-400 tracking-wide">
+              Limited Handmade Stock Available
+            </p>
           </div>
         </div>
       </section>

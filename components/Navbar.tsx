@@ -74,9 +74,9 @@ const Navbar: React.FC = () => {
       {/* Header Container - Wraps both trust bar and nav */}
       <div className="sticky top-0 z-40">
         {/* Trust bar */}
-        <div className="hidden sm:block bg-stone-900 dark:bg-stone-950 text-white dark:text-stone-200 transition-colors duration-300">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-            <div className="flex items-center justify-center gap-3 text-[12px] font-semibold tracking-wide">
+        <div className="bg-stone-900 dark:bg-stone-950 text-white dark:text-stone-200 transition-colors duration-300">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] font-semibold tracking-wide">
               <span>Free Delivery</span>
               <span className="opacity-40">•</span>
               <span>100% Genuine Brand</span>
@@ -247,8 +247,8 @@ const Navbar: React.FC = () => {
           className="bs-snow-banner"
           style={{
             ['--bannerHeight' as any]: `${HEADER_BADGE.festive.bannerHeightPx ?? 260}px`,
-            // Mobile: navbar starts at 0, so snow starts after 64px navbar height
-            ['--snowTop' as any]: '64px',
+            // Mobile: trust bar (~28px) + navbar (64px)
+            ['--snowTop' as any]: '92px',
             // Desktop: trust bar (36px) + navbar (64px)
             ['--snowTopSm' as any]: '100px',
           }}
