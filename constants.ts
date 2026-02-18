@@ -251,7 +251,7 @@ export const PRODUCT: ProductDetails = {
       hex: "#3B82F6", 
       id: "floral-blue",
       images: [
-        "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778712/pyv0zxbxcuszdapgf4ey.png",
+        "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431056/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded%20product%20blue.png",
         "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778712/pyv0zxbxcuszdapgf4ey.png",
         "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778712/pyv0zxbxcuszdapgf4ey.png"
       ]
@@ -261,9 +261,9 @@ export const PRODUCT: ProductDetails = {
       hex: "#EC4899", 
       id: "floral-pink",
       images: [
-        "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png",
-        "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png",
-        "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png"
+        "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png",
+        "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png",
+        "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png"
       ]
     },
   ]
@@ -307,22 +307,23 @@ export const SLING_BAG_PRODUCT_1: ProductDetails = {
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768462296/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/33_zbn3eq.png"
     ]},
     { name: "Floral Pink", hex: "#EC4899", id: "floral-pink", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750778627/b1vtev1ex41w4mmfha0o.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771431034/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_product1_v7uhyr.png"
     ]},
     { name: "Black Wave", hex: "#000000", id: "black-wave", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434176/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/black_sling_vsegau.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461969/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/85_az8kpf.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768462377/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/86_nujzuo.png"
     ]},
     { name: "Blue Wave", hex: "#3B82F6", id: "blue-wave", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466367/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/87_qs5ruc.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434177/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/blue_sling_tjsiit.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466380/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/88_fc1jmw.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466378/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/89_gscvjx.png"
     ]},
     { name: "Yellow Mate", hex: "#FBBF24", id: "yellow-mate", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466638/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/1_guluev.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434321/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/yellow_sling_nfvr4i.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466638/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/2_vo9hj6.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466649/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_kdxlcp.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466638/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/6_vsir1o.png"
@@ -464,7 +465,7 @@ export const HANDBAG_PRODUCT: ProductDetails = {
   ],
   colors: [
     { name: "Black Check", hex: "#000000", id: "black-check", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466459/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/2_nmswop.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771435736/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/black_handbag_lfzw5c.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466459/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/1_qgh08y.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466459/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_bgmq1w.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461911/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/60_gxcxwa.png"

@@ -27,11 +27,16 @@ import MarketplaceLinks from './MarketplaceLinks';
 
 const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || '';
 const HERO_IMAGES_MOBILE = [
-  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png',
-  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771389271/thetidbit-homepage-hero/mobile_banner1_oavmhg.png',
-  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771427669/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/ChatGPT_Image_Feb_18_2026_08_43_52_PM_dhtwzg.png',
-  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771359882/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_54_19_AM_sctriv.png',
-  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771360272/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_02_00_53_AM_rshrqh.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771433167/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/mobile/mobile-hero-1_bvml1j.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771433168/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/mobile/mobile-hero-2_buovfd.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771433169/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/mobile/mobile-hero-3_e3aypr.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771433171/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/mobile/mobile-hero-4_uwnrvc.png',
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1771433169/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/mobile/mobile-hero-5_ycnxry.png',
+  // 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png',
+  // 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771389271/thetidbit-homepage-hero/mobile_banner1_oavmhg.png',
+  // 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771427669/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/ChatGPT_Image_Feb_18_2026_08_43_52_PM_dhtwzg.png',
+  // 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771359882/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_54_19_AM_sctriv.png',
+  // 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771360272/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_02_00_53_AM_rshrqh.png',
 ];
 
 const BEST_SELLERS = ALL_PRODUCTS.slice(0, 4);
@@ -87,7 +92,27 @@ const getCategoryDisplayItems = (categorySlug: string): CategoryDisplayItem[] =>
 
   for (const p of products) {
     if (!p.colors?.length) continue;
-    for (let c = 0; c < p.colors.length && items.length < targetMax; c++) {
+    const defaultColorOrder = p.colors.map((_, idx) => idx);
+    const colorOrder =
+      categorySlug === 'sling-bag' && p.id === 'jute-sling-bag-001'
+        ? (() => {
+            const blockedColorIds = new Set(['mikey-pink', 'mikey-purple']);
+            const allowedColorOrder = defaultColorOrder.filter(
+              (idx) => !blockedColorIds.has(p.colors[idx]?.id || '')
+            );
+            const preferredIndex = allowedColorOrder.find(
+              (idx) => p.colors[idx]?.id === 'yellow-mate'
+            );
+            if (preferredIndex == null) return allowedColorOrder;
+            return [
+              preferredIndex,
+              ...allowedColorOrder.filter((idx) => idx !== preferredIndex),
+            ];
+          })()
+        : defaultColorOrder;
+
+    for (const c of colorOrder) {
+      if (items.length >= targetMax) break;
       items.push({ product: p, colorIndex: c });
     }
     if (items.length >= targetMax) break;
@@ -198,6 +223,11 @@ const CUSTOMER_REVIEWS = [
 ];
 
 const HERO_SLIDE_INTERVAL = 6000;
+const HERO_VALUE_POINTS = [
+  'Starting at ₹499',
+  'Handmade in India',
+  'COD + Easy Returns',
+];
 
 // Founder / Our Story — replace with your details and image URL
 const FOUNDER = {
@@ -313,13 +343,27 @@ const HomePage: React.FC = () => {
                 </div>
 
                 <h1 className="font-serif text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-[1.1] mb-5">
-                  Sustainable Style for{' '}
-                  <span className="text-emerald-300">Everyday Women</span>
+                  Carry Better. Look Better.
                 </h1>
 
-                <p className="text-lg lg:text-xl text-white/90 leading-relaxed mb-8 max-w-lg">
-                  Handmade Jute Bags That Are Stylish, Affordable & Earth-Friendly
+                <p className="text-lg lg:text-xl text-white/90 leading-relaxed mb-4 max-w-xl">
+                  Handcrafted jute bags for office, college, gifting, and everyday life - made for women who choose mindful style.
                 </p>
+
+                <p className="text-sm lg:text-base text-emerald-200/95 font-semibold mb-7">
+                  Trusted by 1000+ women across India
+                </p>
+
+                <div className="flex flex-wrap gap-2.5 mb-8">
+                  {HERO_VALUE_POINTS.map((point) => (
+                    <span
+                      key={point}
+                      className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
 
                 <div className="flex flex-wrap gap-4 mb-8">
                   <Link
@@ -327,7 +371,7 @@ const HomePage: React.FC = () => {
                     className="inline-flex items-center gap-2.5 bg-white text-stone-900 px-7 py-3.5 rounded-xl font-bold text-base hover:bg-stone-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <ShoppingBag size={18} />
-                    Shop Now
+                    Shop Bestsellers
                   </Link>
                   <a
                     href="#best-sellers"
@@ -337,7 +381,7 @@ const HomePage: React.FC = () => {
                     }}
                     className="inline-flex items-center gap-2.5 bg-white/10 backdrop-blur-sm border-2 border-white/40 text-white px-7 py-3.5 rounded-xl font-bold text-base hover:bg-white/20 transition-all"
                   >
-                    Best Sellers
+                    Explore Styles
                     <ArrowRight size={16} />
                   </a>
                 </div>
@@ -420,8 +464,8 @@ const HomePage: React.FC = () => {
             {/* Overlay CTA — emotional, usage-driven */}
             <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10">
               <h1 className="font-serif text-[22px] font-bold text-white leading-tight mb-1.5">
-                Made for Your{' '}
-                <span className="text-emerald-300">Daily Life</span>
+                Everyday Bags for{' '}
+                <span className="text-emerald-300">Real Life</span>
               </h1>
               <p className="text-[13px] text-white/70 tracking-wide mb-2">
                 Office &nbsp;•&nbsp; College &nbsp;•&nbsp; Daily Outings &nbsp;•&nbsp; Gifting
@@ -437,7 +481,7 @@ const HomePage: React.FC = () => {
                 className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-3 rounded-xl font-bold text-sm shadow-lg active:scale-[0.98] transition-transform"
               >
                 <ShoppingBag size={16} />
-                Find Your Everyday Bag
+                Shop Bestsellers
               </Link>
             </div>
           </div>
@@ -496,11 +540,11 @@ const HomePage: React.FC = () => {
           <div className="bg-stone-50 dark:bg-stone-950 px-4 py-2.5 flex justify-between text-[11px] text-stone-600 dark:text-stone-400 font-semibold border-b border-stone-100 dark:border-stone-800">
             <span className="flex items-center gap-1">
               <CheckCircle2 size={12} className="text-emerald-500" />
-              100% Plastic-Free
+              Handmade in India
             </span>
             <span className="flex items-center gap-1">
-              <CheckCircle2 size={12} className="text-emerald-500" />
-              COD Available
+              <Truck size={12} className="text-emerald-500" />
+              Free Shipping ₹499+
             </span>
             <span className="flex items-center gap-1">
               <RefreshCcw size={12} className="text-emerald-500" />
@@ -558,17 +602,21 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-10">
             <h2 id="usage-heading" className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-2">
-              One Bag. Every Day.
+              Made for Your Real Day
             </h2>
             <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
-              Office, shopping, or gifting — one simple companion for how you live.
+              From weekday commutes to weekend outings - these are styles you will actually use on repeat.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {USAGE_CARDS.map(({ title, image }) => (
+            {USAGE_CARDS.map(({ title, image }, index) => (
               <div
                 key={title}
-                className="group flex flex-col bg-white dark:bg-stone-900 rounded-2xl overflow-hidden border border-stone-100 dark:border-stone-700 shadow-sm hover:shadow-lg dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300"
+                className={`group relative flex flex-col overflow-hidden border border-stone-200/90 dark:border-stone-700/80 bg-white dark:bg-stone-900 shadow-[0_14px_35px_-24px_rgba(15,23,42,0.55)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(15,23,42,0.7)] ${
+                  index % 2 === 0
+                    ? 'rounded-[28px] sm:rounded-[32px]'
+                    : 'rounded-[20px] sm:rounded-[24px]'
+                }`}
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-stone-100 dark:bg-stone-800">
                   <img
@@ -578,10 +626,12 @@ const HomePage: React.FC = () => {
                     loading="lazy"
                     decoding="async"
                   />
+                  <span className="absolute top-3 left-3 rounded-full bg-white/90 dark:bg-stone-900/85 backdrop-blur-sm px-2.5 py-1 text-[10px] sm:text-[11px] font-bold tracking-wide text-stone-700 dark:text-stone-200">
+                    DAILY USE
+                  </span>
                 </div>
-                <div className="h-px w-full bg-stone-200 dark:bg-stone-600 shrink-0" aria-hidden="true" />
-                <div className="h-14 sm:h-16 flex items-center justify-center bg-stone-800 dark:bg-stone-700 shrink-0">
-                  <p className="text-white font-medium text-base sm:text-lg text-center px-3">
+                <div className="h-14 sm:h-16 flex items-center justify-center bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 dark:from-stone-700 dark:via-stone-600 dark:to-stone-700 shrink-0">
+                  <p className="text-white font-semibold text-base sm:text-lg text-center px-3 tracking-wide">
                     {title}
                   </p>
                 </div>
@@ -624,7 +674,7 @@ const HomePage: React.FC = () => {
             <div className="px-4 sm:px-8 lg:px-10 py-7 sm:py-9">
               <div className="text-center mb-5 sm:mb-7">
                 <h3 className="font-serif text-[30px] sm:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight">
-                  Our Bestsellers
+                  Bestsellers Women Keep Reordering
                 </h3>
                 <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 mt-2">
                   Most-loved handmade picks for everyday Indian women.
@@ -691,28 +741,39 @@ const HomePage: React.FC = () => {
       {/* ============================================ */}
       {/* 2. BEST SELLERS SECTION                      */}
       {/* ============================================ */}
-      <section id="best-sellers" className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
+      <section id="best-sellers" className="py-14 sm:py-20 bg-gradient-to-b from-stone-50 to-stone-100/70 dark:from-stone-950 dark:to-stone-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 sm:mb-14">
+            <p className="inline-flex items-center gap-2 rounded-full border border-stone-200 dark:border-stone-700 bg-white/80 dark:bg-stone-800/70 px-4 py-1.5 text-xs sm:text-sm font-semibold text-stone-600 dark:text-stone-300 mb-4">
+              Trusted by 1000+ women across India
+            </p>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
-              Most Loved by Our Customers <span className="text-red-500">&#10084;&#65039;</span>
+              Bestselling Styles That Sell Fast <span className="text-red-500">&#10084;&#65039;</span>
             </h2>
             <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-              Handpicked best sellers — loved by 1000+ women across India
+              Handpicked designs with premium handcrafted detail, practical storage, and everyday comfort.
             </p>
           </div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {BEST_SELLERS.map((product) => {
-              const primaryImage = product.colors[0]?.images[0] || '';
+            {BEST_SELLERS.map((product, index) => {
+              const preferredColor =
+                index === 1
+                  ? product.colors.find((color) => color.id === 'yellow-mate') || product.colors[0]
+                  : product.colors[0];
+              const primaryImage = preferredColor?.images[0] || preferredColor?.images[1] || product.colors[0]?.images[0] || '';
+              const productUrl = preferredColor?.id
+                ? `/products/${product.id}?color=${encodeURIComponent(preferredColor.id)}`
+                : `/products/${product.id}`;
+              const displayName = index === 0 ? product.name.replace(/\bHandmade\s*/i, '') : product.name;
               const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
               const lowStock = LOW_STOCK_MAP[product.id];
 
               return (
                 <Link
                   key={product.id}
-                  to={`/products/${product.id}`}
-                  className="group block bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300 border border-stone-100 dark:border-stone-700"
+                  to={productUrl}
+                  className="group block bg-white dark:bg-stone-800 rounded-[26px] overflow-hidden shadow-[0_14px_34px_-24px_rgba(120,53,15,0.45)] dark:shadow-stone-900/50 hover:shadow-[0_26px_50px_-26px_rgba(120,53,15,0.55)] transition-all duration-300 border border-amber-100/80 dark:border-stone-700 hover:-translate-y-1"
                 >
                   {/* Image */}
                   <div className="relative aspect-square overflow-hidden bg-stone-100 dark:bg-stone-900">
@@ -746,9 +807,9 @@ const HomePage: React.FC = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-3 sm:p-4">
+                  <div className="p-3.5 sm:p-5">
                     <h3 className="font-serif text-sm sm:text-base font-bold text-stone-900 dark:text-stone-100 mb-1 line-clamp-2 group-hover:text-brand-green dark:group-hover:text-brand-green/80 transition-colors leading-snug">
-                      {product.name}
+                      {displayName}
                     </h3>
 
                     {/* Star Rating */}
@@ -773,25 +834,15 @@ const HomePage: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Color Swatches */}
-                    <div className="flex items-center gap-1 sm:gap-1.5 mb-3">
-                      {product.colors.slice(0, 4).map((color) => (
-                        <div
-                          key={color.id}
-                          className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-stone-200 dark:border-stone-600"
-                          style={{ backgroundColor: color.hex }}
-                          title={color.name}
-                        />
-                      ))}
-                      {product.colors.length > 4 && (
-                        <span className="text-[10px] sm:text-xs text-stone-500 dark:text-stone-400 font-medium">
-                          +{product.colors.length - 4}
-                        </span>
-                      )}
-                    </div>
+                    {/* Color note (cleaner than showing all swatches) */}
+                    <p className="mb-3 text-[11px] sm:text-xs text-stone-500 dark:text-stone-400 font-medium">
+                      {index === 1
+                        ? `Featured shade: ${preferredColor?.name || 'Yellow Mate'}`
+                        : `${product.colors.length}+ shades available`}
+                    </p>
 
                     {/* CTA */}
-                    <div className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2 sm:py-2.5 rounded-lg sm:rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 pointer-events-none">
+                    <div className="w-full border border-stone-900/15 dark:border-stone-100/20 bg-amber-50 dark:bg-stone-700 text-stone-900 dark:text-stone-100 py-2 sm:py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 pointer-events-none">
                       <ShoppingBag size={14} />
                       View Details
                     </div>
@@ -832,7 +883,7 @@ const HomePage: React.FC = () => {
                     {cat.name}
                   </h2>
                   <p className="text-sm sm:text-base text-stone-500 dark:text-stone-400 mt-1">
-                    Handmade jute bags in this style — {displayItems.length} options
+                    Find your fit in this collection - {displayItems.length} ready-to-ship options
                   </p>
                 </div>
                 <Link
@@ -856,7 +907,7 @@ const HomePage: React.FC = () => {
                     <Link
                       key={itemKey}
                       to={productUrl}
-                      className="group block bg-stone-50 dark:bg-stone-800/50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:shadow-stone-900/50 dark:hover:shadow-stone-900/70 transition-all duration-300 border border-stone-100 dark:border-stone-700"
+                      className="group block bg-white dark:bg-stone-800/60 rounded-[18px] overflow-hidden shadow-sm hover:shadow-lg dark:shadow-stone-900/40 dark:hover:shadow-stone-900/65 transition-all duration-300 border border-stone-200 dark:border-stone-700/80 hover:border-brand-green/30"
                     >
                       <div className="relative aspect-square overflow-hidden bg-stone-100 dark:bg-stone-900">
                         <img
@@ -882,7 +933,7 @@ const HomePage: React.FC = () => {
                           </div>
                         )}
                       </div>
-                      <div className="p-3 sm:p-4">
+                      <div className="p-3 sm:p-4 border-t border-dashed border-stone-200 dark:border-stone-700">
                         <h3 className="font-serif text-sm sm:text-base font-bold text-stone-900 dark:text-stone-100 line-clamp-2 group-hover:text-brand-green dark:group-hover:text-brand-green/80 transition-colors leading-snug">
                           {product.name}
                         </h3>
@@ -899,9 +950,9 @@ const HomePage: React.FC = () => {
                             <span className="text-xs text-stone-400 line-through">₹{product.mrp}</span>
                           )}
                         </div>
-                        <div className="w-full bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 py-2 rounded-lg font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5">
+                        <div className="w-full bg-stone-100 dark:bg-stone-700/80 text-stone-800 dark:text-stone-100 py-2 rounded-lg font-semibold text-xs sm:text-sm flex items-center justify-center gap-1.5">
                           <ShoppingBag size={14} />
-                          View Details
+                          Quick View
                         </div>
                       </div>
                     </Link>
@@ -923,7 +974,7 @@ const HomePage: React.FC = () => {
               Why Choose TheTidbit?
             </h2>
             <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
-              We believe sustainable fashion should be beautiful, practical, and accessible to every woman
+              Premium handmade quality, everyday practicality, and pricing that makes sustainable fashion easy to choose.
             </p>
           </div>
 
@@ -933,14 +984,17 @@ const HomePage: React.FC = () => {
               return (
                 <div
                   key={index}
-                  className="text-center p-6 sm:p-8 rounded-2xl bg-stone-50 dark:bg-stone-800/50 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all duration-300 border border-stone-100 dark:border-stone-700 group"
+                  className="relative text-left p-6 sm:p-7 rounded-[22px] bg-gradient-to-b from-white to-stone-50 dark:from-stone-800 dark:to-stone-800/60 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all duration-300 border border-stone-200/90 dark:border-stone-700 group"
                 >
+                  <p className="absolute top-3.5 right-4 text-[10px] font-bold tracking-[0.18em] text-stone-300 dark:text-stone-600">
+                    0{index + 1}
+                  </p>
                   <div
-                    className={`w-16 h-16 ${item.bg} rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-14 h-14 ${item.bg} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
                   >
-                    <Icon size={28} className={item.color} />
+                    <Icon size={24} className={item.color} />
                   </div>
-                  <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2">{item.title}</h3>
+                  <h3 className="font-bold text-lg text-stone-900 dark:text-stone-100 mb-2 pr-8">{item.title}</h3>
                   <p className="text-sm text-stone-600 dark:text-stone-400 leading-relaxed">{item.description}</p>
                 </div>
               );
@@ -1028,7 +1082,8 @@ const HomePage: React.FC = () => {
             {LIFESTYLE_TESTIMONIALS.map((item, index) => (
               <div
                 key={index}
-                className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+                className="group relative aspect-[3/4] rounded-[26px] overflow-hidden border-[6px] border-white dark:border-stone-800 shadow-lg hover:shadow-2xl transition-all duration-300"
+                style={{ transform: `rotate(${index % 2 === 0 ? '-0.8deg' : '0.8deg'})` }}
               >
                 <img
                   src={cloudinaryTransform(item.image, { w: 600, h: 800, c: 'fill' })}
@@ -1038,11 +1093,11 @@ const HomePage: React.FC = () => {
                   decoding="async"
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                 {/* Testimonial overlay */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5">
-                  <p className="text-white text-xs sm:text-sm font-medium leading-snug mb-1.5 sm:mb-2 line-clamp-3">
+                  <p className="text-white text-xs sm:text-sm font-semibold leading-snug mb-1.5 sm:mb-2 line-clamp-3">
                     {item.quote}
                   </p>
                   <p className="text-white/70 text-[10px] sm:text-xs font-semibold">— {item.name}</p>
@@ -1076,7 +1131,7 @@ const HomePage: React.FC = () => {
             {CUSTOMER_REVIEWS.map((review) => (
               <div
                 key={review.id}
-                className="bg-stone-50 dark:bg-stone-800/50 rounded-2xl p-5 sm:p-6 border border-stone-100 dark:border-stone-700 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all relative"
+                className="bg-gradient-to-b from-white to-stone-50 dark:from-stone-800 dark:to-stone-800/70 rounded-[24px] p-5 sm:p-6 border border-stone-200 dark:border-stone-700 hover:shadow-lg dark:hover:shadow-stone-900/50 transition-all relative border-l-4 border-l-brand-green dark:border-l-emerald-400"
               >
                 {/* Quote Icon */}
                 <div className="absolute top-4 right-4 text-stone-200 dark:text-stone-700">
@@ -1188,7 +1243,7 @@ const HomePage: React.FC = () => {
               </h2>
 
               <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-8 max-w-lg mx-auto">
-                Join 1000+ women who chose sustainable style. Enter your WhatsApp number and get your exclusive discount code instantly.
+                Join 1000+ women who chose sustainable style. Enter your WhatsApp number and get your exclusive first-order code instantly.
               </p>
 
               {!offerSubmitted ? (
