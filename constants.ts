@@ -487,22 +487,24 @@ export const HANDBAG_PRODUCT: ProductDetails = {
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466003/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/2_pkpxk6.png"
     ]},
     { name: "Miniun Yellow", hex: "#FBBF24", id: "miniun-yellow", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771480903/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/yellow_kartoon_fordjf.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466153/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/1_dnmaah.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466165/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_bott1a.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466150/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/2_lnuprm.png"
     ]},
     { name: "Lions Grey", hex: "#6B7280", id: "lions-grey", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771480903/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/lion_e7oled.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464081/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/36_zqdn3j.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464085/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/37_ckobxw.png"
     ]},
     { name: "Furr Purple", hex: "#9333EA", id: "furr-purple", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464031/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/184_rcw2go.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771478703/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/furry_handbag_blue_hsbalv.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464037/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/185_e00bi9.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464039/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/186_ijmc7b.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464058/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/187_joqwhi.png"
     ]},
     { name: "Furr Pink", hex: "#EC4899", id: "furr-pink", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464048/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/188_w7fuvx.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1771478704/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/furry_handbag_pink_veatbm.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464057/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/190_w2ofqd.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768464095/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/189_zzybpa.png"
     ]},
