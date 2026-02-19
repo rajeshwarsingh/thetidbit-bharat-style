@@ -19,7 +19,7 @@ import {
   Gift,
 } from 'lucide-react';
 import SEO from './SEO';
-import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES, MARKETPLACE_LINKS } from '../constants';
+import { ALL_PRODUCTS, PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, REVIEWS, CATEGORY_CARD_IMAGES, PRODUCT_CATEGORIES, MARKETPLACE_LINKS, getProductDetailUrl } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import InstagramCTA from './InstagramCTA';
 import IndiaPride from './IndiaPride';
@@ -45,9 +45,9 @@ const BEST_SELLERS = ALL_PRODUCTS.slice(0, 4);
 // Product usage / lifestyle section (Smart for Office, etc.)
 const USAGE_FALLBACK = 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771358511/thetidbit-homepage-hero/ChatGPT_Image_Feb_18_2026_01_31_30_AM_gx7bux.png';
 const USAGE_CARDS = [
-  { title: 'Smart for Office', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424522/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_51_50_PM_hhzozc.png' },
-  { title: 'Perfect for Shopping', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424510/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_31_PM_wzylky.png' },
-  { title: 'Ideal for Gifting', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424509/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_25_PM_laxnfj.png' },
+  { title: 'Smart for Office', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424522/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_51_50_PM_hhzozc.png', to: '/products/jute-handbag-001/rambo-yellow' },
+  { title: 'Perfect for Shopping', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424510/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_31_PM_wzylky.png', to: '/products/jute-handbag-001/black-check' },
+  { title: 'Ideal for Gifting', image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771424509/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/Usage%20pic/ChatGPT_Image_Feb_18_2026_07_49_25_PM_laxnfj.png', to: '/products/jute-round-sling-001' },
 ].map((c) => ({ ...c, image: c.image || USAGE_FALLBACK }));
 
 const MARKETPLACE_LOGOS = [
@@ -546,7 +546,7 @@ const HomePage: React.FC = () => {
                 return (
                   <Link
                     key={p.id}
-                    to={`/products/${p.id}`}
+                    to={getProductDetailUrl(p.id)}
                     className="flex flex-col items-center gap-1 group"
                   >
                     <div className="w-[56px] h-[56px] rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800 border border-stone-100 dark:border-stone-700 group-active:border-brand-green transition-colors shadow-sm">
@@ -653,9 +653,10 @@ const HomePage: React.FC = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-            {USAGE_CARDS.map(({ title, image }, index) => (
-              <div
+            {USAGE_CARDS.map(({ title, image, to }, index) => (
+              <Link
                 key={title}
+                to={to}
                 className={`group relative flex flex-col overflow-hidden border border-stone-200/90 dark:border-stone-700/80 bg-white dark:bg-stone-900 shadow-[0_14px_35px_-24px_rgba(15,23,42,0.55)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-28px_rgba(15,23,42,0.7)] ${
                   index % 2 === 0
                     ? 'rounded-[28px] sm:rounded-[32px]'
@@ -679,7 +680,7 @@ const HomePage: React.FC = () => {
                     {title}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -806,9 +807,7 @@ const HomePage: React.FC = () => {
                   ? product.colors.find((color) => color.id === 'yellow-mate') || product.colors[0]
                   : product.colors[0];
               const primaryImage = preferredColor?.images[0] || preferredColor?.images[1] || product.colors[0]?.images[0] || '';
-              const productUrl = preferredColor?.id
-                ? `/products/${product.id}?color=${encodeURIComponent(preferredColor.id)}`
-                : `/products/${product.id}`;
+              const productUrl = getProductDetailUrl(product.id, preferredColor?.id);
               const displayName = index === 0 ? product.name.replace(/\bHandmade\s*/i, '') : product.name;
               const discount = Math.round(((product.mrp - product.price) / product.mrp) * 100);
               const lowStock = LOW_STOCK_MAP[product.id];
@@ -946,7 +945,7 @@ const HomePage: React.FC = () => {
                   const lowStock = LOW_STOCK_MAP[product.id];
                   const colorName = color?.name ?? '';
                   const itemKey = `${product.id}-${colorIndex}`;
-                  const productUrl = color?.id ? `/products/${product.id}?color=${encodeURIComponent(color.id)}` : `/products/${product.id}`;
+                  const productUrl = getProductDetailUrl(product.id, color?.id);
                   return (
                     <Link
                       key={itemKey}

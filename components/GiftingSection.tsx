@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart, Gift, Sparkles, ArrowRight, Star } from 'lucide-react';
-import { PRODUCT, ALL_PRODUCTS } from '../constants';
+import { PRODUCT, ALL_PRODUCTS, getProductDetailUrl } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 
 const GiftingSection: React.FC = () => {
@@ -82,7 +82,7 @@ const GiftingSection: React.FC = () => {
                   Handmade with love • {featuredGiftProduct.colors.length} beautiful colors
                 </p>
                 <Link
-                  to={`/products/${featuredGiftProduct.id}`}
+                  to={getProductDetailUrl(featuredGiftProduct.id)}
                   className="inline-flex items-center gap-2 bg-white text-stone-900 px-6 py-3 rounded-xl font-bold hover:bg-stone-50 transition-all shadow-lg hover:shadow-xl"
                 >
                   Shop Now
@@ -172,7 +172,7 @@ const GiftingSection: React.FC = () => {
                 <ArrowRight size={20} />
               </Link>
               <Link
-                to={`/products/${featuredGiftProduct.id}`}
+                to={getProductDetailUrl(featuredGiftProduct.id)}
                 className="inline-flex items-center justify-center gap-2 bg-white dark:bg-stone-800 border-2 border-stone-900 dark:border-stone-100 text-stone-900 dark:text-stone-100 px-8 py-4 rounded-xl font-bold hover:bg-stone-50 dark:hover:bg-stone-700 transition-all shadow-lg text-lg"
               >
                 <Heart size={20} className="fill-pink-400 text-pink-400" />

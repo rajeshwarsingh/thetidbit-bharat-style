@@ -3,7 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { Filter, X, Grid, List } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
-import { ALL_PRODUCTS, PRODUCT_CATEGORIES, PRODUCT } from '../constants';
+import { ALL_PRODUCTS, PRODUCT_CATEGORIES, PRODUCT, getProductDetailUrl } from '../constants';
 import { cloudinaryTransform } from '../utils/cloudinary';
 
 // Helper function to convert slug to category name
@@ -308,7 +308,7 @@ const AllProductsPage: React.FC = () => {
                     ) : (
                       <Link
                         key={product.id}
-                        to={`/products/${product.id}`}
+                        to={getProductDetailUrl(product.id)}
                         className="group block bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-md dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70 transition-all duration-300"
                       >
                         <div className="flex flex-col sm:flex-row">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles, CheckCircle2 } from 'lucide-react';
-import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS } from '../constants';
+import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS, PRODUCT_CATEGORIES, getProductDetailUrl } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import { useSlingTry } from './SlingTryContext';
 import { ProductDetails } from '../types';
@@ -16,7 +16,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setAppliedCoupon, initialColorId }) => {
   const { openSlingTry } = useSlingTry();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [couponInput, setCouponInput] = useState('');
@@ -327,20 +327,42 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
 
           {/* Product Info Section */}
           <div className="lg:col-span-5 mt-10 lg:mt-0">
-            {/* Breadcrumbs */}
-            <nav className="flex text-sm text-stone-500 dark:text-stone-400 mb-4">
-              <ol className="flex items-center space-x-2">
+            {/* Breadcrumbs: Home → Products → Category → Product (optional: color) */}
+            <nav aria-label="Breadcrumb" className="flex text-sm text-stone-500 dark:text-stone-400 mb-4">
+              <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
                 <li>
-                  <a href="#" onClick={(e) => { e.preventDefault(); scrollToTop(); }} className="hover:text-stone-900 dark:hover:text-stone-100 transition font-serif font-bold">
-                    TheTidbit
-                  </a>
+                  <Link to="/" className="hover:text-stone-900 dark:hover:text-stone-100 transition font-medium">
+                    Home
+                  </Link>
                 </li>
-                <li>/</li>
+                <li aria-hidden="true" className="text-stone-400 dark:text-stone-500">/</li>
                 <li>
-                  <span className="text-stone-500 dark:text-stone-400 cursor-default">Women</span>
+                  <Link to="/products" className="hover:text-stone-900 dark:hover:text-stone-100 transition font-medium">
+                    Products
+                  </Link>
                 </li>
-                <li>/</li>
-                <li className="text-stone-900 dark:text-stone-100 font-medium">Sling Bags</li>
+                {(() => {
+                  const categoryName = product.category?.[product.category.length - 1];
+                  const categorySlug = categoryName && PRODUCT_CATEGORIES.find((c) => c.name === categoryName)?.slug;
+                  if (!categorySlug) return null;
+                  return (
+                    <>
+                      <li aria-hidden="true" className="text-stone-400 dark:text-stone-500">/</li>
+                      <li>
+                        <Link to={`/products?category=${categorySlug}`} className="hover:text-stone-900 dark:hover:text-stone-100 transition font-medium">
+                          {categoryName}
+                        </Link>
+                      </li>
+                    </>
+                  );
+                })()}
+                <li aria-hidden="true" className="text-stone-400 dark:text-stone-500">/</li>
+                <li className="text-stone-900 dark:text-stone-100 font-medium truncate max-w-[180px] sm:max-w-none" title={product.name}>
+                  {initialColorId && selectedColor?.id === initialColorId && selectedColor
+                    ? `${product.name} – ${selectedColor.name}`
+                    : product.name
+                  }
+                </li>
               </ol>
             </nav>
 
@@ -414,11 +436,7 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
                     key={color.name}
                     onClick={() => {
                       setSelectedColor(color);
-                      setSearchParams((prev) => {
-                        const next = new URLSearchParams(prev);
-                        next.set('color', color.id);
-                        return next;
-                      }, { replace: true });
+                      navigate(`/products/${product.id}/${color.id}`, { replace: true });
                     }}
                     className="flex flex-col items-center gap-2 focus:outline-none group"
                     aria-label={`Select colour: ${color.name}`}

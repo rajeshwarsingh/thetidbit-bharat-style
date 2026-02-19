@@ -57,6 +57,7 @@ export function AppFrame({ enableAnalytics = true }: { enableAnalytics?: boolean
                 <Route path="/" element={<HomePage />} />
                 <Route path="/home-one" element={<HomeOnePage />} />
                 <Route path="/products" element={<AllProductsPage />} />
+                <Route path="/products/:productId/:colorSlug" element={<ProductDetailPage />} />
                 <Route path="/products/:productId" element={<ProductDetailPage />} />
                 <Route path="/story" element={<BlogPage />} />
                 <Route path="/stories" element={<StoriesPage />} />

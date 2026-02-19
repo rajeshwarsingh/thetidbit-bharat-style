@@ -13,33 +13,51 @@ import IndiaPride from './IndiaPride';
 import Reveal from './Reveal';
 import DesktopWhatsAppCTA from './DesktopWhatsAppCTA';
 import SEO from './SEO';
-import { PRODUCT, ALL_PRODUCTS, LOGO_URL } from '../constants';
+import { PRODUCT, ALL_PRODUCTS, LOGO_URL, getProductDetailUrl } from '../constants';
 
 const ProductDetailPage: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();
+  const { productId, colorSlug } = useParams<{ productId: string; colorSlug?: string }>();
   const [searchParams] = useSearchParams();
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
 
-  // Optional color from URL: ?color=<colorId> so links can open with that color selected (shareable)
-  const initialColorId = searchParams.get('color');
+  // Color from path (/products/:id/:colorSlug) or query (?color=) for shareable links
+  const initialColorId = colorSlug ?? searchParams.get('color');
 
   // Find product by ID, fallback to main PRODUCT
   const currentProduct = productId 
     ? ALL_PRODUCTS.find(p => p.id === productId) || PRODUCT
     : PRODUCT;
 
+  // Resolve color variation when colorSlug is in URL (for SEO and canonical)
+  const variationColor = initialColorId
+    ? currentProduct.colors.find(c => c.id === initialColorId)
+    : null;
+  const canonicalPath = variationColor
+    ? getProductDetailUrl(currentProduct.id, variationColor.id)
+    : getProductDetailUrl(currentProduct.id);
+  const canonicalUrlFull = `https://bharat.style${canonicalPath}`;
+
   useEffect(() => {
     setAppliedCoupon(null);
   }, [productId]);
+
+  // SEO: product-level vs variation-level title, description, image
+  const seoTitle = variationColor
+    ? `${currentProduct.name} – ${variationColor.name}`
+    : currentProduct.name;
+  const seoDescription = variationColor
+    ? `${currentProduct.name} in ${variationColor.name}. ${currentProduct.tagline}. ${currentProduct.features.join('. ')}. Free Delivery & Easy Returns.`
+    : `${currentProduct.tagline}. ${currentProduct.features.join('. ')}. Free Delivery & Easy Returns.`;
+  const seoImage = variationColor ? variationColor.images[0] : currentProduct.colors[0].images[0];
 
   // Product Schema for Google Rich Snippets
   const productSchema = {
     "@context": "https://schema.org/",
     "@type": "Product",
-    "name": currentProduct.name,
-    "image": currentProduct.colors[0].images,
+    "name": variationColor ? `${currentProduct.name} – ${variationColor.name}` : currentProduct.name,
+    "image": variationColor ? variationColor.images : currentProduct.colors[0].images,
     "description": currentProduct.features.join('. '),
-    "sku": currentProduct.id,
+    "sku": variationColor ? `${currentProduct.id}-${variationColor.id}` : currentProduct.id,
     "brand": {
       "@type": "Brand",
       "name": "TheTidbit",
@@ -47,7 +65,7 @@ const ProductDetailPage: React.FC = () => {
     },
     "offers": {
       "@type": "Offer",
-      "url": `https://bharat.style/products/${currentProduct.id}`,
+      "url": canonicalUrlFull,
       "priceCurrency": "INR",
       "price": currentProduct.price,
       "priceValidUntil": "2026-12-31",
@@ -82,8 +100,8 @@ const ProductDetailPage: React.FC = () => {
     },{
       "@type": "ListItem",
       "position": 3,
-      "name": currentProduct.name,
-      "item": `https://bharat.style/products/${currentProduct.id}`
+      "name": seoTitle,
+      "item": canonicalUrlFull
     }]
   };
 
@@ -148,13 +166,13 @@ const ProductDetailPage: React.FC = () => {
   // To support multiple products fully, you'd need to refactor Hero/Features/etc to accept product as prop
 
   return (
-    <React.Fragment key={currentProduct.id}>
+    <React.Fragment key={`${currentProduct.id}-${variationColor?.id ?? 'base'}`}>
       <SEO 
-        title={currentProduct.name}
-        description={`${currentProduct.tagline}. ${currentProduct.features.join('. ')}. Free Delivery & Easy Returns.`}
-        canonicalUrl={`https://bharat.style/products/${currentProduct.id}`}
+        title={seoTitle}
+        description={seoDescription}
+        canonicalUrl={canonicalUrlFull}
         type="product"
-        image={currentProduct.colors[0].images[0]}
+        image={seoImage}
         schema={[productSchema, breadcrumbSchema, faqSchema]}
       />
       <Hero product={currentProduct} appliedCoupon={appliedCoupon} setAppliedCoupon={setAppliedCoupon} initialColorId={initialColorId} />

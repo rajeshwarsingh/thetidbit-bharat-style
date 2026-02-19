@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Star, ShoppingBag } from 'lucide-react';
 import { ProductDetails } from '../types';
+import { getProductDetailUrl } from '../constants';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
 
 interface ProductCardProps {
@@ -15,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, showTag = false }) =
 
   return (
     <Link
-      to={`/products/${product.id}`}
+      to={getProductDetailUrl(product.id)}
       className="group block bg-white dark:bg-stone-800 rounded-2xl overflow-hidden shadow-md dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70 transition-all duration-300"
     >
       {/* Image Container */}

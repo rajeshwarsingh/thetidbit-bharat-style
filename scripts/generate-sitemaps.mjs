@@ -9,6 +9,14 @@ const rootDir = join(__dirname, '..');
 const BASE_URL = 'https://bharat.style';
 const NOW = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 
+// Product and color variation URLs for sitemap (must match constants.ts ALL_PRODUCTS)
+const PRODUCT_SITEMAP = [
+  { productId: 'jute-round-sling-001', colorIds: ['red', 'blue', 'skin-orange', 'pink', 'floral-blue', 'floral-pink'] },
+  { productId: 'jute-sling-bag-001', colorIds: ['mikey-pink', 'mikey-purple', 'floral-pink', 'black-wave', 'blue-wave', 'yellow-mate', 'pink-mate', 'blue-mate', 'grey-mate', 'check-black', 'buckle-pink', 'buckle-blue', 'check-purple', 'half-round-pink', 'half-round-blue'] },
+  { productId: 'jute-sling-bag-002', colorIds: ['butterfly-blue', 'butterfly-pink', 'butterfly-red', 'star-blue', 'star-pink'] },
+  { productId: 'jute-handbag-001', colorIds: ['black-check', 'blue-check', 'yellow-black', 'white-blue', 'miniun-yellow', 'lions-grey', 'furr-purple', 'furr-pink', 'button-black', 'button-purple', 'rambo-yellow', 'rambo-purple', 'grey-white', 'purple-white', 'white-pink-line', 'white-blue-line', 'evil-eye-blue', 'evil-eye-pink', 'buckle-yellow', 'bicle-white'] },
+];
+
 /**
  * Load stories by parsing the TypeScript file
  * Uses a more robust parsing approach that handles nested objects
@@ -165,20 +173,19 @@ async function generateStoriesSitemap(stories) {
 async function generateMainSitemap() {
   const routes = [
     { loc: '/', changefreq: 'daily', priority: '1.0' },
+    { loc: '/products', changefreq: 'weekly', priority: '0.9' },
     { loc: '/about', changefreq: 'monthly', priority: '0.8' },
     { loc: '/story', changefreq: 'monthly', priority: '0.8' },
     { loc: '/stories', changefreq: 'weekly', priority: '0.9' },
     { loc: '/track', changefreq: 'weekly', priority: '0.7' },
   ];
 
-  // Add product color variant pages
-  const productColors = ['red', 'blue', 'skin-orange', 'pink'];
-  for (const color of productColors) {
-    routes.push({
-      loc: `/?color=${color}`,
-      changefreq: 'weekly',
-      priority: '0.9'
-    });
+  // Add each product page and each product+color variation page (SEO-friendly URLs)
+  for (const { productId, colorIds } of PRODUCT_SITEMAP) {
+    routes.push({ loc: `/products/${productId}`, changefreq: 'weekly', priority: '0.9' });
+    for (const colorId of colorIds) {
+      routes.push({ loc: `/products/${productId}/${colorId}`, changefreq: 'weekly', priority: '0.85' });
+    }
   }
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
