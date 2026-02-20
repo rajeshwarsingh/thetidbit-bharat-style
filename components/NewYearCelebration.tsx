@@ -28,7 +28,7 @@ const NewYearCelebration: React.FC = () => {
         closeTimer = setTimeout(() => {
           setIsVisible(false);
           setTimeout(() => setShouldRender(false), 400);
-        }, 4600);
+        }, 7600);
       }, 2500);
 
       return () => {
