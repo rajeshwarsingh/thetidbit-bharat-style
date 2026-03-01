@@ -8,6 +8,7 @@ const rootDir = join(__dirname, '..');
 
 const BASE_URL = 'https://bharat.style';
 const NOW = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+// test
 
 // Product and color variation URLs for sitemap (must match constants.ts ALL_PRODUCTS)
 const PRODUCT_SITEMAP = [
