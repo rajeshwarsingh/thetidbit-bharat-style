@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { ExternalLink, ShieldCheck } from 'lucide-react';
 import { AMAZON_PRODUCT_URL, AMAZON_STORE_URL } from '../constants';

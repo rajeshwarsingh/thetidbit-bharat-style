@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
 import { ArrowLeft, Quote, Heart, MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE, MISSION_IMAGE, LOGO_URL } from '../constants';
 import SEO from './SEO';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
@@ -46,7 +47,7 @@ const AboutPage: React.FC = () => {
           width="1920"
           height="1080"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="async"
         />
       </div>

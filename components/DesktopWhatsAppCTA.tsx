@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { MessageCircle } from 'lucide-react';
 
@@ -35,5 +36,3 @@ const DesktopWhatsAppCTA: React.FC = () => {
 };
 
 export default DesktopWhatsAppCTA;
-
-

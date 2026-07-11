@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Sparkles } from 'lucide-react';
 
@@ -23,5 +24,3 @@ const SlingTryFloatingButton: React.FC<{ onClick: () => void }> = ({ onClick }) 
 };
 
 export default SlingTryFloatingButton;
-
-

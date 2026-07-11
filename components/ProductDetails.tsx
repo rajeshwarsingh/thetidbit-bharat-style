@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { PRODUCT } from '../constants';
 import { ChevronDown, ChevronUp } from 'lucide-react';

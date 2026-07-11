@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { Star, ShoppingBag } from 'lucide-react';
 import { ProductDetails } from '../types';
 import { getProductDetailUrl } from '../constants';

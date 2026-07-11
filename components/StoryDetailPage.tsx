@@ -1,5 +1,6 @@
+'use client';
 import React, { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate } from '@/lib/router';
 import { ArrowLeft, Calendar, Clock, Heart, ArrowRight } from 'lucide-react';
 import SEO from './SEO';
 import { stories } from '../data/stories';
@@ -107,7 +108,7 @@ const StoryDetailPage: React.FC = () => {
           width="1600"
           height="900"
           loading="eager"
-          fetchpriority="high"
+          fetchPriority="high"
           decoding="async"
         />
       </div>

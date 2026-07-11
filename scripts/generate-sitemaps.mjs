@@ -10,12 +10,20 @@ const BASE_URL = 'https://bharat.style';
 const NOW = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 // test
 
-// Product and color variation URLs for sitemap (must match constants.ts ALL_PRODUCTS)
+// Catalog product slugs for sitemap (must match data/catalogs.ts CATALOGS).
+// No colour variations — each catalog is a single standalone URL.
 const PRODUCT_SITEMAP = [
-  { productId: 'jute-round-sling-001', colorIds: ['red', 'blue', 'skin-orange', 'pink', 'floral-blue', 'floral-pink'] },
-  { productId: 'jute-sling-bag-001', colorIds: ['mikey-pink', 'mikey-purple', 'floral-pink', 'black-wave', 'blue-wave', 'yellow-mate', 'pink-mate', 'blue-mate', 'grey-mate', 'check-black', 'buckle-pink', 'buckle-blue', 'check-purple', 'half-round-pink', 'half-round-blue'] },
-  { productId: 'jute-sling-bag-002', colorIds: ['butterfly-blue', 'butterfly-pink', 'butterfly-red', 'star-blue', 'star-pink'] },
-  { productId: 'jute-handbag-001', colorIds: ['black-check', 'blue-check', 'yellow-black', 'white-blue', 'miniun-yellow', 'lions-grey', 'furr-purple', 'furr-pink', 'button-black', 'button-purple', 'rambo-yellow', 'rambo-purple', 'grey-white', 'purple-white', 'white-pink-line', 'white-blue-line', 'evil-eye-blue', 'evil-eye-pink', 'buckle-yellow', 'bicle-white'] },
+  { productId: 'round-sling-blue' },
+  { productId: 'round-sling-red' },
+  { productId: 'round-sling-pink' },
+  { productId: 'round-sling-sand' },
+  { productId: 'butterfly-sling-blue' },
+  { productId: 'butterfly-sling-pink' },
+  { productId: 'evil-eye-sling-blue' },
+  { productId: 'evil-eye-sling-pink' },
+  { productId: 'woven-sling-black' },
+  { productId: 'chain-sling-yellow' },
+  { productId: 'jute-tote-purple' },
 ];
 
 /**
@@ -181,13 +189,14 @@ async function generateMainSitemap() {
     { loc: '/track', changefreq: 'weekly', priority: '0.7' },
   ];
 
-  // Add each product page and each product+color variation page (SEO-friendly URLs)
-  for (const { productId, colorIds } of PRODUCT_SITEMAP) {
+  // Add each catalog product page (SEO-friendly single-slug URLs, no colours)
+  for (const { productId } of PRODUCT_SITEMAP) {
     routes.push({ loc: `/products/${productId}`, changefreq: 'weekly', priority: '0.9' });
-    for (const colorId of colorIds) {
-      routes.push({ loc: `/products/${productId}/${colorId}`, changefreq: 'weekly', priority: '0.85' });
-    }
   }
+  // Bulk & collection landing pages
+  routes.push({ loc: '/collections', changefreq: 'weekly', priority: '0.9' });
+  routes.push({ loc: '/bulk', changefreq: 'monthly', priority: '0.8' });
+  routes.push({ loc: '/contact', changefreq: 'monthly', priority: '0.6' });
 
   let xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

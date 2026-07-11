@@ -1,5 +1,6 @@
+'use client';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '@/lib/router';
 import { GA_TRACKING_ID } from '../constants';
 
 // Declare global window property for gtag
@@ -58,14 +59,14 @@ const GoogleAnalytics = () => {
     const idleId =
       'requestIdleCallback' in window
         ? (window as any).requestIdleCallback(trigger, { timeout: 2500 })
-        : window.setTimeout(trigger, 2500);
+        : (window as any).setTimeout(trigger, 2500);
 
     return () => {
       window.removeEventListener('pointerdown', onFirstInteraction);
       window.removeEventListener('keydown', onFirstInteraction);
       window.removeEventListener('scroll', onFirstInteraction);
       if ('cancelIdleCallback' in window) (window as any).cancelIdleCallback(idleId);
-      else window.clearTimeout(idleId);
+      else (window as any).clearTimeout(idleId);
     };
   }, []);
 

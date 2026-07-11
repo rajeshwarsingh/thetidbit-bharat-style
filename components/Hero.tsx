@@ -1,5 +1,6 @@
+'use client';
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from '@/lib/router';
 import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS, PRODUCT_CATEGORIES, getProductDetailUrl } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
@@ -267,7 +268,7 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
                     height="800"
                     // Main product image is critical, so we use eager loading
                     loading="eager"
-                    fetchpriority="high"
+                    fetchPriority="high"
                     decoding="async"
                   />
                 </div>

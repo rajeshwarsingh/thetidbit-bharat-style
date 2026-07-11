@@ -1,4 +1,4 @@
-import { ProductDetails } from './types';
+import { ProductDetails } from '../types';
 
 // Auto-generated from Amazon listings - 2026-01-14T12:44:59.796Z
 // Total Products: 43

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Leaf, Feather, Maximize, MoveDiagonal } from 'lucide-react';
 

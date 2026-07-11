@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Instagram, ExternalLink } from 'lucide-react';
 import { INSTAGRAM_HANDLE } from '../constants';
@@ -54,6 +55,3 @@ const InstagramCTA: React.FC = () => {
 };
 
 export default InstagramCTA;
-
-
-

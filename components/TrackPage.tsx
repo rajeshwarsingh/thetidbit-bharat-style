@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import {
   AlertTriangle,
@@ -16,7 +17,7 @@ import {
   Share2,
   Users,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import SEO from './SEO';
 import { WHATSAPP_NUMBER, PRODUCT, INSTAGRAM_HANDLE, REVIEWS, AMAZON_STORE_URL } from '../constants';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
@@ -426,7 +427,7 @@ const TrackPage: React.FC = () => {
                       <AlertTriangle size={20} className="mt-0.5 text-red-700 dark:text-red-400 flex-shrink-0" />
                       <div>
                         <div className="font-semibold mb-1">Couldn't fetch this shipment</div>
-                        <div className="text-sm text-red-800 dark:text-red-300">{r.error}</div>
+                        <div className="text-sm text-red-800 dark:text-red-300">{'error' in r ? r.error : ''}</div>
                       </div>
                     </div>
                   )}

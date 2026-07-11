@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { ArrowUpRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { MARKETPLACE_LINKS } from '../constants';

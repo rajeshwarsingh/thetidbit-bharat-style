@@ -1,6 +1,7 @@
+'use client';
 import React, { useState } from 'react';
 import { Instagram, Phone, Mail, MapPin, X, CreditCard, Facebook, Youtube, ShoppingBag, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { INSTAGRAM_HANDLE, WHATSAPP_NUMBER, SOCIAL_LINKS, MARKETPLACE_LINKS, CONTACT_INFO } from '../constants';
 
 const Footer: React.FC = () => {

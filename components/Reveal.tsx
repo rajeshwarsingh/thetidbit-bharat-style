@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 type Props = {
@@ -61,5 +62,3 @@ const Reveal: React.FC<Props> = ({ children, className, delayMs = 0, once = true
 };
 
 export default Reveal;
-
-

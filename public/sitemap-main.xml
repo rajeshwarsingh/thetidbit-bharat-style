@@ -2,338 +2,122 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bharat.style/</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://bharat.style/products</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://bharat.style/about</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharat.style/story</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://bharat.style/stories</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://bharat.style/track</loc>
-    <lastmod>2026-02-19</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-round-sling-001</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/round-sling-blue</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/red</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/skin-orange</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/floral-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-round-sling-001/floral-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/round-sling-red</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/mikey-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/mikey-purple</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/floral-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/black-wave</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/blue-wave</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/yellow-mate</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/pink-mate</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/blue-mate</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/grey-mate</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/check-black</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/buckle-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/buckle-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/check-purple</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/half-round-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-001/half-round-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/round-sling-pink</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002/butterfly-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002/butterfly-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002/butterfly-red</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002/star-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-sling-bag-002/star-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/round-sling-sand</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/black-check</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/butterfly-sling-blue</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/blue-check</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/butterfly-sling-pink</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/yellow-black</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/evil-eye-sling-blue</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/white-blue</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/evil-eye-sling-pink</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/miniun-yellow</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/woven-sling-black</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/lions-grey</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/chain-sling-yellow</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/furr-purple</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/products/jute-tote-purple</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/furr-pink</loc>
-    <lastmod>2026-02-19</lastmod>
+    <loc>https://bharat.style/collections</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/button-black</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <loc>https://bharat.style/bulk</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bharat.style/products/jute-handbag-001/button-purple</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/rambo-yellow</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/rambo-purple</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/grey-white</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/purple-white</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/white-pink-line</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/white-blue-line</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/evil-eye-blue</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/evil-eye-pink</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/buckle-yellow</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://bharat.style/products/jute-handbag-001/bicle-white</loc>
-    <lastmod>2026-02-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
+    <loc>https://bharat.style/contact</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

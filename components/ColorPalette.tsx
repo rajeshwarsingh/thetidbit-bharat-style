@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { PRODUCT, WHATSAPP_NUMBER } from '../constants';
 import { ArrowUpRight } from 'lucide-react';

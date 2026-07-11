@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import SEO from './SEO';
-import { ALL_PRODUCTS, MARKETPLACE_LINKS } from '../constants';
+import { MARKETPLACE_LINKS } from '../constants';
+import { CATALOGS as ALL_PRODUCTS } from '../data/catalogs';
 import ProductCard from './ProductCard';
 import { cloudinaryTransform } from '../utils/cloudinary';
 

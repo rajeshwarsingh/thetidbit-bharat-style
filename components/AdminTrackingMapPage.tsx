@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import SEO from './SEO';
 
@@ -105,5 +106,3 @@ const AdminTrackingMapPage: React.FC = () => {
 };
 
 export default AdminTrackingMapPage;
-
-

@@ -1,5 +1,6 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import SEO from './SEO';
 import { stories } from '../data/stories';
@@ -205,4 +206,3 @@ const StoriesPage: React.FC = () => {
 };
 
 export default StoriesPage;
-

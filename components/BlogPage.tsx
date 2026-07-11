@@ -1,7 +1,8 @@
+'use client';
 import React, { useEffect } from 'react';
 import { ArrowLeft, Quote, HeartHandshake, Sprout, Hammer } from 'lucide-react';
 import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE, LOGO_URL } from '../constants';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@/lib/router';
 import SEO from './SEO';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 

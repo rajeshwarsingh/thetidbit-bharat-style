@@ -1,7 +1,9 @@
+'use client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { Heart, Gift, Sparkles, ArrowRight, Star } from 'lucide-react';
-import { PRODUCT, ALL_PRODUCTS, getProductDetailUrl } from '../constants';
+import { PRODUCT, getProductDetailUrl } from '../constants';
+import { CATALOGS as ALL_PRODUCTS } from '../data/catalogs';
 import { cloudinaryTransform } from '../utils/cloudinary';
 
 const GiftingSection: React.FC = () => {

@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 
 const IndiaPride: React.FC = () => {
   return (
@@ -124,5 +125,3 @@ const IndiaPride: React.FC = () => {
 };
 
 export default IndiaPride;
-
-

@@ -1,5 +1,6 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { ShoppingBag } from 'lucide-react';
 
 const MobileShopCTA: React.FC = () => {

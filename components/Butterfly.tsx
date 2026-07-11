@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTheme } from './ThemeContext';
 
@@ -333,4 +334,3 @@ const Butterfly: React.FC<ButterflyProps> = ({ delay = 0, id = 0, gender }) => {
 };
 
 export default Butterfly;
-

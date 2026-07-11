@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect } from 'react';
 import { ExternalLink, X } from 'lucide-react';
 
@@ -94,5 +95,3 @@ const SlingTryModal: React.FC<Props> = ({ open, onClose, iframeSrc }) => {
 };
 
 export default SlingTryModal;
-
-

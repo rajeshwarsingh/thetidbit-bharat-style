@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { ShoppingBag, Heart } from 'lucide-react';
 import { NEW_ARRIVALS } from '../constants';

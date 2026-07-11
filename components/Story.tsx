@@ -1,7 +1,8 @@
+'use client';
 import React from 'react';
 import { Sprout, Hand, HeartHandshake, Package, Quote, ArrowRight } from 'lucide-react';
 import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE } from '../constants';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 
 const Story: React.FC = () => {

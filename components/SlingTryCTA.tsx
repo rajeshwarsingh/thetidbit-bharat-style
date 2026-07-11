@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/lib/router';
 
 const SlingTryCTA: React.FC<{ onOpenModal?: () => void }> = ({ onOpenModal }) => {
   return (
@@ -65,5 +66,3 @@ const SlingTryCTA: React.FC<{ onOpenModal?: () => void }> = ({ onOpenModal }) =>
 };
 
 export default SlingTryCTA;
-
-

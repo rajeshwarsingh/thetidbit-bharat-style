@@ -600,8 +600,8 @@ export const ALL_PRODUCTS: ProductDetails[] = [
 ];
 
 /** SEO-friendly product URL: /products/:productId or /products/:productId/:colorSlug */
-export function getProductDetailUrl(productId: string, colorId?: string | null): string {
-  if (colorId) return `/products/${productId}/${encodeURIComponent(colorId)}`;
+export function getProductDetailUrl(productId: string, _colorId?: string | null): string {
+  // No colour variants in the catalog model — every product has a single URL.
   return `/products/${productId}`;
 }
 

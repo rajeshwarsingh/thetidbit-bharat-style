@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { PRODUCT, WHATSAPP_NUMBER, COUPON_DISCOUNTS } from '../constants';
 import { ProductDetails } from '../types';

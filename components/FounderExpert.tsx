@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Quote, Heart } from 'lucide-react';
 import { FOUNDER } from '../constants';

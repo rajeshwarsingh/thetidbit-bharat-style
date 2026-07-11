@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import { X, Send } from 'lucide-react';
 import { WHATSAPP_NUMBER } from '../constants';

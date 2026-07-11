@@ -1,9 +1,11 @@
+'use client';
 import React, { useState, useMemo } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link } from '@/lib/router';
 import { Filter, X, Grid, List } from 'lucide-react';
 import SEO from './SEO';
 import ProductCard from './ProductCard';
-import { ALL_PRODUCTS, PRODUCT_CATEGORIES, PRODUCT, getProductDetailUrl } from '../constants';
+import { PRODUCT_CATEGORIES, PRODUCT, getProductDetailUrl } from '../constants';
+import { CATALOGS as ALL_PRODUCTS } from '../data/catalogs';
 import { cloudinaryTransform } from '../utils/cloudinary';
 
 // Helper function to convert slug to category name
@@ -332,7 +334,7 @@ const AllProductsPage: React.FC = () => {
                                   {product.tagline}
                                 </p>
                               </div>
-                              {showTag && product.category.length > 0 && (
+                              {product.category.length > 0 && (
                                 <div className="bg-stone-100 dark:bg-stone-700 text-stone-900 dark:text-stone-100 text-xs font-semibold px-3 py-1 rounded-full">
                                   {product.category[product.category.length - 1]}
                                 </div>

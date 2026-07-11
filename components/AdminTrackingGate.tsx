@@ -1,5 +1,6 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@/lib/router';
 import AdminTrackingMapPage from './AdminTrackingMapPage';
 
 const SESSION_KEY = 'bs_admin_tracking_authed';
@@ -69,5 +70,3 @@ const AdminTrackingGate: React.FC = () => {
 };
 
 export default AdminTrackingGate;
-
-

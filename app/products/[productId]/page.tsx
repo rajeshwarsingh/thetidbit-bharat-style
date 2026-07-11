@@ -1,0 +1,35 @@
+import type { Metadata } from 'next';
+import ProductDetail from '../../../components/ProductDetail';
+import { buildMetadata } from '../../../lib/seo';
+import { CATALOGS } from '../../../data/catalogs';
+
+/** Only the catalog slugs are valid product routes — anything else 404s. */
+export const dynamicParams = false;
+
+/** Statically generate a route for every catalog (own SEO-friendly slug). */
+export function generateStaticParams() {
+  return CATALOGS.map((p) => ({ productId: p.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ productId: string }>;
+}): Promise<Metadata> {
+  const { productId } = await params;
+  const product = CATALOGS.find((p) => p.id === productId);
+  if (!product) {
+    return buildMetadata({ title: 'Product', description: 'TheTidbit product', path: `/products/${productId}`, noindex: true });
+  }
+  return buildMetadata({
+    title: product.name,
+    description: `${product.tagline}. ${product.features.join('. ')}. Free shipping over ₹499, COD & easy returns.`,
+    path: `/products/${product.id}`,
+    image: product.colors[0]?.images[0],
+    type: 'product',
+  });
+}
+
+export default function Page() {
+  return <ProductDetail />;
+}

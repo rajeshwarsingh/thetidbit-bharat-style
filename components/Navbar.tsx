@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
-import { Menu, Snowflake, X } from 'lucide-react';
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Menu, Snowflake, X, Heart, Search, Truck } from 'lucide-react';
 import { HEADER_BADGE, LOGO_URL } from '../constants';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from '@/lib/router';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import ThemeToggle from './ThemeToggle';
+import { useWishlist } from '../utils/wishlist';
+
+/** Primary navigation model — single source of truth for desktop + mobile. */
+const NAV_LINKS: { label: string; to: string; match: (p: string) => boolean }[] = [
+  { label: 'Home', to: '/', match: (p) => p === '/' },
+  { label: 'Shop', to: '/collections', match: (p) => p === '/collections' },
+  { label: 'Bulk Orders', to: '/bulk', match: (p) => p === '/bulk' },
+  { label: 'About', to: '/about', match: (p) => p === '/about' },
+  { label: 'Contact', to: '/contact', match: (p) => p === '/contact' },
+];
 
 const IndiaFlagIcon = () => {
   return (
@@ -48,8 +59,17 @@ const IndiaFlagIcon = () => {
 
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const wishlist = useWishlist();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const handleScrollToCollection = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -86,11 +106,11 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        <nav className="bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-700 transition-colors duration-300">
+        <nav className={`bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-700 transition-all duration-300 ${scrolled ? 'shadow-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Mobile Menu Button */}
-          <div className="flex items-center sm:hidden">
+          <div className="flex items-center md:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 p-2 transition-colors"
@@ -101,7 +121,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Logo Section */}
-          <div className="flex-1 flex justify-center sm:justify-start">
+          <div className="flex-1 flex justify-center md:justify-start">
             <Link to="/" onClick={closeMenu} className="flex items-center gap-3 group focus:outline-none">
               <img
                 src={cloudinaryTransform(LOGO_URL, { w: 160 })}
@@ -122,47 +142,49 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Nav Links - SEO Friendly Links */}
-          <div className="hidden sm:flex sm:items-center sm:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
+            {NAV_LINKS.map((link) => {
+              const active = link.match(location.pathname);
+              return (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  className={`text-sm font-medium border-b-2 transition-colors px-1 py-2 ${active ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Right-side: Search + Track + Wishlist + Theme + Badge */}
+          <div className="flex items-center justify-end gap-1.5 sm:gap-2">
             <Link
-              to="/"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+              to="/collections"
+              aria-label="Search products"
+              className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             >
-              Home
-            </Link>
-            <Link
-              to="/home-one"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/home-one' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
-            >
-              Brand
-            </Link>
-            <Link
-              to="/products"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/products' || location.pathname.startsWith('/products/') ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
-            >
-              Products
+              <Search size={20} />
             </Link>
             <Link
               to="/track"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/track' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+              aria-label="Track your order"
+              className="hidden sm:inline-flex p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             >
-              Track Order
+              <Truck size={20} />
             </Link>
-            <Link 
-              to="/stories"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname.startsWith('/stories') ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+            <Link
+              to="/wishlist"
+              aria-label={`Wishlist${wishlist.length ? ` (${wishlist.length} items)` : ''}`}
+              className="relative p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             >
-              Stories
+              <Heart size={20} />
+              {wishlist.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-brand-green text-white text-[10px] font-bold flex items-center justify-center">
+                  {wishlist.length}
+                </span>
+              )}
             </Link>
-            <Link 
-              to="/about"
-              className={`text-sm font-medium border-b-2 transition-colors px-3 py-2 ${location.pathname === '/about' ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
-            >
-              About TheTidbit
-            </Link>
-          </div>
-
-          {/* Right-side: Theme Toggle + Badge */}
-          <div className="flex items-center justify-end gap-3">
             <ThemeToggle />
             {HEADER_BADGE?.enabled ? (
               <div
@@ -289,61 +311,46 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden bg-white dark:bg-stone-900 border-t border-stone-100 dark:border-stone-700 absolute w-full left-0 shadow-lg transition-colors duration-300">
+        <div className="md:hidden bg-white dark:bg-stone-900 border-t border-stone-100 dark:border-stone-700 absolute w-full left-0 shadow-lg transition-colors duration-300">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link
-              to="/"
-              onClick={closeMenu}
-              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
-                location.pathname === '/' 
-                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
-                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
-              }`}
-            >
-              Home
-            </Link>
-            <Link
-              to="/home-one"
-              onClick={closeMenu}
-              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
-                location.pathname === '/home-one' 
-                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
-                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
-              }`}
-            >
-              Brand
-            </Link>
-            <Link
-              to="/products"
-              onClick={closeMenu}
-              className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md transition-colors ${
-                location.pathname === '/products' || location.pathname.startsWith('/products/')
-                  ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800' 
-                  : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
-              }`}
-            >
-              Products
-            </Link>
+            {NAV_LINKS.map((link) => {
+              const active = link.match(location.pathname);
+              return (
+                <Link
+                  key={link.label}
+                  to={link.to}
+                  onClick={closeMenu}
+                  className={`block w-full text-left px-3 py-2.5 text-base font-medium rounded-md transition-colors ${
+                    active
+                      ? 'text-stone-900 dark:text-stone-100 bg-stone-50 dark:bg-stone-800'
+                      : 'text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+            <div className="my-2 border-t border-stone-100 dark:border-stone-700" />
             <Link
               to="/track"
               onClick={closeMenu}
-              className="block w-full text-left px-3 py-2 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
+              className="block w-full text-left px-3 py-2.5 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
             >
               Track Order
             </Link>
-            <Link 
+            <Link
+              to="/wishlist"
+              onClick={closeMenu}
+              className="block w-full text-left px-3 py-2.5 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
+            >
+              Wishlist{wishlist.length > 0 ? ` (${wishlist.length})` : ''}
+            </Link>
+            <Link
               to="/stories"
               onClick={closeMenu}
-              className="block w-full text-left px-3 py-2 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
+              className="block w-full text-left px-3 py-2.5 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
             >
               Stories
-            </Link>
-            <Link 
-              to="/about"
-              onClick={closeMenu}
-              className="block w-full text-left px-3 py-2 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
-            >
-              About TheTidbit
             </Link>
           </div>
         </div>
