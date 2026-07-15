@@ -550,16 +550,14 @@ export const HANDBAG_PRODUCT: ProductDetails = {
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461893/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/50_prwztp.png"
     ]},
     { name: "Evil Eye Blue", hex: "#3B82F6", id: "evil-eye-blue", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768467996/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/1_cohere.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768467979/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/3_nydfcf.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768467985/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/6_hflw6j.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768467979/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/5_e99nmt.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png"
     ]},
     { name: "Evil Eye Pink", hex: "#EC4899", id: "evil-eye-pink", images: [
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768468409/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/1_k9kvjg.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768468411/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/2_b42qtn.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768468409/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/5_nzu8si.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768468410/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/6_l5szdg.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png"
     ]},
     { name: "Buckle Yellow", hex: "#FBBF24", id: "buckle-yellow", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1771441984/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/yellow_handbag_dduztp.png",

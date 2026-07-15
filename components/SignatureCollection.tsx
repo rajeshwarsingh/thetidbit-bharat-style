@@ -32,7 +32,7 @@ const SignatureCollection: React.FC<Props> = ({ limit, showCta = true }) => {
             Handcrafted jute bags for every day
           </h2>
           <p className="mt-4 text-stone-600 dark:text-stone-400 text-base sm:text-lg">
-            Shop our bestselling handmade bags — in stock and ready to ship. Free shipping over ₹499, Cash on Delivery & easy returns.
+            Shop our bestselling handmade bags — in stock and ready to ship. Free shipping across India, Cash on Delivery & easy returns.
           </p>
         </Reveal>
 

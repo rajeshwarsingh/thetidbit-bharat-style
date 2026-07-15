@@ -78,18 +78,34 @@ const CATALOG_DEFS: CatalogDef[] = [
     name: 'TheTidbit Evil Eye Sling Bag for Women | Handmade Jute Crossbody Bag | Blue',
     price: 474, collection: 'travel', source: HANDBAG_PRODUCT, colorId: 'evil-eye-blue',
     tagline: 'Evil-eye charm • Crossbody',
+    images: [
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png',
+    ],
   },
   {
     slug: 'evil-eye-sling-pink',
     name: 'TheTidbit Evil Eye Sling Bag for Women | Handmade Jute Crossbody Bag | Pink',
     price: 474, collection: 'travel', source: HANDBAG_PRODUCT, colorId: 'evil-eye-pink',
     tagline: 'Evil-eye charm • Crossbody',
+    images: [
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png',
+    ],
   },
   {
     slug: 'woven-sling-black',
     name: 'TheTidbit Woven Sling Bag for Women | Handmade Jute Crossbody Bag | Black',
     price: 514, collection: 'daily', source: SLING_BAG_PRODUCT_1, colorId: 'black-wave',
     tagline: 'Hand-woven jute • Crossbody',
+  },
+  {
+    slug: 'classic-sling-blue-wave',
+    name: 'TheTidbit Classic Sling Bag for Women | Handmade Jute Crossbody Bag | Blue Wave',
+    price: 514, collection: 'daily', source: SLING_BAG_PRODUCT_1, colorId: 'blue-wave',
+    tagline: 'Eco-Friendly • Handmade • Classic Crossbody Bag',
   },
   {
     slug: 'chain-sling-yellow',

@@ -54,8 +54,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'A valid 10-digit phone number is required.', envProbe: probe }, { status: 400 });
   }
 
-  // SECURITY: price + shipping from server catalog, never from the client.
-  const { subtotal, shipping, total } = orderGrandTotal(product.price, quantity);
+  // SECURITY: price + shipping + GST from server catalog, never from the client.
+  const { subtotal, shipping, gst, gstPercent, total } = orderGrandTotal(product.price, quantity);
   const amountPaise = total * 100;
   const txn = txnId();
   const origin = req.nextUrl.origin;
@@ -69,6 +69,8 @@ export async function POST(req: NextRequest) {
       amount: total,
       subtotal,
       shipping,
+      gst,
+      gstPercent,
       envProbe: probe,
     });
   }
@@ -101,6 +103,8 @@ export async function POST(req: NextRequest) {
     amount: total,
     subtotal,
     shipping,
+    gst,
+    gstPercent,
     envProbe: probe,
   });
 }

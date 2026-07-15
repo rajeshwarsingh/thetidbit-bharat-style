@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendOrderEmail, OrderPayload } from '../../../../lib/email';
 import { checkStatus, phonePeMode } from '../../../../lib/phonepe';
+import { getCatalogById } from '../../../../data/catalogs';
+import { orderGrandTotal, GST_PERCENT } from '../../../../utils/pricing';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -23,10 +25,30 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const qty = Number(order.qty) || 1;
+  const product = order.productId ? getCatalogById(String(order.productId)) : undefined;
+  const unitPrice = product?.price ?? (Number(order.unitPrice) || 0);
+  const pricing = unitPrice > 0
+    ? orderGrandTotal(unitPrice, qty)
+    : {
+        subtotal: Number(order.subtotal) || 0,
+        shipping: Number(order.shipping) || 0,
+        gst: Number(order.gst) || 0,
+        gstPercent: Number(order.gstPercent) || GST_PERCENT,
+        total: Number(order.total) || 0,
+        taxable: 0,
+      };
+
   const payload: OrderPayload = {
+    productId: String(order.productId || ''),
     productName: String(order.productName),
-    qty: Number(order.qty) || 1,
-    total: Number(order.total) || 0,
+    unitPrice,
+    qty,
+    subtotal: pricing.subtotal,
+    shipping: pricing.shipping,
+    gst: pricing.gst,
+    gstPercent: pricing.gstPercent,
+    total: pricing.total,
     name: String(order.name),
     phone: String(order.phone || ''),
     email: String(order.email || '').trim() || undefined,
@@ -35,5 +57,5 @@ export async function POST(req: NextRequest) {
   };
 
   const result = await sendOrderEmail(payload, String(txn), true);
-  return NextResponse.json(result, { status: result.ok ? 200 : 200 });
+  return NextResponse.json(result, { status: 200 });
 }

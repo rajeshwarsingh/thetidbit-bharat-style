@@ -5,16 +5,21 @@
  * page can show a summary and let the customer confirm on WhatsApp.
  */
 import { WHATSAPP_NUMBER } from '../constants';
+import { GST_PERCENT } from './pricing';
 
 export interface Order {
   productId: string;
   productName: string;
   unitPrice: number;
   qty: number;
+  subtotal: number;
+  shipping: number;
+  gst: number;
+  gstPercent: number;
   total: number;
   name: string;
   phone: string;
-  /** Optional — if set, customer also gets an order confirmation email after payment. */
+  /** Optional — if set, customer also gets the tax invoice email after payment. */
   email?: string;
   address: string;
   pincode: string;
@@ -43,6 +48,7 @@ export function loadOrder(txn: string): Order | null {
 
 /** WhatsApp message for placing/confirming an order. */
 export function orderWhatsAppUrl(order: Order, opts?: { paid?: boolean; txn?: string }): string {
+  const gstPct = order.gstPercent ?? GST_PERCENT;
   const lines = [
     opts?.paid
       ? `Hi TheTidbit! I've *paid online* for my order. Please confirm & dispatch.`
@@ -50,7 +56,10 @@ export function orderWhatsAppUrl(order: Order, opts?: { paid?: boolean; txn?: st
     ``,
     `*${order.productName}*`,
     `Qty: ${order.qty}`,
-    `Amount: ₹${order.total}`,
+    `Taxable value: ₹${order.subtotal ?? Math.max(0, order.total - (order.gst ?? 0))}`,
+    `GST (${gstPct}%): ₹${order.gst ?? 0}`,
+    `Shipping: Free`,
+    `*Total: ₹${order.total}*`,
     opts?.txn ? `Payment Ref: ${opts.txn}` : '',
     opts?.paid ? `Status: PAID ✅` : '',
     ``,

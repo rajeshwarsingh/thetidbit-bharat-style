@@ -440,7 +440,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ============================================ */}
-      {/* 4. OUR COLLECTION (the 11 catalogs)           */}
+      {/* 4. OUR COLLECTION (the 12 catalogs)           */}
       {/* ============================================ */}
       <SignatureCollection />
 

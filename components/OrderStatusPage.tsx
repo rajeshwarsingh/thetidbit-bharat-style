@@ -59,13 +59,31 @@ const OrderStatusPage: React.FC = () => {
           <p className="mt-3 text-stone-600 dark:text-stone-400">
             Thank you{order ? `, ${order.name.split(' ')[0]}` : ''}! Your order is confirmed.
             {txn && <> Payment ref: <span className="font-mono text-sm">{txn}</span>.</>}
-            {order?.email ? <> A confirmation was also sent to <span className="font-medium">{order.email}</span>.</> : null}
+            {order?.email ? <> Tax invoice sent to <span className="font-medium">{order.email}</span>.</> : <> Add an email on checkout next time to receive your tax invoice.</>}
           </p>
           {order && (
-            <div className="mt-6 text-left rounded-2xl border border-stone-200 dark:border-stone-700 p-5">
+            <div className="mt-6 text-left rounded-2xl border border-stone-200 dark:border-stone-700 p-5 space-y-2">
               <p className="font-semibold text-stone-900 dark:text-stone-100">{order.productName}</p>
-              <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">Qty {order.qty} · ₹{order.total}</p>
-              <p className="text-sm text-stone-500 dark:text-stone-400 mt-2">{order.address}, PIN {order.pincode}</p>
+              <p className="text-sm text-stone-500 dark:text-stone-400">Qty {order.qty}</p>
+              <div className="pt-2 border-t border-stone-100 dark:border-stone-700 space-y-1.5 text-sm">
+                <div className="flex justify-between text-stone-600 dark:text-stone-300">
+                  <span>Taxable value</span>
+                  <span>₹{order.subtotal ?? Math.max(0, order.total - (order.gst ?? 0))}</span>
+                </div>
+                <div className="flex justify-between text-stone-600 dark:text-stone-300">
+                  <span>GST ({order.gstPercent ?? 5}%)</span>
+                  <span>₹{order.gst ?? 0}</span>
+                </div>
+                <div className="flex justify-between text-stone-600 dark:text-stone-300">
+                  <span>Shipping</span>
+                  <span className="text-brand-green font-medium">Free</span>
+                </div>
+                <div className="flex justify-between font-bold text-stone-900 dark:text-stone-100 pt-1">
+                  <span>Total paid</span>
+                  <span>₹{order.total}</span>
+                </div>
+              </div>
+              <p className="text-sm text-stone-500 dark:text-stone-400 pt-2">{order.address}, PIN {order.pincode}</p>
             </div>
           )}
           <div className="mt-7 flex flex-col sm:flex-row gap-3 justify-center">

@@ -6,7 +6,7 @@ import SEO from './SEO';
 import { getCatalogItem } from '../data/catalog';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import { Order, saveOrder, orderWhatsAppUrl } from '../utils/order';
-import { FREE_SHIPPING_MIN, orderGrandTotal } from '../utils/pricing';
+import { orderGrandTotal } from '../utils/pricing';
 
 const CheckoutPage: React.FC = () => {
   const [params] = useSearchParams();
@@ -33,7 +33,7 @@ const CheckoutPage: React.FC = () => {
     );
   }
 
-  const { subtotal, shipping, total } = orderGrandTotal(item.price, qty);
+  const { subtotal, shipping, gst, gstPercent, total } = orderGrandTotal(item.price, qty);
   const emailTrimmed = email.trim();
 
   const buildOrder = (): Order => ({
@@ -41,6 +41,10 @@ const CheckoutPage: React.FC = () => {
     productName: item.name,
     unitPrice: item.price,
     qty,
+    subtotal,
+    shipping,
+    gst,
+    gstPercent,
     total,
     name: name.trim(),
     phone: phone.trim(),
@@ -151,7 +155,7 @@ const CheckoutPage: React.FC = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-stone-600 dark:text-stone-300 mb-1">
-                    Email <span className="font-normal text-stone-400">(optional)</span>
+                    Email <span className="font-normal text-stone-400">(optional — for invoice)</span>
                   </label>
                   <input
                     type="email"
@@ -161,7 +165,7 @@ const CheckoutPage: React.FC = () => {
                     className="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
                     placeholder="you@email.com"
                   />
-                  <p className="mt-1 text-xs text-stone-400">We’ll send your order confirmation here after payment.</p>
+                  <p className="mt-1 text-xs text-stone-400">We’ll email your tax invoice here after payment.</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-stone-600 dark:text-stone-300 mb-1">PIN code</label>
@@ -219,7 +223,7 @@ const CheckoutPage: React.FC = () => {
                 <ShieldCheck size={14} className="text-brand-green" /> Secure payment
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Truck size={14} className="text-brand-green" /> Free shipping over ₹{FREE_SHIPPING_MIN}
+                <Truck size={14} className="text-brand-green" /> Free shipping across India
               </span>
             </div>
           </div>
@@ -264,17 +268,24 @@ const CheckoutPage: React.FC = () => {
 
               <div className="mt-4 pt-4 border-t border-stone-200 dark:border-stone-700 space-y-2 text-sm">
                 <div className="flex justify-between text-stone-600 dark:text-stone-300">
-                  <span>Subtotal</span>
+                  <span>Taxable value</span>
                   <span>₹{subtotal}</span>
                 </div>
                 <div className="flex justify-between text-stone-600 dark:text-stone-300">
-                  <span>Shipping</span>
-                  <span>{shipping === 0 ? 'Free' : `₹${shipping}`}</span>
+                  <span>GST ({gstPercent}%)</span>
+                  <span>₹{gst}</span>
                 </div>
-                <div className="flex justify-between font-bold text-base text-stone-900 dark:text-stone-100 pt-2">
-                  <span>Total</span>
+                <div className="flex justify-between text-stone-600 dark:text-stone-300">
+                  <span>Shipping</span>
+                  <span className="text-brand-green font-medium">Free</span>
+                </div>
+                <div className="flex justify-between font-bold text-base text-stone-900 dark:text-stone-100 pt-2 border-t border-stone-100 dark:border-stone-700">
+                  <span>Total payable</span>
                   <span>₹{total}</span>
                 </div>
+                <p className="text-[11px] text-stone-400 pt-1">
+                  Prices are inclusive of GST @ {gstPercent}%. Free shipping. Tax invoice emailed after payment.
+                </p>
               </div>
             </div>
           </div>

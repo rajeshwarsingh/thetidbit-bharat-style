@@ -143,7 +143,7 @@ const ProductDetail: React.FC = () => {
               {p.mrp > p.price && <span className="text-lg text-stone-400 line-through">₹{p.mrp}</span>}
               {item.discountPercentage > 0 && <span className="text-sm font-bold text-red-600">Save {item.discountPercentage}%</span>}
             </div>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">Inclusive of all taxes · Free shipping over ₹499</p>
+            <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">Inclusive of all taxes · Free shipping</p>
 
             {/* Primary CTA -> checkout (pay online or WhatsApp) */}
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -220,7 +220,7 @@ const ProductDetail: React.FC = () => {
           <div className="rounded-2xl bg-white dark:bg-stone-800/50 border border-stone-100 dark:border-stone-700 p-6">
             <h3 className="font-bold text-stone-900 dark:text-stone-100 mb-2 font-serif text-lg">Delivery & Returns</h3>
             <ul className="text-sm text-stone-600 dark:text-stone-400 space-y-1.5">
-              <li>• Free shipping on prepaid orders over ₹499. Cash on Delivery available.</li>
+              <li>• Free shipping on all orders across India. Cash on Delivery available.</li>
               <li>• Dispatched in 24–48 hours; delivered in 3–6 days across India.</li>
               <li>• Easy 10-day return & exchange — message us on WhatsApp with your order ID.</li>
             </ul>

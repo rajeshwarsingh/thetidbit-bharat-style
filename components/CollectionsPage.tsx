@@ -89,7 +89,7 @@ const CollectionsPage: React.FC = () => {
               Find your everyday bag
             </h1>
             <p className="mt-3 text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
-              In-stock handmade jute bags — free shipping over ₹499, Cash on Delivery & easy returns.
+              In-stock handmade jute bags — free shipping across India, Cash on Delivery & easy returns.
             </p>
           </Reveal>
         </div>

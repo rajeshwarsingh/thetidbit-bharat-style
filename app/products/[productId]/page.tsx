@@ -23,7 +23,7 @@ export async function generateMetadata({
   }
   return buildMetadata({
     title: product.name,
-    description: `${product.tagline}. ${product.features.join('. ')}. Free shipping over ₹499, COD & easy returns.`,
+    description: `${product.tagline}. ${product.features.join('. ')}. Free shipping across India, COD & easy returns.`,
     path: `/products/${product.id}`,
     image: product.colors[0]?.images[0],
     type: 'product',
