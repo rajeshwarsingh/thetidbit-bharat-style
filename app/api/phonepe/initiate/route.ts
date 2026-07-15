@@ -11,12 +11,35 @@ function txnId() {
   return `TT${Date.now().toString(36)}${rand}`.slice(0, 34).toUpperCase();
 }
 
+/** Temporary deploy probe — remove once Vercel env is confirmed. */
+function envProbe() {
+  const mask = (v: string | undefined) => {
+    if (!v) return '(missing)';
+    if (v.length <= 6) return `${v} (len=${v.length})`;
+    return `${v.slice(0, 4)}…${v.slice(-4)} (len=${v.length})`;
+  };
+  return {
+    PHONEPE_ENV: process.env.PHONEPE_ENV ?? '(missing → defaults to sandbox)',
+    PHONEPE_CLIENT_ID: mask(process.env.PHONEPE_CLIENT_ID),
+    PHONEPE_CLIENT_SECRET: mask(process.env.PHONEPE_CLIENT_SECRET),
+    PHONEPE_CLIENT_VERSION: process.env.PHONEPE_CLIENT_VERSION ?? '(missing)',
+    PHONEPE_MERCHANT_ID: mask(process.env.PHONEPE_MERCHANT_ID),
+    RESEND_API_KEY: mask(process.env.RESEND_API_KEY),
+    ORDER_NOTIFY_EMAIL: process.env.ORDER_NOTIFY_EMAIL ?? '(missing)',
+    ORDER_FROM_EMAIL: process.env.ORDER_FROM_EMAIL ?? '(missing)',
+    phonePeMode,
+  };
+}
+
 export async function POST(req: NextRequest) {
+  const probe = envProbe();
+  console.log('[phonepe/initiate] env probe', probe);
+
   let body: any;
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ success: false, error: 'Invalid request.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'Invalid request.', envProbe: probe }, { status: 400 });
   }
 
   const { productId, qty, phone } = body || {};
@@ -25,10 +48,10 @@ export async function POST(req: NextRequest) {
   const mobile = String(phone || '').replace(/\D/g, '').slice(-10);
 
   if (!product) {
-    return NextResponse.json({ success: false, error: 'Product not found.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'Product not found.', envProbe: probe }, { status: 400 });
   }
   if (mobile.length !== 10) {
-    return NextResponse.json({ success: false, error: 'A valid 10-digit phone number is required.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'A valid 10-digit phone number is required.', envProbe: probe }, { status: 400 });
   }
 
   // SECURITY: price + shipping from server catalog, never from the client.
@@ -46,6 +69,7 @@ export async function POST(req: NextRequest) {
       amount: total,
       subtotal,
       shipping,
+      envProbe: probe,
     });
   }
 
@@ -58,12 +82,13 @@ export async function POST(req: NextRequest) {
   });
 
   if (!result.success || !result.redirectUrl) {
-    console.error('[phonepe/initiate] failed', { productId, quantity, amountPaise, error: result.error });
+    console.error('[phonepe/initiate] failed', { productId, quantity, amountPaise, error: result.error, envProbe: probe });
     return NextResponse.json(
       {
         success: false,
         error: 'Could not start online payment. Please try WhatsApp instead.',
         detail: result.error,
+        envProbe: probe,
       },
       { status: 502 }
     );
@@ -76,5 +101,6 @@ export async function POST(req: NextRequest) {
     amount: total,
     subtotal,
     shipping,
+    envProbe: probe,
   });
 }

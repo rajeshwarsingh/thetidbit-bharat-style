@@ -1,26 +1,5 @@
 {
-  "/api/order/notify/route": "app/api/order/notify/route.js",
-  "/api/admin/tracking-map/route": "app/api/admin/tracking-map/route.js",
-  "/api/phonepe/status/route": "app/api/phonepe/status/route.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/trackcourier/route": "app/api/trackcourier/route.js",
-  "/api/track-by-mobile/route": "app/api/track-by-mobile/route.js",
   "/api/phonepe/initiate/route": "app/api/phonepe/initiate/route.js",
   "/checkout/page": "app/checkout/page.js",
-  "/collections/page": "app/collections/page.js",
-  "/bulk/page": "app/bulk/page.js",
-  "/about/page": "app/about/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/order/status/page": "app/order/status/page.js",
-  "/ops/tracking/page": "app/ops/tracking/page.js",
-  "/products/page": "app/products/page.js",
-  "/home-one/page": "app/home-one/page.js",
-  "/page": "app/page.js",
-  "/order/pay/page": "app/order/pay/page.js",
-  "/products/[productId]/page": "app/products/[productId]/page.js",
-  "/story/page": "app/story/page.js",
-  "/track/page": "app/track/page.js",
-  "/stories/page": "app/stories/page.js",
-  "/wishlist/page": "app/wishlist/page.js",
-  "/stories/[slug]/page": "app/stories/[slug]/page.js"
+  "/page": "app/page.js"
 }
