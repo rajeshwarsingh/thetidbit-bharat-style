@@ -1,280 +1,188 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
-import { dirname, join } from 'node:path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const rootDir = join(__dirname, '..');
-
-const BASE_URL = 'https://thetidbit.in';
-const NOW = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-// test
-
-// Catalog product slugs for sitemap (must match data/catalogs.ts CATALOGS).
-// No colour variations — each catalog is a single standalone URL.
-const PRODUCT_SITEMAP = [
-  { productId: 'round-sling-blue' },
-  { productId: 'round-sling-red' },
-  { productId: 'round-sling-pink' },
-  { productId: 'round-sling-sand' },
-  { productId: 'butterfly-sling-blue' },
-  { productId: 'butterfly-sling-pink' },
-  { productId: 'evil-eye-sling-blue' },
-  { productId: 'evil-eye-sling-pink' },
-  { productId: 'woven-sling-black' },
-  { productId: 'chain-sling-yellow' },
-  { productId: 'jute-tote-purple' },
-  { productId: 'classic-sling-blue-wave' },
-];
-
 /**
- * Load stories by parsing the TypeScript file
- * Uses a more robust parsing approach that handles nested objects
+ * Generate sitemap index + sub-sitemaps for thetidbit.in
+ *
+ * sitemap.xml              → index
+ * sitemap-pages.xml        → home, collections (+ filters), about, bulk, contact, stories hub
+ * sitemap-products.xml     → all 12 signature PDPs with images
+ * sitemap-stories.xml      → all story articles with images
+ * sitemap-images.xml       → product + story image discovery (PDP-linked)
  */
-async function loadStories() {
-  const storiesPath = join(rootDir, 'data', 'stories.ts');
-  const storiesContent = await readFile(storiesPath, 'utf8');
-  
-  const stories = [];
-  
-  // Extract stories array section
-  const storiesArrayMatch = storiesContent.match(/export const stories: Story\[\] = \[([\s\S]*)\];/);
-  if (!storiesArrayMatch) {
-    throw new Error('Could not find stories array');
-  }
-  
-  const storiesArrayContent = storiesArrayMatch[1];
-  
-  // Split stories by looking for pattern "  },\n  {" which separates story objects
-  // But we need to handle nested braces properly
-  const storyMatches = [];
-  let currentPos = 0;
-  
-  // Find all story starts (id: 'X')
-  const idPattern = /id:\s*['"](\d+)['"]/g;
-  const idMatches = [...storiesArrayContent.matchAll(idPattern)];
-  
-  for (let i = 0; i < idMatches.length; i++) {
-    const idMatch = idMatches[i];
-    const storyStart = idMatch.index;
-    
-    // Find the opening brace before this id
-    let braceStart = storyStart;
-    while (braceStart > 0 && storiesArrayContent[braceStart] !== '{') {
-      braceStart--;
-    }
-    
-    // Find the matching closing brace
-    let braceCount = 0;
-    let braceEnd = braceStart;
-    for (let j = braceStart; j < storiesArrayContent.length; j++) {
-      if (storiesArrayContent[j] === '{') braceCount++;
-      if (storiesArrayContent[j] === '}') {
-        braceCount--;
-        if (braceCount === 0) {
-          braceEnd = j + 1;
-          break;
-        }
-      }
-    }
-    
-    const storyBlock = storiesArrayContent.substring(braceStart, braceEnd);
-    
-    // Extract fields
-    const slugMatch = storyBlock.match(/slug:\s*['"]([^'"]+)['"]/);
-    const titleMatch = storyBlock.match(/title:\s*['"]([^'"]+)['"]/);
-    const excerptMatch = storyBlock.match(/excerpt:\s*['"]([^'"]+)['"]/);
-    const heroImageMatch = storyBlock.match(/heroImage:\s*['"]([^'"]+)['"]/);
-    const heroImageAltMatch = storyBlock.match(/heroImageAlt:\s*['"]([^'"]+)['"]/);
-    const publishDateMatch = storyBlock.match(/publishDate:\s*['"]([^'"]+)['"]/);
-    
-    if (slugMatch && titleMatch && excerptMatch && heroImageMatch && heroImageAltMatch && publishDateMatch) {
-      // Extract lifestyle images
-      const lifestyleImages = [];
-      const lifestyleImagesMatch = storyBlock.match(/lifestyleImages:\s*\[([\s\S]*?)\]/);
-      if (lifestyleImagesMatch) {
-        const imagesContent = lifestyleImagesMatch[1];
-        const imageUrlMatches = [...imagesContent.matchAll(/url:\s*['"]([^'"]+)['"][\s\S]*?alt:\s*['"]([^'"]+)['"]/g)];
-        for (const imgMatch of imageUrlMatches) {
-          lifestyleImages.push({
-            url: imgMatch[1],
-            alt: imgMatch[2]
-          });
-        }
-      }
-      
-      stories.push({
-        id: idMatch[1],
-        slug: slugMatch[1],
-        title: titleMatch[1],
-        excerpt: excerptMatch[1],
-        heroImage: heroImageMatch[1],
-        heroImageAlt: heroImageAltMatch[1],
-        publishDate: publishDateMatch[1],
-        lifestyleImages
-      });
-    }
-  }
-  
-  if (stories.length === 0) {
-    throw new Error('No stories found. Please check stories.ts format.');
-  }
-  
-  return stories;
+import { writeFile, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import {
+  rootDir,
+  today,
+  loadCatalogProducts,
+  loadCollectionFilters,
+  loadStories,
+  STATIC_PAGES,
+  urlEntry,
+  wrapUrlset,
+  wrapSitemapIndex,
+} from './sitemap-data.mjs';
+
+const NOW = today();
+
+async function writeSitemap(filename, xml) {
+  const publicDir = join(rootDir, 'public');
+  await mkdir(publicDir, { recursive: true });
+  await writeFile(join(rootDir, filename), xml, 'utf8');
+  await writeFile(join(publicDir, filename), xml, 'utf8');
 }
 
-/**
- * Generate sitemap-stories.xml with story URLs and image tags
- */
+async function generatePagesSitemap(collectionFilters) {
+  let body = '';
+
+  for (const page of STATIC_PAGES) {
+    body += urlEntry({ ...page, lastmod: NOW });
+  }
+
+  for (const filter of collectionFilters) {
+    body += urlEntry({
+      loc: `/collections?filter=${filter}`,
+      lastmod: NOW,
+      changefreq: 'weekly',
+      priority: '0.85',
+    });
+  }
+
+  const xml = wrapUrlset(body);
+  await writeSitemap('sitemap-pages.xml', xml);
+  const count = STATIC_PAGES.length + collectionFilters.length;
+  console.log(`✓ Generated sitemap-pages.xml with ${count} URLs`);
+  return count;
+}
+
+async function generateProductsSitemap(products) {
+  let body = '';
+  for (const p of products) {
+    body += urlEntry({
+      loc: p.loc,
+      lastmod: NOW,
+      changefreq: 'weekly',
+      priority: '0.9',
+      images: p.images.slice(0, 8).map((url, i) => ({
+        url,
+        title: p.displayName,
+        caption: i === 0 ? `${p.displayName} — TheTidbit handmade jute bag` : `${p.displayName} view ${i + 1}`,
+      })),
+    });
+  }
+  const xml = wrapUrlset(body, true);
+  await writeSitemap('sitemap-products.xml', xml);
+  console.log(`✓ Generated sitemap-products.xml with ${products.length} product URLs`);
+  return products.length;
+}
+
 async function generateStoriesSitemap(stories) {
-  const imageNamespace = 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"';
-  
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        ${imageNamespace}>
-`;
+  let body = '';
+  for (const story of stories) {
+    const images = [
+      { url: story.heroImage, title: story.title, caption: story.heroImageAlt },
+      ...story.lifestyleImages.map((img) => ({ url: img.url, caption: img.alt })),
+    ];
+    body += urlEntry({
+      loc: story.loc,
+      lastmod: story.publishDate.split('T')[0] || NOW,
+      changefreq: 'monthly',
+      priority: '0.8',
+      images,
+    });
+  }
+  const xml = wrapUrlset(body, true);
+  await writeSitemap('sitemap-stories.xml', xml);
+  console.log(`✓ Generated sitemap-stories.xml with ${stories.length} story URLs`);
+  return stories.length;
+}
+
+async function generateImageSitemap(products, stories) {
+  let body = '';
+
+  for (const p of products) {
+    if (!p.images.length) continue;
+    body += urlEntry({
+      loc: p.loc,
+      lastmod: NOW,
+      images: p.images.slice(0, 10).map((url) => ({ url, title: p.displayName })),
+    });
+  }
 
   for (const story of stories) {
-    const storyUrl = `${BASE_URL}/stories/${story.slug}`;
-    const lastmod = story.publishDate.split('T')[0] || NOW;
-    
-    xml += `  <url>
-    <loc>${storyUrl}</loc>
-    <lastmod>${lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>${story.heroImage}</image:loc>
-      <image:title><![CDATA[${story.title}]]></image:title>
-      <image:caption><![CDATA[${story.heroImageAlt}]]></image:caption>
-    </image:image>
-`;
-
-    // Include lifestyle images if they exist
-    if (story.lifestyleImages && story.lifestyleImages.length > 0) {
-      for (const lifestyleImage of story.lifestyleImages) {
-        xml += `    <image:image>
-      <image:loc>${lifestyleImage.url}</image:loc>
-      <image:caption><![CDATA[${lifestyleImage.alt}]]></image:caption>
-    </image:image>
-`;
-      }
-    }
-    
-    xml += `  </url>
-`;
+    const images = [
+      { url: story.heroImage, title: story.title },
+      ...story.lifestyleImages.map((img) => ({ url: img.url, caption: img.alt })),
+    ];
+    body += urlEntry({
+      loc: story.loc,
+      lastmod: story.publishDate.split('T')[0] || NOW,
+      images,
+    });
   }
 
-  xml += `</urlset>`;
-
-  // Write to both root and public directories
-  const publicDir = join(rootDir, 'public');
-  await mkdir(publicDir, { recursive: true });
-  
-  await writeFile(join(rootDir, 'sitemap-stories.xml'), xml, 'utf8');
-  await writeFile(join(publicDir, 'sitemap-stories.xml'), xml, 'utf8');
-  
-  console.log(`✓ Generated sitemap-stories.xml with ${stories.length} story URLs`);
+  const xml = wrapUrlset(body, true);
+  await writeSitemap('sitemap-images.xml', xml);
+  const imageCount = products.reduce((n, p) => n + p.images.length, 0)
+    + stories.reduce((n, s) => n + 1 + s.lifestyleImages.length, 0);
+  console.log(`✓ Generated sitemap-images.xml (${products.length + stories.length} pages, ~${imageCount} images)`);
 }
 
-/**
- * Generate main sitemap.xml with core pages and product pages
- */
-async function generateMainSitemap() {
-  const routes = [
-    { loc: '/', changefreq: 'daily', priority: '1.0' },
-    { loc: '/products', changefreq: 'weekly', priority: '0.9' },
-    { loc: '/about', changefreq: 'monthly', priority: '0.8' },
-    { loc: '/stories', changefreq: 'weekly', priority: '0.9' },
-  ];
-
-  // Add each catalog product page (SEO-friendly single-slug URLs, no colours)
-  for (const { productId } of PRODUCT_SITEMAP) {
-    routes.push({ loc: `/products/${productId}`, changefreq: 'weekly', priority: '0.9' });
-  }
-  // Bulk & collection landing pages
-  routes.push({ loc: '/collections', changefreq: 'weekly', priority: '0.9' });
-  routes.push({ loc: '/bulk', changefreq: 'monthly', priority: '0.8' });
-  routes.push({ loc: '/contact', changefreq: 'monthly', priority: '0.6' });
-
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`;
-
-  for (const route of routes) {
-    xml += `  <url>
-    <loc>${BASE_URL}${route.loc}</loc>
-    <lastmod>${NOW}</lastmod>
-    <changefreq>${route.changefreq}</changefreq>
-    <priority>${route.priority}</priority>
-  </url>
-`;
-  }
-
-  xml += `</urlset>`;
-
-  const publicDir = join(rootDir, 'public');
-  await mkdir(publicDir, { recursive: true });
-  
-  // Write as sitemap-main.xml (we'll reference it in the index)
-  await writeFile(join(rootDir, 'sitemap-main.xml'), xml, 'utf8');
-  await writeFile(join(publicDir, 'sitemap-main.xml'), xml, 'utf8');
-  
-  console.log(`✓ Generated sitemap-main.xml with ${routes.length} core URLs`);
-}
-
-/**
- * Generate sitemap index that references all sitemaps
- */
 async function generateSitemapIndex() {
-  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>${BASE_URL}/sitemap-main.xml</loc>
-    <lastmod>${NOW}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE_URL}/sitemap-stories.xml</loc>
-    <lastmod>${NOW}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>${BASE_URL}/sitemap-images.xml</loc>
-    <lastmod>${NOW}</lastmod>
-  </sitemap>
-</sitemapindex>
-`;
-
-  const publicDir = join(rootDir, 'public');
-  await mkdir(publicDir, { recursive: true });
-  
-  // Write sitemap index as sitemap.xml (since that's what robots.txt references)
-  await writeFile(join(rootDir, 'sitemap.xml'), indexXml, 'utf8');
-  await writeFile(join(publicDir, 'sitemap.xml'), indexXml, 'utf8');
-  
+  const indexXml = wrapSitemapIndex(
+    ['/sitemap-pages.xml', '/sitemap-products.xml', '/sitemap-stories.xml', '/sitemap-images.xml'],
+    NOW,
+  );
+  await writeSitemap('sitemap.xml', indexXml);
   console.log('✓ Generated sitemap index (sitemap.xml)');
 }
 
-/**
- * Main execution
- */
+/** @deprecated kept for backwards compat — same as pages + products combined count */
+async function generateMainSitemap(products, collectionFilters) {
+  let body = '';
+  for (const page of STATIC_PAGES) {
+    body += urlEntry({ ...page, lastmod: NOW });
+  }
+  for (const filter of collectionFilters) {
+    body += urlEntry({
+      loc: `/collections?filter=${filter}`,
+      lastmod: NOW,
+      changefreq: 'weekly',
+      priority: '0.85',
+    });
+  }
+  for (const p of products) {
+    body += urlEntry({
+      loc: p.loc,
+      lastmod: NOW,
+      changefreq: 'weekly',
+      priority: '0.9',
+    });
+  }
+  const xml = wrapUrlset(body);
+  await writeSitemap('sitemap-main.xml', xml);
+  console.log(`✓ Generated sitemap-main.xml (legacy combined, ${STATIC_PAGES.length + collectionFilters.length + products.length} URLs)`);
+}
+
 async function main() {
   try {
     console.log('Generating sitemaps...\n');
-    
-    // Load stories data
-    const stories = await loadStories();
-    console.log(`✓ Loaded ${stories.length} stories\n`);
-    
-    // First generate the stories sitemap
+
+    const [products, stories, collectionFilters] = await Promise.all([
+      loadCatalogProducts(),
+      loadStories(),
+      loadCollectionFilters(),
+    ]);
+
+    console.log(`✓ Loaded ${products.length} products, ${stories.length} stories, ${collectionFilters.length} collection filters\n`);
+
+    await generatePagesSitemap(collectionFilters);
+    await generateProductsSitemap(products);
     await generateStoriesSitemap(stories);
-    
-    // Then generate the main sitemap
-    await generateMainSitemap();
-    
-    // Finally, generate the sitemap index
+    await generateImageSitemap(products, stories);
+    await generateMainSitemap(products, collectionFilters);
     await generateSitemapIndex();
-    
-    console.log('\n✓ All sitemaps generated successfully!');
+
+    const total = STATIC_PAGES.length + collectionFilters.length + products.length + stories.length;
+    console.log(`\n✓ All sitemaps generated — ${total} indexable URLs across pages, products & stories`);
   } catch (error) {
     console.error('Error generating sitemaps:', error);
     process.exit(1);

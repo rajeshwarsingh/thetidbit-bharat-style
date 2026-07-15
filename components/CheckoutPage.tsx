@@ -7,6 +7,7 @@ import { getCatalogItem } from '../data/catalog';
 import { cloudinaryTransform } from '../utils/cloudinary';
 import { Order, saveOrder, orderWhatsAppUrl } from '../utils/order';
 import { orderGrandTotal } from '../utils/pricing';
+import MarketplaceTrustStrip from './MarketplaceTrustStrip';
 
 const CheckoutPage: React.FC = () => {
   const [params] = useSearchParams();
@@ -36,9 +37,11 @@ const CheckoutPage: React.FC = () => {
   const { subtotal, shipping, gst, gstPercent, total } = orderGrandTotal(item.price, qty);
   const emailTrimmed = email.trim();
 
+  const displayTitle = item.product.displayName || item.name;
+
   const buildOrder = (): Order => ({
     productId: item.productId,
-    productName: item.name,
+    productName: displayTitle,
     unitPrice: item.price,
     qty,
     subtotal,
@@ -234,11 +237,11 @@ const CheckoutPage: React.FC = () => {
               <div className="flex gap-4">
                 <img
                   src={cloudinaryTransform(item.image, { w: 160 })}
-                  alt={item.name}
+                  alt={displayTitle}
                   className="w-20 h-20 rounded-xl object-cover bg-stone-100 dark:bg-stone-800"
                 />
                 <div className="min-w-0">
-                  <p className="font-semibold text-sm text-stone-900 dark:text-stone-100 leading-snug line-clamp-2">{item.name}</p>
+                  <p className="font-semibold text-sm text-stone-900 dark:text-stone-100 leading-snug line-clamp-2">{displayTitle}</p>
                   <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">₹{item.price}</p>
                 </div>
               </div>
@@ -287,6 +290,7 @@ const CheckoutPage: React.FC = () => {
                   Prices are inclusive of GST @ {gstPercent}%. Free shipping. Tax invoice emailed after payment.
                 </p>
               </div>
+              <MarketplaceTrustStrip className="mt-4" />
             </div>
           </div>
         </div>

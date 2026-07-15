@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Link } from '@/lib/router';
-import { Star, Heart, ShoppingBag, MessageCircle } from 'lucide-react';
+import { Heart, ShoppingBag, MessageCircle } from 'lucide-react';
 import { CatalogItem } from '../types';
 import { getProductDetailUrl } from '../constants';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
@@ -135,17 +135,7 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
             {item.shortName}
           </h3>
         )}
-        <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-2">{item.product.tagline || 'Made to order'}</p>
-
-        {/* Rating */}
-        <div className="flex items-center gap-1.5 mb-2">
-          <div className="flex text-amber-500">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <Star key={i} size={13} className="fill-current" />
-            ))}
-          </div>
-          <span className="text-xs text-stone-500 dark:text-stone-400">4.8</span>
-        </div>
+        <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-2">{item.product.tagline || 'Handmade in India'}</p>
 
         {/* Price */}
         <div className="flex items-baseline gap-2 mb-3">

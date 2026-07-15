@@ -254,7 +254,7 @@ const HomePage: React.FC = () => {
                 <p className="text-lg lg:text-xl text-white/90 leading-relaxed mb-4 max-w-xl">
                   Premium handmade jute bags for women — eco-friendly sling bags and stylish handbags for office, college, travel and everyday life, made in India.
                 </p>
-                <p className="text-sm lg:text-base text-emerald-200/95 font-semibold mb-7">Trusted by 1000+ women across India</p>
+                <p className="text-sm lg:text-base text-emerald-200/95 font-semibold mb-7">Handmade in India · Free shipping · Ready to ship</p>
                 <div className="flex flex-wrap gap-2.5 mb-8">
                   {HERO_VALUE_POINTS.map((point) => (
                     <span key={point} className="inline-flex items-center rounded-full border border-white/30 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90 backdrop-blur-sm">
@@ -332,7 +332,7 @@ const HomePage: React.FC = () => {
               </p>
               <p className="text-[13px] text-white/70 tracking-wide mb-2">Office &nbsp;•&nbsp; College &nbsp;•&nbsp; Daily &nbsp;•&nbsp; Gifting</p>
               <p className="text-[17px] font-bold text-white mb-1.5">Starting at <span className="text-emerald-300">₹499</span></p>
-              <p className="text-[11px] text-white/60 mb-3.5 tracking-wide">Handmade Pieces &nbsp;•&nbsp; Made to Order</p>
+              <p className="text-[11px] text-white/60 mb-3.5 tracking-wide">Ready to ship &nbsp;•&nbsp; Ships in 24–48 hrs &nbsp;•&nbsp; Free delivery</p>
               <Link to="/collections" className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-3 rounded-xl font-bold text-sm shadow-lg active:scale-[0.98] transition-transform">
                 <ShoppingBag size={16} />
                 Shop the Collection
@@ -604,9 +604,11 @@ const HomePage: React.FC = () => {
               {[0, 1, 2, 3, 4].map((i) => (<Star key={i} size={20} className="fill-current" />))}
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
-              Loved by <span className="text-brand-green dark:text-brand-green/80">1000+</span> Happy Customers
+              What our customers say
             </h2>
-            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">Real reviews from real women who chose sustainable style.</p>
+            <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              Real women across India sharing their everyday carry — also available on Amazon & Flipkart.
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto">
             {CUSTOMER_REVIEWS.map((review) => (
@@ -644,10 +646,10 @@ const HomePage: React.FC = () => {
           <div className="mt-12 sm:mt-16 pt-10 border-t border-stone-200 dark:border-stone-700">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               {[
-                { value: '1000+', label: 'Happy Customers' },
-                { value: '4.8★', label: 'Average Rating' },
-                { value: '98%', label: 'Would Recommend' },
-                { value: '5000+', label: 'Bags Sold' },
+                { value: '12+', label: 'Signature Styles' },
+                { value: 'India', label: 'Handmade Here' },
+                { value: 'Free', label: 'Shipping' },
+                { value: 'Amazon', label: '& Flipkart' },
               ].map((stat, i) => (
                 <div key={i}>
                   <div className="text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100 mb-1">{stat.value}</div>
@@ -679,7 +681,7 @@ const HomePage: React.FC = () => {
                 Get <span className="text-emerald-600 dark:text-emerald-400">₹100 Off</span> on Your First Order
               </h2>
               <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-8 max-w-lg mx-auto">
-                Join 1000+ women who chose sustainable style. Enter your WhatsApp number and get your exclusive first-order code instantly.
+                Join women who chose sustainable style. Enter your WhatsApp number and get your exclusive first-order code instantly.
               </p>
               {!offerSubmitted ? (
                 <form onSubmit={handleOfferSubmit} className="max-w-md mx-auto">

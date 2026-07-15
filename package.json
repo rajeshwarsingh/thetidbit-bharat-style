@@ -8,12 +8,12 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/generate-sitemaps.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-feed.mjs && next build",
+    "build": "node scripts/generate-sitemaps.mjs && node scripts/generate-feed.mjs && next build",
     "start": "next start",
     "generate-sitemaps": "node scripts/generate-sitemaps.mjs",
     "generate-feed": "node scripts/generate-feed.mjs",
-    "generate-image-sitemap": "node scripts/generate-image-sitemap.mjs",
-    "generate-all-seo": "node scripts/generate-sitemaps.mjs && node scripts/generate-image-sitemap.mjs && node scripts/generate-feed.mjs"
+    "generate-image-sitemap": "node scripts/generate-sitemaps.mjs",
+    "generate-all-seo": "node scripts/generate-sitemaps.mjs && node scripts/generate-feed.mjs"
   },
   "dependencies": {
     "lucide-react": "0.344.0",

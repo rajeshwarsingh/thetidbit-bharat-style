@@ -7,6 +7,7 @@ import {
 import SEO from './SEO';
 import Reveal from './Reveal';
 import YouMayLike from './YouMayLike';
+import MarketplaceTrustStrip from './MarketplaceTrustStrip';
 import { getCatalogItem } from '../data/catalog';
 import { CATALOG_COLLECTION } from '../data/catalogs';
 import { LOGO_URL } from '../constants';
@@ -178,6 +179,8 @@ const ProductDetail: React.FC = () => {
               <span className="mx-1">·</span>
               <MessageCircle size={13} className="text-brand-green" /> or order on WhatsApp — choose at checkout
             </p>
+
+            <MarketplaceTrustStrip className="mt-4" />
 
             <div className="mt-6 grid grid-cols-2 gap-3">
               {[
