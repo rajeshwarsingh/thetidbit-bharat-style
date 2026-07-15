@@ -538,6 +538,9 @@ video {
 .pointer-events-none {
   pointer-events: none;
 }
+.pointer-events-auto {
+  pointer-events: auto;
+}
 .visible {
   visibility: visible;
 }
@@ -851,6 +854,9 @@ video {
 }
 .ml-4 {
   margin-left: 1rem;
+}
+.ml-auto {
+  margin-left: auto;
 }
 .mr-1 {
   margin-right: 0.25rem;
@@ -1428,6 +1434,9 @@ video {
 }
 .gap-0 {
   gap: 0px;
+}
+.gap-0\.5 {
+  gap: 0.125rem;
 }
 .gap-1 {
   gap: 0.25rem;
@@ -5015,8 +5024,20 @@ object {
 
 @media (min-width: 768px) {
 
+  .md\:pointer-events-auto {
+    pointer-events: auto;
+  }
+
+  .md\:static {
+    position: static;
+  }
+
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .md\:ml-8 {
+    margin-left: 2rem;
   }
 
   .md\:block {
@@ -5049,6 +5070,14 @@ object {
 
   .md\:w-auto {
     width: auto;
+  }
+
+  .md\:flex-1 {
+    flex: 1 1 0%;
+  }
+
+  .md\:flex-none {
+    flex: none;
   }
 
   .md\:grid-cols-2 {

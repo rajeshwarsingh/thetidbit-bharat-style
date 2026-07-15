@@ -108,9 +108,9 @@ const Navbar: React.FC = () => {
 
         <nav className={`bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-700 transition-all duration-300 ${scrolled ? 'shadow-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="relative flex items-center h-16">
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center md:hidden shrink-0 z-10">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 p-2 transition-colors"
@@ -120,29 +120,31 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Logo Section */}
-          <div className="flex-1 flex justify-center md:justify-start">
-            <Link to="/" onClick={closeMenu} className="flex items-center gap-3 group focus:outline-none">
+          {/* Logo — absolutely centered on mobile, left-aligned on desktop */}
+          <div className="absolute inset-x-0 flex justify-center md:static md:flex-none md:justify-start pointer-events-none md:pointer-events-auto">
+            <Link
+              to="/"
+              onClick={closeMenu}
+              className="pointer-events-auto flex items-center gap-2 sm:gap-3 group focus:outline-none"
+            >
               <img
                 src={cloudinaryTransform(LOGO_URL, { w: 160 })}
                 srcSet={cloudinarySrcSet(LOGO_URL, [80, 120, 160, 240])}
                 sizes="40px"
                 alt="TheTidbit Logo"
-                className="h-10 w-auto"
+                className="h-8 w-auto sm:h-10 shrink-0"
                 width="40"
                 height="40"
                 decoding="async"
               />
-              <div className="flex flex-col items-start">
-                 <span className="font-serif text-2xl font-bold text-stone-900 dark:text-stone-100 tracking-tight leading-none group-hover:text-brand-green transition-colors">
-                    TheTidbit
-                 </span>
-              </div>
+              <span className="font-serif text-lg sm:text-2xl font-bold text-stone-900 dark:text-stone-100 tracking-tight leading-none group-hover:text-brand-green transition-colors whitespace-nowrap">
+                TheTidbit
+              </span>
             </Link>
           </div>
 
           {/* Desktop Nav Links - SEO Friendly Links */}
-          <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
+          <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8 md:ml-8 md:flex-1">
             {NAV_LINKS.map((link) => {
               const active = link.match(location.pathname);
               return (
@@ -158,7 +160,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right-side: Search + Track + Wishlist + Theme + Badge */}
-          <div className="flex items-center justify-end gap-1.5 sm:gap-2">
+          <div className="ml-auto flex items-center justify-end gap-0.5 sm:gap-2 shrink-0 z-10">
             <Link
               to="/collections"
               aria-label="Search products"
@@ -245,7 +247,7 @@ const Navbar: React.FC = () => {
                 <span
                   role="img"
                   aria-label={HEADER_BADGE.ariaLabel}
-                  className="text-4xl leading-none drop-shadow-sm"
+                  className="text-2xl sm:text-4xl leading-none drop-shadow-sm"
                 >
                   {HEADER_BADGE.variant === 'svg_india_flag' ? (
                     <span aria-hidden="true">

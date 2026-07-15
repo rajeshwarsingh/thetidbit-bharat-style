@@ -76,9 +76,9 @@ export interface StatusResult {
 
 let cachedToken: { token: string; expiresAt: number } | null = null;
 
-async function v2Token(): Promise<string | null> {
+async function v2Token(): Promise<{ token: string } | { error: string }> {
   const now = Math.floor(Date.now() / 1000);
-  if (cachedToken && cachedToken.expiresAt - 60 > now) return cachedToken.token;
+  if (cachedToken && cachedToken.expiresAt - 60 > now) return { token: cachedToken.token };
   try {
     const res = await fetch(V2_AUTH, {
       method: 'POST',
@@ -90,20 +90,25 @@ async function v2Token(): Promise<string | null> {
         grant_type: 'client_credentials',
       }),
     });
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
     if (data?.access_token) {
       cachedToken = { token: data.access_token, expiresAt: data.expires_at || now + 3000 };
-      return data.access_token;
+      return { token: data.access_token };
     }
-    return null;
-  } catch {
-    return null;
+    const detail = data?.message || data?.code || `HTTP ${res.status}`;
+    console.error('[PhonePe OAuth failed]', { env: ENV, url: V2_AUTH, detail, code: data?.code });
+    return {
+      error: `PhonePe auth failed (${ENV}): ${detail}. If this is a UAT client, set PHONEPE_ENV=sandbox.`,
+    };
+  } catch (e: any) {
+    return { error: `PhonePe auth network error: ${String(e?.message ?? e)}` };
   }
 }
 
 async function v2Initiate(args: InitiateArgs): Promise<InitiateResult> {
-  const token = await v2Token();
-  if (!token) return { success: false, error: 'Could not authenticate with PhonePe.' };
+  const auth = await v2Token();
+  if ('error' in auth) return { success: false, error: auth.error };
+  const token = auth.token;
   try {
     const res = await fetch(`${V2_BASE}/checkout/v2/pay`, {
       method: 'POST',
@@ -128,11 +133,11 @@ async function v2Initiate(args: InitiateArgs): Promise<InitiateResult> {
 }
 
 async function v2Status(orderId: string): Promise<StatusResult> {
-  const token = await v2Token();
-  if (!token) return { state: 'UNKNOWN' };
+  const auth = await v2Token();
+  if ('error' in auth) return { state: 'UNKNOWN' };
   try {
     const res = await fetch(`${V2_BASE}/checkout/v2/order/${orderId}/status`, {
-      headers: { Authorization: `O-Bearer ${token}` },
+      headers: { Authorization: `O-Bearer ${auth.token}` },
     });
     const data = await res.json();
     return { state: (data?.state as StatusResult['state']) || 'UNKNOWN', amountPaise: data?.amount };
