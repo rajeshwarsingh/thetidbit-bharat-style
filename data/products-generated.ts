@@ -17,7 +17,7 @@ export const PRODUCT_1: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -53,7 +53,7 @@ export const PRODUCT_2: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -100,7 +100,7 @@ export const PRODUCT_3: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -136,7 +136,7 @@ export const PRODUCT_4: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -172,7 +172,7 @@ export const PRODUCT_5: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -208,7 +208,7 @@ export const PRODUCT_6: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -244,7 +244,7 @@ export const PRODUCT_7: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -279,7 +279,7 @@ export const PRODUCT_8: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -334,7 +334,7 @@ export const PRODUCT_9: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -369,7 +369,7 @@ export const PRODUCT_10: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -415,7 +415,7 @@ export const PRODUCT_11: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -459,7 +459,7 @@ export const PRODUCT_12: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -493,7 +493,7 @@ export const PRODUCT_13: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -528,7 +528,7 @@ export const PRODUCT_14: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -574,7 +574,7 @@ export const PRODUCT_15: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -609,7 +609,7 @@ export const PRODUCT_16: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -644,7 +644,7 @@ export const PRODUCT_17: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -678,7 +678,7 @@ export const PRODUCT_18: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -715,7 +715,7 @@ export const PRODUCT_19: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -752,7 +752,7 @@ export const PRODUCT_20: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -789,7 +789,7 @@ export const PRODUCT_21: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -826,7 +826,7 @@ export const PRODUCT_22: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -863,7 +863,7 @@ export const PRODUCT_23: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -900,7 +900,7 @@ export const PRODUCT_24: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -935,7 +935,7 @@ export const PRODUCT_25: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -970,7 +970,7 @@ export const PRODUCT_26: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -1004,7 +1004,7 @@ export const PRODUCT_27: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -1038,7 +1038,7 @@ export const PRODUCT_28: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1074,7 +1074,7 @@ export const PRODUCT_29: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1110,7 +1110,7 @@ export const PRODUCT_30: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1144,7 +1144,7 @@ export const PRODUCT_31: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1179,7 +1179,7 @@ export const PRODUCT_32: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1214,7 +1214,7 @@ export const PRODUCT_33: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1260,7 +1260,7 @@ export const PRODUCT_34: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1296,7 +1296,7 @@ export const PRODUCT_35: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1332,7 +1332,7 @@ export const PRODUCT_36: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1368,7 +1368,7 @@ export const PRODUCT_37: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1414,7 +1414,7 @@ export const PRODUCT_38: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1460,7 +1460,7 @@ export const PRODUCT_39: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1506,7 +1506,7 @@ export const PRODUCT_40: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Lightweight and easy to carry",
@@ -1540,7 +1540,7 @@ export const PRODUCT_41: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1576,7 +1576,7 @@ export const PRODUCT_42: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -1612,7 +1612,7 @@ export const PRODUCT_43: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",

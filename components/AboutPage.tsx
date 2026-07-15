@@ -2,38 +2,20 @@
 import React from 'react';
 import { ArrowLeft, Quote, Heart, MapPin } from 'lucide-react';
 import { Link } from '@/lib/router';
-import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE, MISSION_IMAGE, LOGO_URL } from '../constants';
+import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE, MISSION_IMAGE } from '../constants';
 import SEO from './SEO';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
+import { ABOUT_META } from '../lib/seo-content';
 
 const AboutPage: React.FC = () => {
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "TheTidbit",
-    "alternateName": "TheTidbit",
-    "url": "https://bharat.style",
-    "logo": LOGO_URL,
-    "founder": {
-      "@type": "Organization",
-      "name": "TheTidbit"
-    },
-    "knowsAbout": ["Sustainable Fashion", "Handmade Crafts", "Indian Handicrafts", "Jute Products"],
-    "areaServed": {
-      "@type": "Country",
-      "name": "India"
-    }
-  };
-
   return (
     <div className="bg-white min-h-screen">
       <SEO 
-        title="Our Story - TheTidbit"
-        description="The real story behind TheTidbit. How we connect rural Indian artisans with urban homes through beautiful, handmade jute bags. A journey of craft, care, and connection."
-        canonicalUrl="https://bharat.style/about"
+        title={ABOUT_META.title}
+        description={ABOUT_META.description}
+        canonicalUrl="https://thetidbit.in/about"
         type="website"
         image={MISSION_IMAGE}
-        schema={organizationSchema}
       />
 
       {/* Hero Section - Clean, no overlay */}

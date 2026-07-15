@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
-const BASE_URL = 'https://bharat.style';
+const BASE_URL = 'https://thetidbit.in';
 const NOW = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
 // test
 
@@ -24,6 +24,7 @@ const PRODUCT_SITEMAP = [
   { productId: 'woven-sling-black' },
   { productId: 'chain-sling-yellow' },
   { productId: 'jute-tote-purple' },
+  { productId: 'classic-sling-blue-wave' },
 ];
 
 /**
@@ -184,9 +185,7 @@ async function generateMainSitemap() {
     { loc: '/', changefreq: 'daily', priority: '1.0' },
     { loc: '/products', changefreq: 'weekly', priority: '0.9' },
     { loc: '/about', changefreq: 'monthly', priority: '0.8' },
-    { loc: '/story', changefreq: 'monthly', priority: '0.8' },
     { loc: '/stories', changefreq: 'weekly', priority: '0.9' },
-    { loc: '/track', changefreq: 'weekly', priority: '0.7' },
   ];
 
   // Add each catalog product page (SEO-friendly single-slug URLs, no colours)

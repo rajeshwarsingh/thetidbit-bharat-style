@@ -92,7 +92,7 @@ function buildInvoiceHtml(order: OrderPayload, txn: string, paid: boolean, forCu
               <div style="font-size:11px;color:#a8a29e;text-transform:uppercase;letter-spacing:0.08em;">From</div>
               <div style="font-weight:700;margin-top:6px;">TheTidbit</div>
               <div style="font-size:13px;color:#57534e;line-height:1.5;margin-top:4px;">
-                ${esc(CONTACT_INFO.address)}<br/>
+                ${CONTACT_INFO.addressLines.map((line) => esc(line)).join('<br/>')}<br/>
                 ${esc(CONTACT_INFO.email)} · ${esc(CONTACT_INFO.mobile)}
                 ${GSTIN ? `<br/>GSTIN: ${esc(GSTIN)}` : ''}
               </div>

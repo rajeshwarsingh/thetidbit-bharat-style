@@ -7,7 +7,8 @@ import Reveal from './Reveal';
 import CatalogProductCard from './CatalogProductCard';
 import { getAllCatalogItems, COLLECTIONS } from '../data/catalog';
 import { CatalogItem, CollectionTag } from '../types';
-import { bulkInquiryUrl, openWhatsApp } from '../utils/whatsapp';
+import { SITE_URL } from '../lib/seo';
+import { COLLECTION_SEO, COLLECTIONS_META, collectionPageJsonLd } from '../lib/seo-content';
 
 type FilterId = 'all' | CollectionTag;
 
@@ -21,9 +22,15 @@ const PAGE_SIZE = 12;
 const CollectionsPage: React.FC = () => {
   const [params, setParams] = useSearchParams();
   const filter = (params.get('filter') as FilterId) || 'all';
-  const [query, setQuery] = useState('');
+  const urlQuery = params.get('q') || '';
+  const [query, setQuery] = useState(urlQuery);
   const [visible, setVisible] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
+
+  // Keep local search input in sync when landing via SearchAction (?q=).
+  useEffect(() => {
+    setQuery(urlQuery);
+  }, [urlQuery]);
 
   const allItems = useMemo(() => getAllCatalogItems(), []);
 
@@ -35,19 +42,20 @@ const CollectionsPage: React.FC = () => {
     if (q) {
       items = items.filter(
         (i) =>
+          i.name.toLowerCase().includes(q) ||
           i.shortName.toLowerCase().includes(q) ||
+          (i.product.displayName || '').toLowerCase().includes(q) ||
           i.color.name.toLowerCase().includes(q) ||
           i.collection.toLowerCase().includes(q) ||
-          i.category.join(' ').toLowerCase().includes(q)
+          i.category.join(' ').toLowerCase().includes(q) ||
+          (i.product.tagline || '').toLowerCase().includes(q)
       );
     }
     return items;
   }, [allItems, filter, query]);
 
-  // Reset paging when the filter/search changes.
   useEffect(() => setVisible(PAGE_SIZE), [filter, query]);
 
-  // Infinite loading.
   useEffect(() => {
     const el = sentinelRef.current;
     if (!el) return;
@@ -68,17 +76,36 @@ const CollectionsPage: React.FC = () => {
     setParams(next, { replace: true });
   };
 
+  const commitSearch = (value: string) => {
+    setQuery(value);
+    const next = new URLSearchParams(params);
+    if (value.trim()) next.set('q', value.trim());
+    else next.delete('q');
+    setParams(next, { replace: true });
+  };
+
   const shown = filtered.slice(0, visible);
+  const seoBlock = filter !== 'all' ? COLLECTION_SEO[filter] : null;
+  const pageTitle = seoBlock ? seoBlock.h1Hint : 'Handmade bags for every day';
+  const pageDescription = seoBlock ? seoBlock.description : COLLECTIONS_META.description;
+  const collectionSchema = collectionPageJsonLd({
+    name: seoBlock ? seoBlock.label : COLLECTIONS_META.title,
+    description: pageDescription,
+    url:
+      filter !== 'all'
+        ? `${SITE_URL}/collections?filter=${filter}`
+        : `${SITE_URL}/collections`,
+    products: filtered.map((i) => ({
+      name: i.product.displayName || i.name,
+      url: i.url,
+      image: i.image,
+    })),
+  });
 
   return (
     <>
-      <SEO
-        title="Collections — Signature & Made-on-Demand Bags"
-        description="Browse TheTidbit's full range of handmade jute bags. Shop the ready-to-ship Signature Collection or request a quote for made-on-demand, bulk and corporate orders."
-        canonicalUrl="https://thetidbit.in/collections"
-      />
+      <SEO schema={collectionSchema} />
 
-      {/* Page header */}
       <section className="bg-jute-100 dark:bg-stone-950 py-12 sm:py-16 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal>
@@ -86,32 +113,34 @@ const CollectionsPage: React.FC = () => {
               <Sparkles size={14} /> The Collection
             </span>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">
-              Find your everyday bag
+              {pageTitle}
             </h1>
-            <p className="mt-3 text-stone-600 dark:text-stone-400 max-w-xl mx-auto">
-              In-stock handmade jute bags — free shipping across India, Cash on Delivery & easy returns.
+            <p className="mt-3 text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+              {pageDescription}
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Sticky controls */}
       <div className="sticky top-[92px] sm:top-[100px] z-30 bg-white/95 dark:bg-stone-900/95 backdrop-blur border-b border-stone-200 dark:border-stone-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
-          {/* Search */}
           <div className="relative max-w-md mx-auto">
             <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onBlur={() => commitSearch(query)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') commitSearch(query);
+              }}
               placeholder="Search bags, colours, styles…"
               aria-label="Search products"
               className="w-full pl-10 pr-9 py-2.5 rounded-full border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
             />
             {query && (
               <button
-                onClick={() => setQuery('')}
+                onClick={() => commitSearch('')}
                 aria-label="Clear search"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
               >
@@ -119,7 +148,6 @@ const CollectionsPage: React.FC = () => {
               </button>
             )}
           </div>
-          {/* Filter chips */}
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 sm:justify-center scrollbar-none">
             {FILTERS.map((f) => (
               <button
@@ -138,14 +166,13 @@ const CollectionsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Bulk cross-sell (retail catalog; bulk lives on its own page) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
         <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between rounded-2xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 p-4 sm:p-5">
           <div className="flex items-start gap-3">
             <Package className="text-brand-green shrink-0 mt-0.5" size={22} />
             <p className="text-sm text-stone-600 dark:text-stone-300">
               <strong className="text-stone-900 dark:text-stone-100">In stock & ready to ship.</strong> Buy online via PhonePe or order on
-              WhatsApp (COD). Need bags in bulk for corporate gifting or reselling?
+              WhatsApp. Need bags in bulk for corporate gifting or reselling?
             </p>
           </div>
           <Link
@@ -157,40 +184,53 @@ const CollectionsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid */}
-      <section className="py-8 sm:py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-sm text-stone-500 dark:text-stone-400 mb-6">
-            {filtered.length} {filtered.length === 1 ? 'product' : 'products'}
-          </p>
-          {shown.length === 0 ? (
-            <div className="text-center py-20 text-stone-500 dark:text-stone-400">
-              No products match your search.
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {shown.map((item, i) => (
-                <Reveal key={item.key} delayMs={(i % 4) * 60}>
-                  <CatalogProductCard item={item} showCollection={filter === 'all'} />
-                </Reveal>
-              ))}
-            </div>
-          )}
-          <div ref={sentinelRef} className="h-10" />
-          {visible < filtered.length && (
-            <div className="text-center mt-4">
-              <button
-                onClick={() => setVisible((v) => Math.min(v + PAGE_SIZE, filtered.length))}
-                className="inline-flex items-center gap-2 border border-stone-300 dark:border-stone-600 text-stone-700 dark:text-stone-200 font-semibold px-6 py-3 rounded-full hover:border-brand-green transition-colors"
-              >
-                Load more
-              </button>
-            </div>
-          )}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        {shown.length === 0 ? (
+          <p className="text-center text-stone-500 py-16">No bags match that search. Try another colour or style.</p>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {shown.map((item, i) => (
+              <Reveal key={item.key} delayMs={(i % 4) * 60}>
+                <CatalogProductCard item={item} />
+              </Reveal>
+            ))}
+          </div>
+        )}
+        <div ref={sentinelRef} className="h-8" />
+      </section>
+
+      <section className="bg-stone-50 dark:bg-stone-900 border-t border-stone-200 dark:border-stone-800 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-3 gap-6 text-center sm:text-left">
+          <div>
+            <h2 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">Buying guides</h2>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
+              Learn how to choose handmade jute bags, style sling bags, and shop sustainable handbags in India.
+            </p>
+            <Link to="/stories" className="inline-flex mt-3 text-sm font-bold text-brand-green hover:underline">
+              Read stories
+            </Link>
+          </div>
+          <div>
+            <h2 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">Our craft</h2>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
+              TheTidbit is an Indian D2C brand making premium eco-friendly handbags with artisans.
+            </p>
+            <Link to="/about" className="inline-flex mt-3 text-sm font-bold text-brand-green hover:underline">
+              About TheTidbit
+            </Link>
+          </div>
+          <div>
+            <h2 className="font-serif text-xl font-bold text-stone-900 dark:text-stone-100">Corporate gifting</h2>
+            <p className="mt-2 text-sm text-stone-600 dark:text-stone-400">
+              Need bulk handmade bags for teams, weddings or brand merch? Request a wholesale quote.
+            </p>
+            <Link to="/bulk" className="inline-flex mt-3 text-sm font-bold text-brand-green hover:underline">
+              Bulk orders
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Bulk CTA footer */}
       <section className="bg-stone-900 dark:bg-stone-950 text-white py-14">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="font-serif text-2xl sm:text-3xl font-bold">Need bags in bulk?</h2>

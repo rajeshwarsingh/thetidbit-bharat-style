@@ -29,10 +29,10 @@ const SignatureCollection: React.FC<Props> = ({ limit, showCta = true }) => {
             <Sparkles size={14} /> Our Collection
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 leading-tight">
-            Handcrafted jute bags for every day
+            Premium handmade jute bags for women
           </h2>
           <p className="mt-4 text-stone-600 dark:text-stone-400 text-base sm:text-lg">
-            Shop our bestselling handmade bags — in stock and ready to ship. Free shipping across India, Cash on Delivery & easy returns.
+            Explore TheTidbit’s signature collection of eco-friendly handbags and sling bags — stylish everyday carry, made in India, ready to ship free across the country.
           </p>
         </Reveal>
 

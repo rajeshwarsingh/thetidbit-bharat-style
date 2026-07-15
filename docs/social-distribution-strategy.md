@@ -11,7 +11,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "Last month, my cousin did something unusual. Instead of buying another fast fashion bag, she chose something handmade. Here's why that choice matters: [link]"
 
-**Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -19,7 +19,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "What if your everyday bag could tell a story? Not just hold your wallet, but carry memories of the hands that made it: [link]"
 
-**Link:** `https://bharat.style/stories/a-simple-bag-that-carries-stories-not-just-essentials`
+**Link:** `https://thetidbit.in/stories/a-simple-bag-that-carries-stories-not-just-essentials`
 
 ---
 
@@ -27,7 +27,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "In living rooms across India, a quiet conversation is happening. Women are rethinking fashion, one thoughtful choice at a time. Read more: [link]"
 
-**Link:** `https://bharat.style/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
+**Link:** `https://thetidbit.in/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
 
 ---
 
@@ -35,7 +35,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "From a small village in West Bengal to your home. This is the journey of a handmade bag—and the stories it carries: [link]"
 
-**Link:** `https://bharat.style/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
+**Link:** `https://thetidbit.in/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
 
 ---
 
@@ -43,7 +43,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "After decades of polyester, women are falling back in love with natural fabrics. Here's why that matters: [link]"
 
-**Link:** `https://bharat.style/stories/why-women-are-falling-back-in-love-with-natural-fabrics`
+**Link:** `https://thetidbit.in/stories/why-women-are-falling-back-in-love-with-natural-fabrics`
 
 ---
 
@@ -51,7 +51,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "Every bag has a story. This one started in a workshop in West Bengal, made by hands that care. Read the full story: [link]"
 
-**Link:** `https://bharat.style/stories/a-simple-bag-that-carries-stories-not-just-essentials`
+**Link:** `https://thetidbit.in/stories/a-simple-bag-that-carries-stories-not-just-essentials`
 
 ---
 
@@ -59,7 +59,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "Why are Indian women choosing handmade over fast fashion? It's not about the bag—it's about values, stories, and choices that matter: [link]"
 
-**Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -67,7 +67,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "The shift isn't loud. It's quiet. It's happening in small choices, thoughtful purchases, women choosing differently. Read about it: [link]"
 
-**Link:** `https://bharat.style/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
+**Link:** `https://thetidbit.in/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
 
 ---
 
@@ -75,7 +75,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "Lakshmi sits on her porch, needle in hand, creating something beautiful. This is how traditions live on: [link]"
 
-**Link:** `https://bharat.style/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
+**Link:** `https://thetidbit.in/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
 
 ---
 
@@ -83,7 +83,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "My grandmother's jute bag is still going strong after 30 years. Can you imagine a fast fashion bag lasting that long? Here's why it matters: [link]"
 
-**Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -94,7 +94,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "What if your bag could tell stories? Not just hold your essentials, but carry the memories of the hands that made it. Link in bio 👆"
 
-**Story Link:** `https://bharat.style/stories/a-simple-bag-that-carries-stories-not-just-essentials`
+**Story Link:** `https://thetidbit.in/stories/a-simple-bag-that-carries-stories-not-just-essentials`
 
 ---
 
@@ -103,7 +103,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "My cousin Riya did something unusual last month. Instead of buying another fast fashion bag, she chose handmade. Here's why: Link in bio 💚"
 
-**Story Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Story Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -112,7 +112,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "A quiet revolution is happening in Indian homes. Women are choosing differently. Read the full story: Link in bio 👆"
 
-**Story Link:** `https://bharat.style/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
+**Story Link:** `https://thetidbit.in/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
 
 ---
 
@@ -121,7 +121,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "From a village in West Bengal to your home. The journey of a handmade bag—and why it matters: Link in bio 🌾"
 
-**Story Link:** `https://bharat.style/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
+**Story Link:** `https://thetidbit.in/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
 
 ---
 
@@ -130,7 +130,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "After years of synthetic fabrics, women are falling back in love with natural. Cotton. Jute. Linen. Here's why: Link in bio ✨"
 
-**Story Link:** `https://bharat.style/stories/why-women-are-falling-back-in-love-with-natural-fabrics`
+**Story Link:** `https://thetidbit.in/stories/why-women-are-falling-back-in-love-with-natural-fabrics`
 
 ---
 
@@ -139,7 +139,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "My grandmother's jute bag: 30 years old and still beautiful. Fast fashion bag: Falls apart in 3 months. Which one actually costs more? Read more: Link in bio 💭"
 
-**Story Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Story Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -148,7 +148,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "'Every bag I make is a piece of my story.' — Lakshmi Devi, Master Artisan. Read her story and the journey of handmade: Link in bio 🙏"
 
-**Story Link:** `https://bharat.style/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
+**Story Link:** `https://thetidbit.in/stories/from-rural-hands-to-urban-hearts-the-journey-of-a-handmade-bag`
 
 ---
 
@@ -157,7 +157,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "It's not about the bag. It's about choices that align with your values. Read about women choosing mindfully: Link in bio 💚"
 
-**Story Link:** `https://bharat.style/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
+**Story Link:** `https://thetidbit.in/stories/the-quiet-rise-of-sustainable-fashion-in-indian-homes`
 
 ---
 
@@ -166,7 +166,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "When something is made by human hands, it carries something machines can't replicate. Read why that matters: Link in bio ✨"
 
-**Story Link:** `https://bharat.style/stories/a-simple-bag-that-carries-stories-not-just-essentials`
+**Story Link:** `https://thetidbit.in/stories/a-simple-bag-that-carries-stories-not-just-essentials`
 
 ---
 
@@ -175,7 +175,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 **Caption:**
 "Maybe we've been asking the wrong question. Not 'What's new?' but 'What matters?' Read the full story: Link in bio 👆"
 
-**Story Link:** `https://bharat.style/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
+**Story Link:** `https://thetidbit.in/stories/why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
 
 ---
 
@@ -219,7 +219,7 @@ Share story links (not product links) with curiosity-driven captions that encour
 ## Quick Link Reference
 
 All story links follow this pattern:
-- Base URL: `https://bharat.style/stories/`
+- Base URL: `https://thetidbit.in/stories/`
 - Story slugs:
   - `why-indian-women-are-choosing-handmade-bags-over-fast-fashion`
   - `a-simple-bag-that-carries-stories-not-just-essentials`

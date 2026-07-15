@@ -1,6 +1,6 @@
 # SEO & Feed Setup Guide for Bharat.style
 
-This document outlines the complete SEO implementation for `https://bharat.style/` including sitemaps, feeds, structured data, and Google Search Console setup.
+This document outlines the complete SEO implementation for `https://thetidbit.in/` including sitemaps, feeds, structured data, and Google Search Console setup.
 
 ## 📋 Overview
 
@@ -53,7 +53,7 @@ Sitemaps are automatically generated during build and written to both:
 
 ### File: `feed.xml`
 
-RSS 2.0 feed located at `https://bharat.style/feed.xml`
+RSS 2.0 feed located at `https://thetidbit.in/feed.xml`
 
 **Features:**
 - Latest 10 stories/articles
@@ -72,7 +72,7 @@ npm run generate-feed
 
 Already added to `index.html`:
 ```html
-<link rel="alternate" type="application/rss+xml" title="Bharat.style Feed" href="https://bharat.style/feed.xml" />
+<link rel="alternate" type="application/rss+xml" title="Bharat.style Feed" href="https://thetidbit.in/feed.xml" />
 ```
 
 ## 🏗️ Structured Data (JSON-LD)
@@ -118,7 +118,7 @@ All pages use the `SEO` component (`components/SEO.tsx`) which includes:
 ### Open Graph Tags
 ```html
 <meta property="og:type" content="website|article|product" />
-<meta property="og:url" content="https://bharat.style/..." />
+<meta property="og:url" content="https://thetidbit.in/..." />
 <meta property="og:title" content="..." />
 <meta property="og:description" content="..." />
 <meta property="og:image" content="..." />
@@ -164,7 +164,7 @@ Each image entry includes:
 ### 1. Verify Property
 
 1. Go to [Google Search Console](https://search.google.com/search-console)
-2. Add property: `https://bharat.style/`
+2. Add property: `https://thetidbit.in/`
 3. Choose verification method:
    - **HTML tag** (recommended): Add meta tag to `index.html`
    - **DNS record**: Add TXT record to domain
@@ -173,12 +173,12 @@ Each image entry includes:
 ### 2. Submit Sitemaps
 
 After verification, submit:
-- `https://bharat.style/sitemap.xml` (index - will discover all others)
+- `https://thetidbit.in/sitemap.xml` (index - will discover all others)
 
 Or submit individually:
-- `https://bharat.style/sitemap-main.xml`
-- `https://bharat.style/sitemap-stories.xml`
-- `https://bharat.style/sitemap-images.xml`
+- `https://thetidbit.in/sitemap-main.xml`
+- `https://thetidbit.in/sitemap-stories.xml`
+- `https://thetidbit.in/sitemap-images.xml`
 
 ### 3. Monitor Coverage
 
@@ -301,7 +301,7 @@ npm run generate-image-sitemap
 All pages use canonical URLs via the `SEO` component:
 - Prevents duplicate content issues
 - Points to the primary version of each page
-- Format: `https://bharat.style/{path}`
+- Format: `https://thetidbit.in/{path}`
 
 ## 🎨 Image Mapping
 

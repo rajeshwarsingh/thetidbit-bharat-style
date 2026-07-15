@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
-const BASE_URL = 'https://bharat.style';
+const BASE_URL = 'https://thetidbit.in';
 const SITE_NAME = 'TheTidbit';
 const SITE_DESCRIPTION = 'Eco-friendly, artistic, handmade jute bags by TheTidbit. Sustainable fashion for the modern boho soul.';
 

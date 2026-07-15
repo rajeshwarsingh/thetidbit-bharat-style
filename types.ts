@@ -64,7 +64,11 @@ export interface ProductDetails {
   id: string;
   brand: string;
   name: string;
+  /** Short H1-friendly title (optional; falls back to name). */
+  displayName?: string;
   tagline: string;
+  /** Unique natural-language product description for PDP + schema. */
+  description?: string;
   price: number;
   mrp: number;
   discountPercentage: number;

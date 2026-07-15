@@ -11,14 +11,12 @@ import {
   Briefcase,
   Truck,
   ShieldCheck,
-  RefreshCcw,
   Quote,
   Send,
   Heart,
   Camera,
   CheckCircle2,
 } from 'lucide-react';
-import SEO from './SEO';
 import { PRODUCT, HERO_BANNERS, WHATSAPP_NUMBER, CATEGORY_CARD_IMAGES, LOGO_URL, getProductDetailUrl } from '../constants';
 import { CATALOGS as ALL_PRODUCTS } from '../data/catalogs';
 import { getAllCatalogItems } from '../data/catalog';
@@ -28,6 +26,9 @@ import IndiaPride from './IndiaPride';
 import MobileShopCTA from './MobileShopCTA';
 import MarketplaceLinks from './MarketplaceLinks';
 import SignatureCollection from './SignatureCollection';
+import { stories } from '../data/stories';
+import { SEO_FAQS, faqPageJsonLd } from '../lib/seo-content';
+import SEO from './SEO';
 
 const HERO_IMAGE_DESKTOP = HERO_BANNERS[0] || PRODUCT.colors[0]?.images[0] || '';
 const HERO_IMAGES_MOBILE = [
@@ -154,19 +155,7 @@ const CUSTOMER_REVIEWS = [
 ];
 
 const HERO_SLIDE_INTERVAL = 6000;
-const HERO_VALUE_POINTS = ['Starting at ₹499', 'Handmade in India', 'COD + Easy Returns'];
-
-const ORG_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'TheTidbit',
-  url: 'https://thetidbit.in',
-  logo: LOGO_URL,
-  sameAs: [
-    'https://www.instagram.com/thetidbit.in/',
-    'https://www.facebook.com/thetidbitin',
-  ],
-};
+const HERO_VALUE_POINTS = ['Starting at ₹499', 'Handmade in India', 'Free Shipping'];
 
 const HomePage: React.FC = () => {
   const [offerPhone, setOfferPhone] = useState('');
@@ -227,8 +216,6 @@ const HomePage: React.FC = () => {
 
   return (
     <>
-      <SEO schema={ORG_SCHEMA} />
-
       {/* ============================================ */}
       {/* 1. HERO                                       */}
       {/* ============================================ */}
@@ -245,6 +232,8 @@ const HomePage: React.FC = () => {
               `}
               sizes="100vw"
               alt="Modern Indian woman confidently carrying a handmade jute bag by TheTidbit"
+              width={2400}
+              height={1600}
               className="w-full h-full object-cover object-[65%_40%]"
               loading="eager"
               fetchPriority="high"
@@ -263,7 +252,7 @@ const HomePage: React.FC = () => {
                   Carry Better. Look Better.
                 </h1>
                 <p className="text-lg lg:text-xl text-white/90 leading-relaxed mb-4 max-w-xl">
-                  Handcrafted jute bags for office, college, gifting, and everyday life - made for women who choose mindful style.
+                  Premium handmade jute bags for women — eco-friendly sling bags and stylish handbags for office, college, travel and everyday life, made in India.
                 </p>
                 <p className="text-sm lg:text-base text-emerald-200/95 font-semibold mb-7">Trusted by 1000+ women across India</p>
                 <div className="flex flex-wrap gap-2.5 mb-8">
@@ -288,9 +277,9 @@ const HomePage: React.FC = () => {
                   </a>
                 </div>
                 <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85 font-medium">
-                  <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-300" /> Cash on Delivery</span>
-                  <span className="flex items-center gap-1.5"><Truck size={15} className="text-emerald-300" /> Free Shipping Over ₹499</span>
-                  <span className="flex items-center gap-1.5"><RefreshCcw size={15} className="text-emerald-300" /> Easy Returns</span>
+                  <span className="flex items-center gap-1.5"><Truck size={15} className="text-emerald-300" /> Free Shipping Across India</span>
+                  <span className="flex items-center gap-1.5"><CheckCircle2 size={15} className="text-emerald-300" /> Handmade Quality</span>
+                  <span className="flex items-center gap-1.5"><ShieldCheck size={15} className="text-emerald-300" /> Secure Online Pay</span>
                 </div>
               </div>
             </div>
@@ -338,9 +327,9 @@ const HomePage: React.FC = () => {
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 pt-20 bg-gradient-to-t from-black/70 via-black/40 to-transparent z-10">
-              <h1 className="font-serif text-[22px] font-bold text-white leading-tight mb-1.5">
+              <p className="font-serif text-[22px] font-bold text-white leading-tight mb-1.5">
                 Everyday Bags for <span className="text-emerald-300">Real Life</span>
-              </h1>
+              </p>
               <p className="text-[13px] text-white/70 tracking-wide mb-2">Office &nbsp;•&nbsp; College &nbsp;•&nbsp; Daily &nbsp;•&nbsp; Gifting</p>
               <p className="text-[17px] font-bold text-white mb-1.5">Starting at <span className="text-emerald-300">₹499</span></p>
               <p className="text-[11px] text-white/60 mb-3.5 tracking-wide">Handmade Pieces &nbsp;•&nbsp; Made to Order</p>
@@ -360,7 +349,7 @@ const HomePage: React.FC = () => {
                 return (
                   <Link key={p.id} to={getProductDetailUrl(p.id)} className="flex flex-col items-center gap-1 group">
                     <div className="w-[56px] h-[56px] rounded-xl overflow-hidden bg-stone-100 dark:bg-stone-800 border border-stone-100 dark:border-stone-700 group-active:border-brand-green transition-colors shadow-sm">
-                      <img src={cloudinaryTransform(thumb, { w: 128, h: 128, c: 'fill' })} alt={p.name} className="w-full h-full object-cover" loading="eager" decoding="async" />
+                      <img src={cloudinaryTransform(thumb, { w: 128, h: 128, c: 'fill' })} alt={p.displayName || displayName} className="w-full h-full object-cover" loading="eager" decoding="async" width={56} height={56} />
                     </div>
                     <span className="text-[9px] font-semibold text-stone-600 dark:text-stone-300 text-center leading-tight line-clamp-1">{displayName}</span>
                   </Link>
@@ -384,10 +373,10 @@ const HomePage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
             {[
-              { icon: Truck, label: 'Free Delivery', sub: 'Over ₹499', color: 'text-blue-600 dark:text-blue-400' },
-              { icon: ShieldCheck, label: 'Cash on Delivery', sub: 'Pay at your door', color: 'text-emerald-600 dark:text-emerald-400' },
-              { icon: RefreshCcw, label: 'Easy Returns', sub: '10-day policy', color: 'text-purple-600 dark:text-purple-400' },
-              { icon: Heart, label: 'Handmade in India', sub: 'Artisan crafted', color: 'text-rose-600 dark:text-rose-400' },
+              { icon: Truck, label: 'Free Delivery', sub: 'Across India', color: 'text-blue-600 dark:text-blue-400' },
+              { icon: ShieldCheck, label: 'Secure Payment', sub: 'Pay online via PhonePe', color: 'text-emerald-600 dark:text-emerald-400' },
+              { icon: Heart, label: 'Handmade Quality', sub: 'Artisan crafted', color: 'text-purple-600 dark:text-purple-400' },
+              { icon: Leaf, label: 'Eco-Friendly', sub: 'Natural jute', color: 'text-rose-600 dark:text-rose-400' },
             ].map((badge, i) => {
               const Icon = badge.icon;
               return (
@@ -556,6 +545,56 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* ============================================ */}
+      {/* STORIES / JOURNAL                             */}
+      {/* ============================================ */}
+      <section className="py-14 sm:py-20 bg-white dark:bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 sm:mb-12">
+            <div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
+                Stories &amp; guides
+              </h2>
+              <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 max-w-xl">
+                Buying guides, jute craft notes, and styling ideas for handmade handbags — built for real Indian daily life.
+              </p>
+            </div>
+            <Link
+              to="/stories"
+              className="inline-flex items-center gap-2 text-sm font-bold text-brand-green hover:underline underline-offset-4"
+            >
+              View all stories <ArrowRight size={16} />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {stories.slice(0, 3).map((story) => (
+              <Link
+                key={story.id}
+                to={`/stories/${story.slug}`}
+                className="group rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/40 hover:shadow-lg transition-all"
+              >
+                <div className="aspect-[16/10] overflow-hidden bg-stone-100 dark:bg-stone-800">
+                  <img
+                    src={cloudinaryTransform(story.heroImage, { w: 800, h: 500, c: 'fill' })}
+                    alt={story.heroImageAlt}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <div className="p-5">
+                  <p className="text-xs text-stone-400 mb-2">{story.readTime} min read</p>
+                  <h3 className="font-serif text-lg font-bold text-stone-900 dark:text-stone-100 leading-snug group-hover:text-brand-green transition-colors line-clamp-2">
+                    {story.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-stone-600 dark:text-stone-400 line-clamp-2">{story.excerpt}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================ */}
       {/* 8. CUSTOMER REVIEWS                            */}
       {/* ============================================ */}
       <section id="reviews" className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950">
@@ -684,6 +723,37 @@ const HomePage: React.FC = () => {
       {/* ============================================ */}
       <InstagramCTA />
       <IndiaPride />
+
+      {/* Visible FAQs — paired with FAQPage JSON-LD (homepage only) */}
+      <section className="py-14 sm:py-20 bg-stone-50 dark:bg-stone-950 border-t border-stone-200 dark:border-stone-800" aria-labelledby="home-faq-heading">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 id="home-faq-heading" className="font-serif text-3xl sm:text-4xl font-bold text-stone-900 dark:text-stone-100 text-center mb-8">
+            Frequently asked questions
+          </h2>
+          <div className="space-y-4">
+            {SEO_FAQS.map((item) => (
+              <details
+                key={item.q}
+                className="group rounded-2xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 px-5 py-4"
+              >
+                <summary className="cursor-pointer font-semibold text-stone-900 dark:text-stone-100 list-none flex justify-between gap-3">
+                  <span>{item.q}</span>
+                  <span className="text-brand-green group-open:rotate-45 transition-transform text-xl leading-none">+</span>
+                </summary>
+                <p className="mt-3 text-sm sm:text-base text-stone-600 dark:text-stone-400 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+          <p className="mt-8 text-center text-sm text-stone-500">
+            Explore our{' '}
+            <Link to="/collections" className="text-brand-green font-semibold underline underline-offset-2">handmade bag collections</Link>
+            {' '}or read{' '}
+            <Link to="/stories" className="text-brand-green font-semibold underline underline-offset-2">buying guides</Link>.
+          </p>
+        </div>
+      </section>
+
+      <SEO schema={faqPageJsonLd()} />
 
       <MobileShopCTA />
     </>

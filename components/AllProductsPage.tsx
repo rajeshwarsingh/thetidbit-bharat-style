@@ -79,7 +79,7 @@ const AllProductsPage: React.FC = () => {
       <SEO 
         title="All Products - TheTidbit Handmade Jute Bags"
         description="Browse our complete collection of handmade jute bags. Sling bags, rounded sling bags, and handbags. Eco-friendly, sustainable fashion. Free delivery across India."
-        canonicalUrl="https://bharat.style/products"
+        canonicalUrl="https://thetidbit.in/products"
         type="website"
       />
 

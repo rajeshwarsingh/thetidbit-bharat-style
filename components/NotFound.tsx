@@ -10,7 +10,7 @@ const NotFound: React.FC = () => {
       <SEO 
         title="Page Not Found" 
         description="The page you are looking for does not exist. Return to TheTidbit shop."
-        canonicalUrl="https://bharat.style/404"
+        canonicalUrl="https://thetidbit.in/404"
         noindex
       />
       <h1 className="text-9xl font-serif font-bold text-jute-300 dark:text-jute-800">404</h1>

@@ -17,7 +17,7 @@ const marketplaceConfig = [
     name: 'Flipkart',
     logoSrc: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1768550284/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/logo/2_kr0mbs.svg',
     url: MARKETPLACE_LINKS.flipkart,
-    tagline: 'Fast delivery & easy returns',
+    tagline: 'Fast delivery nationwide',
     logoBg: 'bg-sky-50 dark:bg-sky-950/30',
     logoBorder: 'border-sky-100 dark:border-sky-900/50',
     linkClass: 'text-sky-700 dark:text-sky-400 hover:text-sky-800 dark:hover:text-sky-300',

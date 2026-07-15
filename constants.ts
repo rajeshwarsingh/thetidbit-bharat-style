@@ -37,7 +37,16 @@ export const CONTACT_INFO = {
   mobile: "9226740297",
   whatsapp: "9226740297",
   email: "support@thetidbit.in",
-  address: "SN 406, Shivsahkti, Ambernath, Thane, Mumbai 421505",
+  /** Multi-line display (footer, contact, invoices). */
+  addressLines: [
+    "Shop No. 406, Shivshakti",
+    "Ambernath, Thane",
+    "Maharashtra 421505",
+  ] as const,
+  /** One-line form for APIs / plain text. */
+  get address() {
+    return this.addressLines.join(", ");
+  },
 };
 
 // Hero Banner Images
@@ -197,7 +206,7 @@ export const PRODUCT: ProductDetails = {
   dimensions: "20 × 20 × 1 cm",
   weight: "310 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted jute sling bag with intricate embroidery",
@@ -285,7 +294,7 @@ export const SLING_BAG_PRODUCT_1: ProductDetails = {
   dimensions: "22 × 18 × 2 cm",
   weight: "320 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -396,7 +405,7 @@ export const SLING_BAG_PRODUCT_2: ProductDetails = {
   dimensions: "23 × 19 × 2 cm",
   weight: "330 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",
@@ -454,7 +463,7 @@ export const HANDBAG_PRODUCT: ProductDetails = {
   dimensions: "25 × 20 × 3 cm",
   weight: "350 g",
   origin: "India",
-  returnPolicy: "10 Days Return & Exchange",
+  returnPolicy: "Handmade with care",
   delivery: "Free Delivery",
   features: [
     "Handcrafted by skilled artisans",

@@ -59,7 +59,7 @@ const HomeOnePage: React.FC = () => {
     <>
       <SEO
         title="The Tidbit – For the Smart, Everyday Indian Woman"
-        description="Carry Simplicity. Carry Culture. Handmade jute bags trusted by 1000+ women. Crafted by local artisans. COD & Free Shipping."
+        description="Carry Simplicity. Carry Culture. Handmade jute bags trusted by 1000+ women. Crafted by local artisans. Free shipping across India."
       />
       <div className="min-h-screen bg-[#f5f0e8] dark:bg-stone-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
         {/* ——— Hero: full-width banner ——— */}
@@ -67,7 +67,7 @@ const HomeOnePage: React.FC = () => {
           <img
            src={cloudinaryTransform("https://res.cloudinary.com/thetidbit23024/image/upload/v1771410537/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/desktop-banner/banner-desktop_lsdxsn.png", { w: 2400, h: 1600, c: 'fill', q: 'auto:best' })}
             // src="https://res.cloudinary.com/thetidbit23024/image/upload/v1771410537/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/home-page/desktop-banner/banner-desktop_lsdxsn.png"
-            alt="For the Smart, Everyday Indian Woman. Carry Simplicity. Carry Culture. Trusted by 1000+ Women, Crafted by Local Artisans, COD & Free Shipping."
+            alt="For the Smart, Everyday Indian Woman. Carry Simplicity. Carry Culture. Trusted by 1000+ Women, Crafted by Local Artisans, Free Shipping."
             className="w-full h-auto object-cover object-center"
             loading="eager"
           />

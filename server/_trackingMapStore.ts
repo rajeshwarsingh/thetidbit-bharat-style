@@ -88,7 +88,7 @@ function inferBaseUrl(): string {
   if (vercelUrl) return `https://${vercelUrl}`;
   const publicBase = process.env.PUBLIC_BASE_URL;
   if (publicBase) return publicBase.replace(/\/$/, '');
-  return 'https://bharat.style';
+  return 'https://thetidbit.in';
 }
 
 export async function readTrackingMap(): Promise<TrackingMap> {

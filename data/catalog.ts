@@ -16,11 +16,11 @@ export const DEFAULT_MOQ = 5;
 
 /** Lifestyle collections shown as Featured Categories & filter chips. */
 export const COLLECTIONS: { id: CollectionTag; label: string; description: string }[] = [
-  { id: 'office',  label: 'Office Collection',   description: 'Structured bags for the workday.' },
-  { id: 'travel',  label: 'Travel Collection',   description: 'Roomy companions for every journey.' },
-  { id: 'college', label: 'College Collection',  description: 'Lightweight slings for campus days.' },
-  { id: 'daily',   label: 'Everyday Collection', description: 'Effortless carry, morning to night.' },
-  { id: 'gift',    label: 'Gift Collection',     description: 'Beautifully giftable, ready to gift.' },
+  { id: 'office',  label: 'Office Collection',   description: 'Structured office bags for women — lightweight handmade handbags for workdays.' },
+  { id: 'travel',  label: 'Travel Collection',   description: 'Travel bags for women — crossbody and sling styles made for easy journeys.' },
+  { id: 'college', label: 'College Collection',  description: 'College bags for women — stylish lightweight sling bags for campus life.' },
+  { id: 'daily',   label: 'Daily Essentials',    description: 'Everyday handbags and lightweight jute bags for daily use.' },
+  { id: 'gift',    label: 'Gift Collection',     description: 'Gift handbags for women — premium handmade bags ready to wrap and give.' },
 ];
 
 function toCatalogItem(product: ProductDetails): CatalogItem {
@@ -33,7 +33,7 @@ function toCatalogItem(product: ProductDetails): CatalogItem {
     productId: product.id,
     colorId: color?.id ?? 'default',
     name: product.name,
-    shortName: product.name,
+    shortName: product.displayName || product.name,
     price: product.price,
     mrp: product.mrp,
     discountPercentage: product.discountPercentage,
@@ -79,11 +79,15 @@ export function getItemsByCollection(collection: CollectionTag): CatalogItem[] {
   return getAllCatalogItems().filter((i) => i.collection === collection);
 }
 
-/** Related items (exclude a given product). */
+/** Related items — prefer same lifestyle collection, then fill from Signature catalog. */
 export function getRelatedItems(excludeId?: string, limit = 4): CatalogItem[] {
-  return getAllCatalogItems()
-    .filter((i) => i.productId !== excludeId)
-    .slice(0, limit);
+  const all = getAllCatalogItems();
+  const current = excludeId ? all.find((i) => i.productId === excludeId) : undefined;
+  const rest = all.filter((i) => i.productId !== excludeId);
+  if (!current) return rest.slice(0, limit);
+  const same = rest.filter((i) => i.collection === current.collection);
+  const other = rest.filter((i) => i.collection !== current.collection);
+  return [...same, ...other].slice(0, limit);
 }
 
 /* ------------------------------------------------------------------ *

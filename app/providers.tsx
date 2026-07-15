@@ -24,7 +24,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         <MetaPixel />
         <div className="min-h-screen flex flex-col bg-white dark:bg-stone-900 transition-colors duration-300">
           <Navbar />
-          <main className="flex-grow">{children}</main>
+          <main id="main-content" className="flex-grow">{children}</main>
           <Footer />
         </div>
 

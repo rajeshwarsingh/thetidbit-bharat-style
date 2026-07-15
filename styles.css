@@ -11,14 +11,23 @@
   display: none;
 }
 
-/* ---------- Theme Transitions ---------- */
-* {
-  transition-property: background-color, border-color, color, fill, stroke;
+/* ---------- Theme Transitions (scoped — avoid global * for INP) ---------- */
+a,
+button,
+input,
+textarea,
+select,
+summary,
+[role='button'],
+.transition-colors,
+.transition-opacity,
+.transition-all,
+.transition {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 200ms;
 }
 
-/* Exclude images and other elements that shouldn't transition */
 img,
 svg,
 video,
@@ -28,6 +37,13 @@ iframe,
 embed,
 object {
   transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+:focus-visible {
+  outline: 2px solid #4A5D44;
+  outline-offset: 2px;
 }
 
 /* ---------- Premium micro-interactions ---------- */

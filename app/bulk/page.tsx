@@ -1,11 +1,12 @@
 import BulkOrdersPage from '../../components/BulkOrdersPage';
 import { buildMetadata } from '../../lib/seo';
+import { BULK_META } from '../../lib/seo-content';
 
 export const metadata = buildMetadata({
-  title: 'Bulk & Corporate Orders — Custom Jute Bags',
-  description:
-    'Order handmade jute bags in bulk for corporate gifting, weddings and resellers. Custom branding, competitive wholesale pricing and reliable lead times. Request a quote.',
+  title: BULK_META.title,
+  description: BULK_META.description,
   path: '/bulk',
+  keywords: ['corporate gifting', 'bulk handmade bags', 'custom jute bags India'],
 });
 
 export default function Page() {

@@ -40,7 +40,7 @@ const AdminTrackingMapPage: React.FC = () => {
       <SEO
         title="Admin - Tracking Map"
         description="Admin tool to map mobile numbers to tracking doc IDs."
-        canonicalUrl="https://bharat.style/ops/tracking"
+        canonicalUrl="https://thetidbit.in/ops/tracking"
         noindex
         nofollow
       />

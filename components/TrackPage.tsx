@@ -78,7 +78,7 @@ const TrackPage: React.FC = () => {
   const shopImage = 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766825911/exicting_tidbi_girl_p7zicn.png';
 
   const handleShare = async () => {
-    const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://bharat.style/';
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://thetidbit.in/';
     const shareText = `Check out this beautiful handmade jute sling bag from TheTidbit! ✨ Eco-friendly, artistic, and perfect for everyday use.`;
     const nav = typeof window !== 'undefined' ? window.navigator : undefined;
 
@@ -163,7 +163,7 @@ const TrackPage: React.FC = () => {
       <SEO
         title="Track Order"
         description="Track your TheTidbit order using your courier tracking number (Doc ID)."
-        canonicalUrl="https://bharat.style/track"
+        canonicalUrl="https://thetidbit.in/track"
       />
 
       {/* Dark mode background pattern */}
@@ -467,7 +467,7 @@ const TrackPage: React.FC = () => {
                         Share TheTidbit
                       </button>
                       <a
-                        href={`https://wa.me/?text=${encodeURIComponent('Check out this beautiful handmade jute sling bag from TheTidbit! ✨ Eco-friendly and perfect for everyday use. https://bharat.style/')}`}
+                        href={`https://wa.me/?text=${encodeURIComponent('Check out this beautiful handmade jute sling bag from TheTidbit! ✨ Eco-friendly and perfect for everyday use. https://thetidbit.in/')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 rounded-2xl bg-green-600 text-white px-8 py-4 font-bold hover:bg-green-700 transition-all shadow-lg hover:shadow-xl text-base"
@@ -529,7 +529,7 @@ const TrackPage: React.FC = () => {
                         Share TheTidbit
                       </button>
                       <a
-                        href={`https://wa.me/?text=${encodeURIComponent('Check out this beautiful handmade jute sling bag from TheTidbit! ✨ Eco-friendly and perfect for everyday use. https://bharat.style/')}`}
+                        href={`https://wa.me/?text=${encodeURIComponent('Check out this beautiful handmade jute sling bag from TheTidbit! ✨ Eco-friendly and perfect for everyday use. https://thetidbit.in/')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 rounded-2xl bg-green-600 text-white px-8 py-4 font-bold hover:bg-green-700 transition-all shadow-lg hover:shadow-xl text-base"

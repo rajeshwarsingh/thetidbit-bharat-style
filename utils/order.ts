@@ -52,7 +52,7 @@ export function orderWhatsAppUrl(order: Order, opts?: { paid?: boolean; txn?: st
   const lines = [
     opts?.paid
       ? `Hi TheTidbit! I've *paid online* for my order. Please confirm & dispatch.`
-      : `Hi TheTidbit! I'd like to place this order (Cash on Delivery / pay on WhatsApp):`,
+      : `Hi TheTidbit! I'd like to place this order:`,
     ``,
     `*${order.productName}*`,
     `Qty: ${order.qty}`,

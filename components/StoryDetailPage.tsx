@@ -6,6 +6,7 @@ import SEO from './SEO';
 import { stories } from '../data/stories';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
 import { LOGO_URL } from '../constants';
+import { SIGNATURE_PRODUCT_LINKS } from '../data/catalogs';
 
 const StoryDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -34,9 +35,12 @@ const StoryDetailPage: React.FC = () => {
   // Enhanced Article Schema with ImageObject
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": ["Article", "BlogPosting"],
     "headline": story.title,
     "description": story.excerpt,
+    "articleSection": "Stories",
+    "inLanguage": "en-IN",
+    "wordCount": story.content.join(' ').split(/\s+/).length,
     "image": {
       "@type": "ImageObject",
       "url": story.heroImage,
@@ -44,13 +48,14 @@ const StoryDetailPage: React.FC = () => {
       "height": 900
     },
     "author": {
-      "@type": "Organization",
+      "@type": "Person",
       "name": story.author.name,
-      "url": "https://bharat.style"
+      "jobTitle": story.author.role
     },
     "publisher": {
       "@type": "Organization",
       "name": "TheTidbit",
+      "url": "https://thetidbit.in",
       "logo": {
         "@type": "ImageObject",
         "url": LOGO_URL,
@@ -62,26 +67,23 @@ const StoryDetailPage: React.FC = () => {
     "dateModified": story.publishDate,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://bharat.style/stories/${story.slug}`
+      "@id": `https://thetidbit.in/stories/${story.slug}`
     }
   };
 
   const handleShopClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    navigate('/');
-    setTimeout(() => {
-      document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    navigate('/collections');
   };
 
   // Find related stories (excluding current story)
   const getRelatedStories = () => {
     const related = stories.filter(s => s.id !== story.id);
-    // Return 2-3 related stories
     return related.slice(0, 3);
   };
 
   const relatedStories = getRelatedStories();
+  const relatedProducts = SIGNATURE_PRODUCT_LINKS.slice(0, 4);
 
   // Use optimized image for social sharing (1200x630 for OG/Twitter)
   const socialImage = cloudinaryTransform(story.heroImage, { w: 1200 });
@@ -91,7 +93,7 @@ const StoryDetailPage: React.FC = () => {
       <SEO 
         title={story.title}
         description={story.excerpt}
-        canonicalUrl={`https://bharat.style/stories/${story.slug}`}
+        canonicalUrl={`https://thetidbit.in/stories/${story.slug}`}
         type="article"
         image={socialImage}
         schema={articleSchema}
@@ -169,16 +171,21 @@ const StoryDetailPage: React.FC = () => {
           {/* Article Body - Large, readable fonts, editorial spacing */}
           <div className="space-y-6 text-xl leading-relaxed text-stone-700 font-sans">
             {story.content.map((paragraph, index) => {
-              // Check if we should insert a lifestyle image after this paragraph
               const lifestyleImage = story.lifestyleImages?.find(
                 img => img.insertAfterParagraph === index
               );
+              const isHeading = paragraph.startsWith('## ');
+              const headingText = isHeading ? paragraph.slice(3).trim() : '';
 
               return (
                 <React.Fragment key={index}>
-                  <p className="mb-6">
-                    {paragraph}
-                  </p>
+                  {isHeading ? (
+                    <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 mt-10 mb-4 leading-snug">
+                      {headingText}
+                    </h2>
+                  ) : (
+                    <p className="mb-6">{paragraph}</p>
+                  )}
                   {lifestyleImage && (
                     <figure className="my-12">
                       <img
@@ -204,8 +211,19 @@ const StoryDetailPage: React.FC = () => {
             <div className="bg-stone-50 rounded-2xl p-10 text-center border border-stone-100">
               <Heart className="w-10 h-10 text-stone-400 mx-auto mb-5" />
               <p className="text-lg text-stone-600 mb-6 leading-relaxed max-w-xl mx-auto">
-                Love the story? Explore the collection of handmade jute bags, each crafted with the same care and intention.
+                Love the story? Explore TheTidbit’s signature handmade jute bags — each crafted with the same care.
               </p>
+              <div className="flex flex-wrap justify-center gap-3 mb-6">
+                {relatedProducts.map((p) => (
+                  <Link
+                    key={p.id}
+                    to={p.href}
+                    className="text-sm font-semibold text-brand-green underline underline-offset-2 hover:text-stone-900"
+                  >
+                    {p.label}
+                  </Link>
+                ))}
+              </div>
               <button
                 onClick={handleShopClick}
                 className="inline-block bg-stone-900 text-white px-10 py-4 rounded-xl font-semibold hover:bg-stone-800 transition text-base"
@@ -273,6 +291,13 @@ const StoryDetailPage: React.FC = () => {
           <nav className="mt-16 pt-12 border-t border-stone-200" aria-label="Related pages">
             <div className="flex flex-wrap gap-4 text-sm">
               <Link
+                to="/collections"
+                className="text-stone-600 hover:text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition"
+              >
+                Shop handmade bags
+              </Link>
+              <span className="text-stone-300">•</span>
+              <Link
                 to="/about"
                 className="text-stone-600 hover:text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition"
               >
@@ -287,10 +312,10 @@ const StoryDetailPage: React.FC = () => {
               </Link>
               <span className="text-stone-300">•</span>
               <Link
-                to="/"
+                to="/bulk"
                 className="text-stone-600 hover:text-stone-900 underline underline-offset-4 decoration-stone-300 hover:decoration-stone-600 transition"
               >
-                Home
+                Corporate gifting
               </Link>
             </div>
           </nav>

@@ -45,7 +45,7 @@ const BlogPage: React.FC = () => {
       <SEO 
         title="Our Story - Threads of Tradition"
         description="The heartwarming story of the artisans behind TheTidbit. How we source ethically and empower women weavers in West Bengal."
-        canonicalUrl="https://bharat.style/story"
+        canonicalUrl="https://thetidbit.in/story"
         type="article"
         image={ARTISAN_STORY_IMAGE}
         schema={articleSchema}

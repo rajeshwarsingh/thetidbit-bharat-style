@@ -12,6 +12,7 @@ const NAV_LINKS: { label: string; to: string; match: (p: string) => boolean }[] 
   { label: 'Home', to: '/', match: (p) => p === '/' },
   { label: 'Shop', to: '/collections', match: (p) => p === '/collections' },
   { label: 'Bulk Orders', to: '/bulk', match: (p) => p === '/bulk' },
+  { label: 'Stories', to: '/stories', match: (p) => p === '/stories' || p.startsWith('/stories/') },
   { label: 'About', to: '/about', match: (p) => p === '/about' },
   { label: 'Contact', to: '/contact', match: (p) => p === '/contact' },
 ];
@@ -108,11 +109,10 @@ const Navbar: React.FC = () => {
 
         <nav className={`bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-700 transition-all duration-300 ${scrolled ? 'shadow-md' : ''}`}>
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        {/* Mobile: 3 equal columns so brand stays centered without overlapping icons.
-            Desktop: normal flex row (logo | nav | actions). */}
-        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1 h-16 md:flex md:gap-0">
+        {/* Mobile + desktop: brand left, actions right (shop-standard). */}
+        <div className="flex items-center gap-1 h-16">
           {/* Mobile Menu Button */}
-          <div className="flex items-center justify-start md:hidden">
+          <div className="flex items-center shrink-0 md:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 p-2 -ml-1 transition-colors"
@@ -122,8 +122,8 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Logo — centered in middle column on mobile, left on desktop */}
-          <div className="flex justify-center min-w-0 max-w-full md:justify-start md:shrink-0">
+          {/* Logo — left-aligned */}
+          <div className="flex justify-start min-w-0 shrink">
             <Link
               to="/"
               onClick={closeMenu}
@@ -162,7 +162,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right-side: Search + Track + Wishlist + Theme + Badge */}
-          <div className="flex items-center justify-end gap-0 sm:gap-2 min-w-0 md:ml-auto md:shrink-0">
+          <div className="ml-auto flex items-center justify-end gap-0 sm:gap-2 shrink-0">
             <Link
               to="/collections"
               aria-label="Search products"
@@ -348,13 +348,6 @@ const Navbar: React.FC = () => {
               className="block w-full text-left px-3 py-2.5 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
             >
               Wishlist{wishlist.length > 0 ? ` (${wishlist.length})` : ''}
-            </Link>
-            <Link
-              to="/stories"
-              onClick={closeMenu}
-              className="block w-full text-left px-3 py-2.5 text-base font-medium text-stone-600 dark:text-stone-400 hover:bg-stone-50 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100 rounded-md transition-colors"
-            >
-              Stories
             </Link>
           </div>
         </div>

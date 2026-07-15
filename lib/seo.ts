@@ -13,6 +13,7 @@ interface BuildMetaArgs {
   image?: string;
   type?: 'website' | 'article' | 'product';
   noindex?: boolean;
+  keywords?: string[];
 }
 
 /** Shared builder so every route emits consistent title/description/OG/Twitter/canonical. */
@@ -23,19 +24,19 @@ export function buildMetadata({
   image = DEFAULT_OG_IMAGE,
   type = 'website',
   noindex = false,
+  keywords,
 }: BuildMetaArgs): Metadata {
   const canonical = path.startsWith('http') ? path : `${SITE_URL}${path}`;
   const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
 
   return {
-    // `absolute` bypasses the layout's title template so the "| TheTidbit"
-    // suffix (already handled here) isn't appended twice.
     title: { absolute: fullTitle },
     description,
+    ...(keywords?.length ? { keywords } : {}),
     alternates: { canonical },
     robots: noindex
       ? { index: false, follow: true }
-      : { index: true, follow: true, 'max-image-preview': 'large' } as Metadata['robots'],
+      : ({ index: true, follow: true, 'max-image-preview': 'large' } as Metadata['robots']),
     openGraph: {
       type: type === 'product' ? 'website' : type,
       url: canonical,

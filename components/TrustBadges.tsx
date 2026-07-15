@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Truck, ShieldCheck, RefreshCcw, Lock, Award, Heart } from 'lucide-react';
+import { Truck, ShieldCheck, Lock, Award, Heart, Leaf } from 'lucide-react';
 
 const TrustBadges: React.FC = () => {
   const badges = [
@@ -12,9 +12,9 @@ const TrustBadges: React.FC = () => {
       bgColor: 'bg-blue-50 dark:bg-blue-950/20',
     },
     {
-      icon: RefreshCcw,
-      title: 'Easy Returns',
-      description: '10-day return policy',
+      icon: Leaf,
+      title: 'Eco-Friendly',
+      description: 'Natural jute fibre',
       color: 'text-green-600 dark:text-green-400',
       bgColor: 'bg-green-50 dark:bg-green-950/20',
     },

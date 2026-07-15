@@ -23,8 +23,8 @@ const StoriesPage: React.FC = () => {
     <div className="bg-stone-50 dark:bg-stone-950 min-h-screen transition-colors duration-300">
       <SEO 
         title="Stories"
-        description="Real stories about slow fashion, mindful living, and the moments that matter. Discover the heart behind TheTidbit."
-        canonicalUrl="https://bharat.style/stories"
+        description="Guides on handmade bags, jute handbags, eco-friendly fashion in India, styling tips and gift ideas from TheTidbit."
+        canonicalUrl="https://thetidbit.in/stories"
         type="website"
         image={featuredStory?.heroImage || "https://res.cloudinary.com/thetidbit23024/image/upload/v1766842697/article%20jutes/jute1_hpbfrm.png"}
       />
@@ -34,17 +34,23 @@ const StoriesPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           <div className="max-w-3xl">
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-900 dark:text-stone-100 mb-6 leading-tight">
-              Stories
+              Stories &amp; buying guides
             </h1>
             <p className="text-xl text-stone-600 dark:text-stone-400 leading-relaxed mb-6">
-              Real moments. Real choices. Real style. These are the stories behind the bags we carry and the lives we live.
+              Practical guides on handmade jute bags for women, eco-friendly handbags, styling sling bags, and shopping sustainable fashion in India — written for how people actually search and decide.
             </p>
-            <nav className="text-sm">
+            <nav className="text-sm flex flex-wrap gap-x-4 gap-y-2">
+              <Link
+                to="/collections"
+                className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 underline underline-offset-4 decoration-stone-300 dark:decoration-stone-600 hover:decoration-stone-600 dark:hover:decoration-stone-400 transition"
+              >
+                Shop handmade bags
+              </Link>
               <Link
                 to="/about"
                 className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 underline underline-offset-4 decoration-stone-300 dark:decoration-stone-600 hover:decoration-stone-600 dark:hover:decoration-stone-400 transition"
               >
-                Learn more about our story
+                About TheTidbit
               </Link>
             </nav>
           </div>

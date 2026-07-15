@@ -215,7 +215,7 @@ const CheckoutPage: React.FC = () => {
               </button>
             </div>
             <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
-              Pay securely online via PhonePe (UPI, cards, wallets), or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment (COD available) with you directly.
+              Pay securely online via PhonePe (UPI, cards, wallets), or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment with you directly.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 text-xs text-stone-500 dark:text-stone-400">

@@ -43,6 +43,7 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
   const wished = useIsWished(item.key);
   const hoverImage = item.images[1] || item.images[0];
   const linkable = !hideLink && !!item.url;
+  const altText = item.product.displayName || item.shortName || item.name;
 
   const onWishlist = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,7 +70,7 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
               src={cloudinaryTransform(item.image, { w: 600 })}
               srcSet={cloudinarySrcSet(item.image, [400, 600, 800])}
               sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-              alt={item.name}
+              alt={altText}
               className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
               loading="lazy"
               decoding="async"
@@ -77,7 +78,7 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
             {hoverImage && (
               <img
                 src={cloudinaryTransform(hoverImage, { w: 600 })}
-                alt=""
+                alt={`${altText} alternate view`}
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover opacity-0 scale-105 transition-all duration-500 group-hover:opacity-100 group-hover:scale-100"
                 loading="lazy"
@@ -99,7 +100,7 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
           </>
         );
         return linkable ? (
-          <Link to={item.url} className={cls} aria-label={item.name}>{inner}</Link>
+          <Link to={item.url} className={cls} aria-label={altText}>{inner}</Link>
         ) : (
           <div className={cls}>{inner}</div>
         );

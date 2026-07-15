@@ -1,12 +1,19 @@
 import { Suspense } from 'react';
 import CollectionsPage from '../../components/CollectionsPage';
 import { buildMetadata } from '../../lib/seo';
+import { COLLECTIONS_META } from '../../lib/seo-content';
 
 export const metadata = buildMetadata({
-  title: 'Collections — Signature & Made-on-Demand Bags',
-  description:
-    "Browse TheTidbit's full range of handmade jute bags. Shop the ready-to-ship Signature Collection or request a quote for made-on-demand, bulk and corporate orders.",
+  title: COLLECTIONS_META.title,
+  description: COLLECTIONS_META.description,
   path: '/collections',
+  keywords: [
+    'handmade bags online',
+    'jute sling bags',
+    'office bags for women',
+    'college bags for women',
+    'gift handbags',
+  ],
 });
 
 export default function Page() {

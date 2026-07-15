@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Instagram, Phone, Mail, MapPin, X, CreditCard, Facebook, Youtube, ShoppingBag, ExternalLink } from 'lucide-react';
 import { Link } from '@/lib/router';
 import { INSTAGRAM_HANDLE, WHATSAPP_NUMBER, SOCIAL_LINKS, MARKETPLACE_LINKS, CONTACT_INFO } from '../constants';
+import { SEO_FAQS } from '../lib/seo-content';
+import { SIGNATURE_PRODUCT_LINKS } from '../data/catalogs';
 
 const Footer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -19,16 +21,11 @@ const Footer: React.FC = () => {
       )
     },
     returns: {
-      title: "Returns & Exchange Policy",
+      title: "Order Support",
       content: (
         <div className="space-y-4 text-stone-600 dark:text-stone-400">
-          <p>We offer a hassle-free <strong className="text-stone-900 dark:text-stone-100">10-Day No-Questions-Asked Return Policy</strong>.</p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>If you receive a damaged item or don't love the product, you can return it within 10 days of delivery.</li>
-            <li>The product must be unused and in original packaging with tags intact.</li>
-            <li>Refunds are processed to your original payment mode within 48 hours of pickup.</li>
-          </ul>
-          <p className="text-sm text-stone-500 dark:text-stone-500 italic pt-2">To initiate a return, simply message us on WhatsApp with your Order ID.</p>
+          <p>Every TheTidbit bag is handmade to order with care. If something arrives damaged or incorrect, please message us on WhatsApp with your order ID and photos — we&apos;ll help resolve it.</p>
+          <p className="text-sm text-stone-500 dark:text-stone-500 italic pt-2">Support hours: we usually reply within a few hours on WhatsApp.</p>
         </div>
       )
     },
@@ -36,7 +33,7 @@ const Footer: React.FC = () => {
       title: "Shipping Policy",
       content: (
         <div className="space-y-4 text-stone-600 dark:text-stone-400">
-          <p><strong className="text-stone-900 dark:text-stone-100">Free Shipping:</strong> We offer free shipping on all prepaid orders across India. Cash on Delivery (COD) may carry a small handling fee.</p>
+          <p><strong className="text-stone-900 dark:text-stone-100">Free Shipping:</strong> We offer free shipping on all orders across India.</p>
           <p><strong className="text-stone-900 dark:text-stone-100">Dispatch Time:</strong> Orders are packed and dispatched within 24-48 hours.</p>
           <div>
             <strong className="text-stone-900 dark:text-stone-100">Estimated Delivery Time:</strong>
@@ -54,25 +51,23 @@ const Footer: React.FC = () => {
       title: "Frequently Asked Questions",
       content: (
         <div className="space-y-5 text-stone-600 dark:text-stone-400">
+          {SEO_FAQS.map((item) => (
+            <div key={item.q}>
+              <p className="font-bold text-stone-900 dark:text-stone-100">Q: {item.q}</p>
+              <p className="mt-1">A: {item.a}</p>
+            </div>
+          ))}
           <div>
             <p className="font-bold text-stone-900 dark:text-stone-100">Q: Is the bag washable?</p>
-            <p className="mt-1">A: Jute is a natural fiber. We recommend spot cleaning with a damp cloth for stains. Do not machine wash or soak in water.</p>
+            <p className="mt-1">A: Jute is a natural fibre. Spot clean with a soft damp cloth. Avoid machine washing or soaking so your handmade bag keeps its shape.</p>
           </div>
           <div>
             <p className="font-bold text-stone-900 dark:text-stone-100">Q: Is the strap adjustable?</p>
-            <p className="mt-1">A: Yes, the long strap is fully adjustable, making it perfect for both shoulder and crossbody use for women of all heights.</p>
-          </div>
-          <div>
-            <p className="font-bold text-stone-900 dark:text-stone-100">Q: Does it have a zip closure?</p>
-            <p className="mt-1">A: Yes, the main compartment has a high-quality zip closure to keep your essentials safe. It also has a small inner pocket.</p>
-          </div>
-          <div>
-            <p className="font-bold text-stone-900 dark:text-stone-100">Q: Is it eco-friendly?</p>
-            <p className="mt-1">A: Absolutely! The bag is made from 100% biodegradable jute and cotton, making it a sustainable choice.</p>
+            <p className="mt-1">A: Yes — most TheTidbit sling and crossbody handbags include an adjustable strap for comfortable shoulder or crossbody wear.</p>
           </div>
         </div>
       )
-    }
+    },
   };
 
   const openModal = (e: React.MouseEvent, modalType: string) => {
@@ -92,7 +87,7 @@ const Footer: React.FC = () => {
             <div className="col-span-1 md:col-span-2">
               <h3 className="text-white dark:text-stone-100 text-2xl font-serif font-bold">TheTidbit</h3>
               <p className="mt-4 max-w-xs text-sm text-stone-400 dark:text-stone-500">
-                Sustainable fashion for the conscious soul. Handmade in India 🇮🇳 with love and jute.
+                TheTidbit crafts premium handmade jute bags for women — eco-friendly handbags and sling bags made in India for everyday style.
               </p>
               <div className="mt-6 flex space-x-4">
                 <a 
@@ -151,7 +146,7 @@ const Footer: React.FC = () => {
                     Tracking Info
                   </a>
                 </li>
-                <li><a href="#" onClick={(e) => openModal(e, 'returns')} className="text-sm hover:text-white dark:hover:text-stone-200 transition">Returns & Exchange</a></li>
+                <li><a href="#" onClick={(e) => openModal(e, 'returns')} className="text-sm hover:text-white dark:hover:text-stone-200 transition">Order Support</a></li>
                 <li><a href="#" onClick={(e) => openModal(e, 'shipping')} className="text-sm hover:text-white dark:hover:text-stone-200 transition">Shipping Policy</a></li>
                 <li><a href="#" onClick={(e) => openModal(e, 'faqs')} className="text-sm hover:text-white dark:hover:text-stone-200 transition">FAQs</a></li>
               </ul>
@@ -159,10 +154,22 @@ const Footer: React.FC = () => {
 
             <div>
               <h4 className="text-sm font-semibold text-white dark:text-stone-100 tracking-wider uppercase">Shop</h4>
-              <ul className="mt-4 space-y-4">
+              <ul className="mt-4 space-y-3">
+                <li>
+                  <Link to="/collections" className="text-sm hover:text-white dark:hover:text-stone-200 transition">
+                    All Collections
+                  </Link>
+                </li>
+                {SIGNATURE_PRODUCT_LINKS.slice(0, 8).map((p) => (
+                  <li key={p.id}>
+                    <Link to={p.href} className="text-sm hover:text-white dark:hover:text-stone-200 transition">
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
                 <li>
                   <Link to="/products" className="text-sm hover:text-white dark:hover:text-stone-200 transition">
-                    All Products
+                    View all signature bags
                   </Link>
                 </li>
                 <li>
@@ -173,26 +180,6 @@ const Footer: React.FC = () => {
                     className="text-sm hover:text-white dark:hover:text-stone-200 transition inline-flex items-center gap-1"
                   >
                     Amazon <ExternalLink size={14} />
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href={MARKETPLACE_LINKS.flipkart} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-sm hover:text-white dark:hover:text-stone-200 transition inline-flex items-center gap-1"
-                  >
-                    Flipkart <ExternalLink size={14} />
-                  </a>
-                </li>
-                <li>
-                  <a 
-                    href={MARKETPLACE_LINKS.meesho} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-sm hover:text-white dark:hover:text-stone-200 transition inline-flex items-center gap-1"
-                  >
-                    Meesho <ExternalLink size={14} />
                   </a>
                 </li>
               </ul>
@@ -240,7 +227,11 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2 text-sm">
                   <MapPin size={16} className="mt-0.5 flex-shrink-0" /> 
-                  <span>{CONTACT_INFO.address}</span>
+                  <span className="leading-relaxed">
+                    {CONTACT_INFO.addressLines.map((line) => (
+                      <span key={line} className="block">{line}</span>
+                    ))}
+                  </span>
                 </li>
                 <li className="pt-2">
                   <Link

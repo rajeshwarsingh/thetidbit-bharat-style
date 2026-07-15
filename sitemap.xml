@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>https://bharat.style/sitemap-main.xml</loc>
+    <loc>https://thetidbit.in/sitemap-main.xml</loc>
     <lastmod>2026-07-15</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bharat.style/sitemap-stories.xml</loc>
+    <loc>https://thetidbit.in/sitemap-stories.xml</loc>
     <lastmod>2026-07-15</lastmod>
   </sitemap>
   <sitemap>
-    <loc>https://bharat.style/sitemap-images.xml</loc>
+    <loc>https://thetidbit.in/sitemap-images.xml</loc>
     <lastmod>2026-07-15</lastmod>
   </sitemap>
 </sitemapindex>

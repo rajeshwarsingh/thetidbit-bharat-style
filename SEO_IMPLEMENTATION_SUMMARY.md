@@ -24,10 +24,10 @@
 - `/?color=red|blue|skin-orange|pink` - Priority 0.9
 
 **Access:**
-- `https://bharat.style/sitemap.xml`
-- `https://bharat.style/sitemap-main.xml`
-- `https://bharat.style/sitemap-stories.xml`
-- `https://bharat.style/sitemap-images.xml`
+- `https://thetidbit.in/sitemap.xml`
+- `https://thetidbit.in/sitemap-main.xml`
+- `https://thetidbit.in/sitemap-stories.xml`
+- `https://thetidbit.in/sitemap-images.xml`
 
 ### 2. RSS Feed ✅
 
@@ -45,7 +45,7 @@
 - `scripts/generate-feed.mjs`
 
 **Access:**
-- `https://bharat.style/feed.xml`
+- `https://thetidbit.in/feed.xml`
 
 ### 3. Structured Data (JSON-LD) ✅
 
@@ -95,7 +95,7 @@
 
 **Added to `index.html`:**
 ```html
-<link rel="alternate" type="application/rss+xml" title="Bharat.style Feed" href="https://bharat.style/feed.xml" />
+<link rel="alternate" type="application/rss+xml" title="Bharat.style Feed" href="https://thetidbit.in/feed.xml" />
 ```
 
 ### 7. robots.txt ✅
@@ -107,7 +107,7 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bharat.style/sitemap.xml
+Sitemap: https://thetidbit.in/sitemap.xml
 ```
 
 ### 8. Canonical URLs ✅
@@ -115,7 +115,7 @@ Sitemap: https://bharat.style/sitemap.xml
 All pages use canonical URLs via `SEO` component:
 - Prevents duplicate content
 - Points to primary version
-- Format: `https://bharat.style/{path}`
+- Format: `https://thetidbit.in/{path}`
 
 ### 9. Build Integration ✅
 
@@ -141,11 +141,11 @@ All pages use canonical URLs via `SEO` component:
 
 1. **Verify Property:**
    - Go to [Google Search Console](https://search.google.com/search-console)
-   - Add property: `https://bharat.style/`
+   - Add property: `https://thetidbit.in/`
    - Choose verification method (HTML tag recommended)
 
 2. **Submit Sitemap:**
-   - Submit: `https://bharat.style/sitemap.xml`
+   - Submit: `https://thetidbit.in/sitemap.xml`
    - Google will discover all sub-sitemaps automatically
 
 3. **Monitor:**
@@ -265,8 +265,8 @@ bharat-style/
 
 All SEO files are generated and ready. After deployment:
 
-1. Verify sitemaps are accessible at `https://bharat.style/sitemap.xml`
-2. Verify feed is accessible at `https://bharat.style/feed.xml`
+1. Verify sitemaps are accessible at `https://thetidbit.in/sitemap.xml`
+2. Verify feed is accessible at `https://thetidbit.in/feed.xml`
 3. Submit sitemap to Google Search Console
 4. Monitor indexing and performance
 

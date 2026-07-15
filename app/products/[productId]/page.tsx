@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import ProductDetail from '../../../components/ProductDetail';
 import { buildMetadata } from '../../../lib/seo';
-import { CATALOGS } from '../../../data/catalogs';
+import { productMetaDescription } from '../../../lib/seo-content';
+import { CATALOGS, CATALOG_COLLECTION } from '../../../data/catalogs';
 
 /** Only the catalog slugs are valid product routes — anything else 404s. */
 export const dynamicParams = false;
@@ -21,12 +22,26 @@ export async function generateMetadata({
   if (!product) {
     return buildMetadata({ title: 'Product', description: 'TheTidbit product', path: `/products/${productId}`, noindex: true });
   }
+  const collection = CATALOG_COLLECTION[product.id];
   return buildMetadata({
     title: product.name,
-    description: `${product.tagline}. ${product.features.join('. ')}. Free shipping across India, COD & easy returns.`,
+    description: productMetaDescription({
+      name: product.name,
+      displayName: product.displayName,
+      tagline: product.tagline,
+      description: product.description,
+      price: product.price,
+      collection,
+    }),
     path: `/products/${product.id}`,
     image: product.colors[0]?.images[0],
     type: 'product',
+    keywords: [
+      'handmade jute bags',
+      'handmade bags for women',
+      'made in India handbags',
+      product.shape || 'sling bag',
+    ],
   });
 }
 

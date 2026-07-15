@@ -1,11 +1,12 @@
 import AboutPage from '../../components/AboutPage';
 import { buildMetadata } from '../../lib/seo';
+import { ABOUT_META } from '../../lib/seo-content';
 
 export const metadata = buildMetadata({
-  title: 'About TheTidbit — Our Story',
-  description:
-    'TheTidbit crafts premium, sustainable handmade jute bags in India. Learn about our mission, artisans and commitment to affordable luxury.',
+  title: ABOUT_META.title,
+  description: ABOUT_META.description,
   path: '/about',
+  keywords: ['TheTidbit', 'handmade bags manufacturer', 'made in India handbags'],
 });
 
 export default function Page() {

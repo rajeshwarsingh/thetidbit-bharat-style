@@ -34,7 +34,7 @@ const Home: React.FC = () => {
     },
     "offers": {
       "@type": "Offer",
-      "url": "https://bharat.style/",
+      "url": "https://thetidbit.in/",
       "priceCurrency": "INR",
       "price": PRODUCT.price,
       "priceValidUntil": "2026-12-31",
@@ -60,22 +60,22 @@ const Home: React.FC = () => {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://bharat.style/"
+      "item": "https://thetidbit.in/"
     },{
       "@type": "ListItem",
       "position": 2,
       "name": "Women",
-      "item": "https://bharat.style/women"
+      "item": "https://thetidbit.in/women"
     },{
       "@type": "ListItem",
       "position": 3,
       "name": "Handbags",
-      "item": "https://bharat.style/women/handbags"
+      "item": "https://thetidbit.in/women/handbags"
     },{
       "@type": "ListItem",
       "position": 4,
       "name": "Sling Bags",
-      "item": "https://bharat.style/"
+      "item": "https://thetidbit.in/"
     }]
   };
 
@@ -121,15 +121,15 @@ const Home: React.FC = () => {
         "name": "Do you offer free delivery?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. We offer free delivery on prepaid orders across India."
+          "text": "Yes. We offer free delivery on all orders across India."
         }
       },
       {
         "@type": "Question",
-        "name": "What is the return policy?",
+        "name": "How can I get help with my order?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "We offer a 10-day return and exchange policy. Message us on WhatsApp with your order ID to initiate."
+          "text": "Message us on WhatsApp with your order ID. If something arrives damaged or incorrect, we'll help resolve it."
         }
       }
     ]
@@ -139,8 +139,8 @@ const Home: React.FC = () => {
     <>
       <SEO 
         title="Handmade Jute Embroidered Round Sling Bag"
-        description="Shop the eco-friendly, artistic, handmade jute embroidered round sling bag. Sustainable fashion for the modern boho soul. Free Delivery & Easy Returns."
-        canonicalUrl="https://bharat.style/"
+        description="Shop the eco-friendly, artistic, handmade jute embroidered round sling bag. Sustainable fashion for the modern boho soul. Free delivery across India."
+        canonicalUrl="https://thetidbit.in/"
         type="product"
         image={PRODUCT.colors[0].images[0]}
         schema={[productSchema, breadcrumbSchema, faqSchema]}

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, Link } from '@/lib/router';
-import { Star, ShieldCheck, Truck, RefreshCcw, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Star, ShieldCheck, Truck, Share2, Heart, User, Package, Camera, Tag, X, Check, MessageCircle, ClipboardCheck, Sparkles, CheckCircle2 } from 'lucide-react';
 import { PRODUCT, WHATSAPP_NUMBER, VALID_COUPONS, COUPON_DISCOUNTS, PRODUCT_CATEGORIES, getProductDetailUrl } from '../constants';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import { useSlingTry } from './SlingTryContext';
@@ -146,7 +146,7 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
   };
 
   const handleShare = async () => {
-    const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://bharat.style/';
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : 'https://thetidbit.in/';
     const shareText = `${product.name} (${selectedColor.name}) — ₹${currentPrice} on TheTidbit`;
     const nav = typeof window !== 'undefined' ? window.navigator : undefined;
 
@@ -571,7 +571,7 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
             <div className="mt-4 p-4 rounded-xl border border-stone-200/80 dark:border-stone-700/80 bg-[#f8f5f1] dark:bg-stone-800/60">
               <p className="text-sm font-bold text-stone-900 dark:text-stone-100 mb-2">Shop With Confidence</p>
               <ul className="space-y-1.5">
-                {['7-Day Easy Exchange', 'COD Available', 'WhatsApp Help Anytime'].map((line) => (
+                {['Free Shipping Across India', 'Pay Online Securely', 'WhatsApp Help Anytime'].map((line) => (
                   <li key={line} className="flex items-center gap-2 text-sm text-stone-700 dark:text-stone-300">
                     <CheckCircle2 size={16} className="flex-shrink-0 text-emerald-500 dark:text-emerald-400" />
                     <span>{line}</span>
@@ -618,8 +618,8 @@ const Hero: React.FC<HeroProps> = ({ product = PRODUCT, appliedCoupon, setApplie
                 <span>Free Delivery</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
-                <RefreshCcw size={18} className="text-brand-green" />
-                <span>10-Day Returns</span>
+                <ShieldCheck size={18} className="text-brand-green" />
+                <span>Handmade Quality</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-stone-600 dark:text-stone-400">
                 <ShieldCheck size={18} className="text-brand-green" />

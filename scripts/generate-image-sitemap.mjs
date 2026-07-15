@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const rootDir = join(__dirname, '..');
 
-const BASE_URL = 'https://bharat.style';
+const BASE_URL = 'https://thetidbit.in';
 const NOW = new Date().toISOString().split('T')[0];
 
 /**

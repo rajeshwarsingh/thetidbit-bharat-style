@@ -18,22 +18,22 @@ npm run generate-image-sitemap
 
 ## 📍 Important URLs
 
-- **Main Sitemap**: `https://bharat.style/sitemap.xml`
-- **RSS Feed**: `https://bharat.style/feed.xml`
-- **Main Pages**: `https://bharat.style/sitemap-main.xml`
-- **Stories**: `https://bharat.style/sitemap-stories.xml`
-- **Images**: `https://bharat.style/sitemap-images.xml`
+- **Main Sitemap**: `https://thetidbit.in/sitemap.xml`
+- **RSS Feed**: `https://thetidbit.in/feed.xml`
+- **Main Pages**: `https://thetidbit.in/sitemap-main.xml`
+- **Stories**: `https://thetidbit.in/sitemap-stories.xml`
+- **Images**: `https://thetidbit.in/sitemap-images.xml`
 
 ## ✅ Post-Deployment Checklist
 
 1. **Verify Files Are Accessible:**
-   - [ ] `https://bharat.style/sitemap.xml` returns XML
-   - [ ] `https://bharat.style/feed.xml` returns RSS
+   - [ ] `https://thetidbit.in/sitemap.xml` returns XML
+   - [ ] `https://thetidbit.in/feed.xml` returns RSS
    - [ ] All sitemap URLs return valid XML
 
 2. **Google Search Console:**
    - [ ] Verify property ownership
-   - [ ] Submit `https://bharat.style/sitemap.xml`
+   - [ ] Submit `https://thetidbit.in/sitemap.xml`
    - [ ] Check coverage report (wait 24-48 hours)
    - [ ] Link GA4 to Search Console
 

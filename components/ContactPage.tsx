@@ -16,10 +16,20 @@ const ContactPage: React.FC = () => {
     openWhatsApp(contactUrl(text), 'contact_submit', { placement: 'contact-page' });
   };
 
-  const CARDS = [
+  const CARDS: { icon: typeof Phone; label: string; value: React.ReactNode; href?: string }[] = [
     { icon: Phone, label: 'Call / WhatsApp', value: CONTACT_INFO.mobile, href: `tel:${CONTACT_INFO.mobile}` },
     { icon: Mail, label: 'Email', value: CONTACT_INFO.email, href: `mailto:${CONTACT_INFO.email}` },
-    { icon: MapPin, label: 'Address', value: CONTACT_INFO.address },
+    {
+      icon: MapPin,
+      label: 'Registered address',
+      value: (
+        <span className="leading-relaxed">
+          {CONTACT_INFO.addressLines.map((line) => (
+            <span key={line} className="block">{line}</span>
+          ))}
+        </span>
+      ),
+    },
     { icon: Clock, label: 'Support Hours', value: 'Mon–Sat, 10am – 7pm IST' },
   ];
 
