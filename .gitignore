@@ -1,4 +1,30 @@
-# Logs
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Next.js / build
+.next
+out
+build
+dist
+dist-ssr
+
+# Env / secrets (keep *.example committed)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Debug / logs
 logs
 *.log
 npm-debug.log*
@@ -7,20 +33,22 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-.next
-out
-dist
-dist-ssr
-*.local
+# Testing / coverage
+coverage
+.nyc_output
 
-# Editor directories and files
+# OS / editor
+.DS_Store
+Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Misc
+*.pem
+.turbo
