@@ -13,9 +13,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   webpack: (config) => {
-    // The api/ handlers import sibling modules with explicit `.js` extensions
-    // that actually resolve to `.ts` files (Vite bundler resolution). Teach
-    // webpack the same mapping.
+    // server/ helpers import modules with explicit `.js` extensions that
+    // resolve to `.ts` files (legacy Vite resolution). Teach webpack the same.
     config.resolve.extensionAlias = {
       ...(config.resolve.extensionAlias || {}),
       '.js': ['.ts', '.tsx', '.js', '.jsx'],

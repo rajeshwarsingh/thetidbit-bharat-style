@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { processTrackByMobileRequest } from '../../../api/track-by-mobile';
+import { processTrackByMobileRequest } from '../../../server/track-by-mobile';
 
 export const dynamic = 'force-dynamic';
 

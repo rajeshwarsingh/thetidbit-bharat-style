@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { processTrackCourierRequest } from '../../../api/trackcourier';
+import { processTrackCourierRequest } from '../../../server/trackcourier';
 
 export const dynamic = 'force-dynamic';
 

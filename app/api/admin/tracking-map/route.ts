@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { processAdminTrackingMapRequest } from '../../../../api/admin/tracking-map';
+import { processAdminTrackingMapRequest } from '../../../../server/admin/tracking-map';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { initiatePayment, phonePeMode } from '../../../../lib/phonepe';
 import { getCatalogById } from '../../../../data/catalogs';
+import { orderGrandTotal } from '../../../../utils/pricing';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -30,19 +31,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: false, error: 'A valid 10-digit phone number is required.' }, { status: 400 });
   }
 
-  // SECURITY: price is taken from the server-side catalog, never from the client.
-  const amountPaise = product.price * quantity * 100;
+  // SECURITY: price + shipping from server catalog, never from the client.
+  const { subtotal, shipping, total } = orderGrandTotal(product.price, quantity);
+  const amountPaise = total * 100;
   const txn = txnId();
   const origin = req.nextUrl.origin;
 
-  // TEST MODE: no real credentials → simulate the PhonePe pay screen.
   if (phonePeMode === 'mock') {
     return NextResponse.json({
       success: true,
       txn,
       mock: true,
       redirectUrl: `${origin}/order/pay?txn=${txn}`,
-      amount: product.price * quantity,
+      amount: total,
+      subtotal,
+      shipping,
     });
   }
 
@@ -55,13 +58,23 @@ export async function POST(req: NextRequest) {
   });
 
   if (!result.success || !result.redirectUrl) {
-    return NextResponse.json({ success: false, error: result.error || 'Payment failed to start.' }, { status: 502 });
+    console.error('[phonepe/initiate] failed', { productId, quantity, amountPaise, error: result.error });
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Could not start online payment. Please try WhatsApp instead.',
+        detail: result.error,
+      },
+      { status: 502 }
+    );
   }
 
   return NextResponse.json({
     success: true,
     txn,
     redirectUrl: result.redirectUrl,
-    amount: product.price * quantity,
+    amount: total,
+    subtotal,
+    shipping,
   });
 }
