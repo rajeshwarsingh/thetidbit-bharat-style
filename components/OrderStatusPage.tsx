@@ -59,6 +59,7 @@ const OrderStatusPage: React.FC = () => {
           <p className="mt-3 text-stone-600 dark:text-stone-400">
             Thank you{order ? `, ${order.name.split(' ')[0]}` : ''}! Your order is confirmed.
             {txn && <> Payment ref: <span className="font-mono text-sm">{txn}</span>.</>}
+            {order?.email ? <> A confirmation was also sent to <span className="font-medium">{order.email}</span>.</> : null}
           </p>
           {order && (
             <div className="mt-6 text-left rounded-2xl border border-stone-200 dark:border-stone-700 p-5">

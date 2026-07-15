@@ -107,37 +107,39 @@ const Navbar: React.FC = () => {
         </div>
 
         <nav className={`bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-stone-200 dark:border-stone-700 transition-all duration-300 ${scrolled ? 'shadow-md' : ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative flex items-center h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        {/* Mobile: 3 equal columns so brand stays centered without overlapping icons.
+            Desktop: normal flex row (logo | nav | actions). */}
+        <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1 h-16 md:flex md:gap-0">
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden shrink-0 z-10">
+          <div className="flex items-center justify-start md:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 p-2 transition-colors"
+              className="text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 p-2 -ml-1 transition-colors"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
 
-          {/* Logo — absolutely centered on mobile, left-aligned on desktop */}
-          <div className="absolute inset-x-0 flex justify-center md:static md:flex-none md:justify-start pointer-events-none md:pointer-events-auto">
+          {/* Logo — centered in middle column on mobile, left on desktop */}
+          <div className="flex justify-center min-w-0 max-w-full md:justify-start md:shrink-0">
             <Link
               to="/"
               onClick={closeMenu}
-              className="pointer-events-auto flex items-center gap-2 sm:gap-3 group focus:outline-none"
+              className="flex items-center gap-1.5 sm:gap-3 group focus:outline-none min-w-0"
             >
               <img
                 src={cloudinaryTransform(LOGO_URL, { w: 160 })}
                 srcSet={cloudinarySrcSet(LOGO_URL, [80, 120, 160, 240])}
-                sizes="40px"
+                sizes="32px"
                 alt="TheTidbit Logo"
-                className="h-8 w-auto sm:h-10 shrink-0"
+                className="h-7 w-auto sm:h-10 shrink-0"
                 width="40"
                 height="40"
                 decoding="async"
               />
-              <span className="font-serif text-lg sm:text-2xl font-bold text-stone-900 dark:text-stone-100 tracking-tight leading-none group-hover:text-brand-green transition-colors whitespace-nowrap">
+              <span className="font-serif text-[15px] sm:text-2xl font-bold text-stone-900 dark:text-stone-100 tracking-tight leading-none group-hover:text-brand-green transition-colors whitespace-nowrap truncate">
                 TheTidbit
               </span>
             </Link>
@@ -160,13 +162,13 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right-side: Search + Track + Wishlist + Theme + Badge */}
-          <div className="ml-auto flex items-center justify-end gap-0.5 sm:gap-2 shrink-0 z-10">
+          <div className="flex items-center justify-end gap-0 sm:gap-2 min-w-0 md:ml-auto md:shrink-0">
             <Link
               to="/collections"
               aria-label="Search products"
-              className="p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              className="p-1.5 sm:p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             >
-              <Search size={20} />
+              <Search className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
             </Link>
             <Link
               to="/track"
@@ -178,9 +180,9 @@ const Navbar: React.FC = () => {
             <Link
               to="/wishlist"
               aria-label={`Wishlist${wishlist.length ? ` (${wishlist.length} items)` : ''}`}
-              className="relative p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              className="relative p-1.5 sm:p-2 rounded-full text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
             >
-              <Heart size={20} />
+              <Heart className="h-[18px] w-[18px] sm:h-5 sm:w-5" />
               {wishlist.length > 0 && (
                 <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-brand-green text-white text-[10px] font-bold flex items-center justify-center">
                   {wishlist.length}
@@ -190,7 +192,7 @@ const Navbar: React.FC = () => {
             <ThemeToggle />
             {HEADER_BADGE?.enabled ? (
               <div
-                className="relative inline-flex items-center gap-2 select-none"
+                className="relative inline-flex items-center gap-1 sm:gap-2 select-none shrink-0"
                 title={HEADER_BADGE.title ?? HEADER_BADGE.ariaLabel}
               >
                 {/* Festive decorations */}
@@ -247,10 +249,10 @@ const Navbar: React.FC = () => {
                 <span
                   role="img"
                   aria-label={HEADER_BADGE.ariaLabel}
-                  className="text-2xl sm:text-4xl leading-none drop-shadow-sm"
+                  className="text-xl sm:text-4xl leading-none drop-shadow-sm scale-90 sm:scale-100 origin-center"
                 >
                   {HEADER_BADGE.variant === 'svg_india_flag' ? (
-                    <span aria-hidden="true">
+                    <span aria-hidden="true" className="inline-block [&_svg]:w-8 [&_svg]:h-5 sm:[&_svg]:w-11 sm:[&_svg]:h-[30px]">
                       <IndiaFlagIcon />
                     </span>
                   ) : (

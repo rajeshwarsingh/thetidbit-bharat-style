@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
     total: Number(order.total) || 0,
     name: String(order.name),
     phone: String(order.phone || ''),
+    email: String(order.email || '').trim() || undefined,
     address: String(order.address),
     pincode: String(order.pincode || ''),
   };

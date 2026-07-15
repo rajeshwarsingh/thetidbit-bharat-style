@@ -16,6 +16,7 @@ const CheckoutPage: React.FC = () => {
   const [qty, setQty] = useState(1);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [pincode, setPincode] = useState('');
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
@@ -33,6 +34,7 @@ const CheckoutPage: React.FC = () => {
   }
 
   const { subtotal, shipping, total } = orderGrandTotal(item.price, qty);
+  const emailTrimmed = email.trim();
 
   const buildOrder = (): Order => ({
     productId: item.productId,
@@ -42,6 +44,7 @@ const CheckoutPage: React.FC = () => {
     total,
     name: name.trim(),
     phone: phone.trim(),
+    ...(emailTrimmed ? { email: emailTrimmed } : {}),
     address: address.trim(),
     pincode: pincode.trim(),
   });
@@ -49,6 +52,9 @@ const CheckoutPage: React.FC = () => {
   const validate = (): string | null => {
     if (name.trim().length < 2) return 'Please enter your name.';
     if (phone.replace(/\D/g, '').length !== 10) return 'Please enter a valid 10-digit phone number.';
+    if (emailTrimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
+      return 'Please enter a valid email, or leave it blank.';
+    }
     if (address.trim().length < 8) return 'Please enter your full delivery address.';
     if (pincode.replace(/\D/g, '').length !== 6) return 'Please enter a valid 6-digit PIN code.';
     return null;
@@ -71,6 +77,7 @@ const CheckoutPage: React.FC = () => {
           qty,
           name: name.trim(),
           phone: phone.trim(),
+          email: emailTrimmed || undefined,
           address: address.trim(),
           pincode: pincode.trim(),
         }),
@@ -141,6 +148,20 @@ const CheckoutPage: React.FC = () => {
                     className="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
                     placeholder="10-digit number"
                   />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-stone-600 dark:text-stone-300 mb-1">
+                    Email <span className="font-normal text-stone-400">(optional)</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    className="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
+                    placeholder="you@email.com"
+                  />
+                  <p className="mt-1 text-xs text-stone-400">We’ll send your order confirmation here after payment.</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-stone-600 dark:text-stone-300 mb-1">PIN code</label>

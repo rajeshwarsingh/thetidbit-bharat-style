@@ -14,6 +14,8 @@ export interface Order {
   total: number;
   name: string;
   phone: string;
+  /** Optional — if set, customer also gets an order confirmation email after payment. */
+  email?: string;
   address: string;
   pincode: string;
 }
@@ -55,6 +57,7 @@ export function orderWhatsAppUrl(order: Order, opts?: { paid?: boolean; txn?: st
     `*Deliver to:*`,
     `${order.name}`,
     `${order.phone}`,
+    order.email ? `${order.email}` : '',
     `${order.address}`,
     `PIN: ${order.pincode}`,
   ].filter(Boolean);
