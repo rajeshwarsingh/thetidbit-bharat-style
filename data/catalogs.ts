@@ -120,7 +120,7 @@ const CATALOG_DEFS: CatalogDef[] = [
     slug: 'butterfly-sling-pink',
     name: 'TheTidbit Butterfly Sling Bag for Women | Handmade Jute Crossbody Bag | Embroidered Design | Pink',
     displayName: 'Butterfly Sling Bag in Pink',
-    price: 474, collection: 'gift', source: SLING_BAG_PRODUCT_2, colorId: 'butterfly-pink',
+    price: 1, collection: 'gift', source: SLING_BAG_PRODUCT_2, colorId: 'butterfly-pink',
     tagline: 'Hand-woven butterfly motif in pink',
     description:
       'Pink butterfly embroidery on jute makes this sling feel special for college days, brunches and gifts. It stays lightweight in heat, carries the essentials, and shows clear handmade character — the kind of women’s handbag friends notice. Choose it when you want eco-friendly style that still feels feminine and fun.',
