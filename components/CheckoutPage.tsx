@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSearchParams, Link } from '@/lib/router';
 import { MessageCircle, CreditCard, ShieldCheck, Truck, ArrowLeft, Loader2 } from 'lucide-react';
 import SEO from './SEO';
@@ -8,6 +8,38 @@ import { cloudinaryTransform } from '../utils/cloudinary';
 import { Order, saveOrder, orderWhatsAppUrl } from '../utils/order';
 import { orderGrandTotal } from '../utils/pricing';
 import MarketplaceTrustStrip from './MarketplaceTrustStrip';
+
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => { open: () => void };
+  }
+}
+
+function loadRazorpayScript(): Promise<boolean> {
+  return new Promise((resolve) => {
+    if (typeof window === 'undefined') {
+      resolve(false);
+      return;
+    }
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+    const existing = document.querySelector('script[data-razorpay]');
+    if (existing) {
+      existing.addEventListener('load', () => resolve(true));
+      existing.addEventListener('error', () => resolve(false));
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    script.dataset.razorpay = '1';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+}
 
 const CheckoutPage: React.FC = () => {
   const [params] = useSearchParams();
@@ -22,6 +54,16 @@ const CheckoutPage: React.FC = () => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [payLabel, setPayLabel] = useState('Razorpay');
+
+  useEffect(() => {
+    fetch('/api/payment/config')
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.label) setPayLabel(String(d.label));
+      })
+      .catch(() => {});
+  }, []);
 
   if (!item) {
     return (
@@ -67,6 +109,75 @@ const CheckoutPage: React.FC = () => {
     return null;
   };
 
+  const openRazorpayCheckout = async (data: {
+    txn: string;
+    razorpayOrderId: string;
+    razorpayKeyId: string;
+    amountPaise: number;
+    currency?: string;
+  }) => {
+    const ok = await loadRazorpayScript();
+    if (!ok || !window.Razorpay) {
+      setError('Could not load payment form. Please try WhatsApp instead.');
+      setLoading(false);
+      return;
+    }
+
+    const order = buildOrder();
+    saveOrder(data.txn, order);
+
+    const rzp = new window.Razorpay({
+      key: data.razorpayKeyId,
+      amount: data.amountPaise,
+      currency: data.currency || 'INR',
+      name: 'TheTidbit',
+      description: order.productName,
+      order_id: data.razorpayOrderId,
+      prefill: {
+        name: order.name,
+        contact: order.phone,
+        ...(order.email ? { email: order.email } : {}),
+      },
+      theme: { color: '#166534' },
+      handler: async (response: {
+        razorpay_order_id: string;
+        razorpay_payment_id: string;
+        razorpay_signature: string;
+      }) => {
+        try {
+          const verify = await fetch('/api/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              txn: data.txn,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+          const v = await verify.json().catch(() => ({}));
+          if (!verify.ok || !v.ok) {
+            setError('Payment verification failed. If money was deducted, contact us on WhatsApp.');
+            setLoading(false);
+            return;
+          }
+          // Signature already verified server-side; sim=COMPLETED avoids a brief
+          // PENDING flash while Razorpay's order status catches up.
+          window.location.assign(
+            `/order/status?txn=${encodeURIComponent(data.txn)}&sim=COMPLETED`
+          );
+        } catch {
+          setError('Payment verification failed. Please contact us on WhatsApp.');
+          setLoading(false);
+        }
+      },
+      modal: {
+        ondismiss: () => setLoading(false),
+      },
+    });
+    rzp.open();
+  };
+
   const payOnline = async () => {
     const err = validate();
     if (err) {
@@ -75,8 +186,9 @@ const CheckoutPage: React.FC = () => {
     }
     setError(null);
     setLoading(true);
+    let keepLoadingForCheckout = false;
     try {
-      const res = await fetch('/api/phonepe/initiate', {
+      const res = await fetch('/api/payment/initiate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -90,25 +202,41 @@ const CheckoutPage: React.FC = () => {
         }),
       });
       const data = await res.json().catch(() => ({}));
+
+      // Razorpay Checkout.js modal
+      if (res.ok && data.success && data.provider === 'razorpay' && data.razorpayOrderId && data.razorpayKeyId && data.txn) {
+        keepLoadingForCheckout = true;
+        await openRazorpayCheckout({
+          txn: data.txn,
+          razorpayOrderId: data.razorpayOrderId,
+          razorpayKeyId: data.razorpayKeyId,
+          amountPaise: data.amountPaise,
+          currency: data.currency,
+        });
+        return;
+      }
+
+      // PhonePe / mock — full-page redirect
       if (res.ok && data.success && data.redirectUrl && data.txn) {
         saveOrder(data.txn, buildOrder());
         window.location.assign(data.redirectUrl);
         return;
       }
-      console.error('[checkout] PhonePe initiate failed', res.status, data);
+
+      console.error('[checkout] payment initiate failed', res.status, data);
       // Never surface internal API messages (e.g. courier tracking) to shoppers.
       const friendly =
         typeof data.error === 'string' &&
-        /phone|payment|product|phonepe|whatsapp|valid/i.test(data.error) &&
+        /phone|payment|product|phonepe|razorpay|whatsapp|valid/i.test(data.error) &&
         !/docIds|trackcourier|oauth|HTTP \d/i.test(data.error)
           ? data.error
           : 'Could not start online payment. Please try WhatsApp instead.';
       setError(friendly);
     } catch (e) {
-      console.error('[checkout] PhonePe initiate network error', e);
+      console.error('[checkout] payment initiate network error', e);
       setError('Something went wrong. Please try WhatsApp instead.');
     } finally {
-      setLoading(false);
+      if (!keepLoadingForCheckout) setLoading(false);
     }
   };
 
@@ -204,10 +332,12 @@ const CheckoutPage: React.FC = () => {
                 type="button"
                 onClick={payOnline}
                 disabled={loading}
-                className="inline-flex items-center justify-center gap-2 bg-[#5f259f] text-white font-bold py-3.5 rounded-2xl hover:opacity-95 transition-opacity disabled:opacity-60"
+                className={`inline-flex items-center justify-center gap-2 text-white font-bold py-3.5 rounded-2xl hover:opacity-95 transition-opacity disabled:opacity-60 ${
+                  payLabel === 'PhonePe' ? 'bg-[#5f259f]' : 'bg-stone-900 dark:bg-stone-100 dark:text-stone-900'
+                }`}
               >
                 {loading ? <Loader2 size={18} className="animate-spin" /> : <CreditCard size={18} />}
-                Pay Online (PhonePe)
+                Pay Online ({payLabel})
               </button>
               <button
                 type="button"
@@ -218,7 +348,7 @@ const CheckoutPage: React.FC = () => {
               </button>
             </div>
             <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
-              Pay securely online via PhonePe (UPI, cards, wallets), or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment with you directly.
+              Pay securely online via {payLabel} (UPI, cards, wallets, netbanking), or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment with you directly.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 text-xs text-stone-500 dark:text-stone-400">

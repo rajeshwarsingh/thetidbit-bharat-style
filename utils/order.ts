@@ -1,8 +1,8 @@
 /**
  * Client-side order helpers. The store has no cart/DB — orders are placed via
- * PhonePe (online) or WhatsApp. This builds the order summary, the WhatsApp
- * message, and stashes the order in localStorage so the post-payment status
- * page can show a summary and let the customer confirm on WhatsApp.
+ * online payment (Razorpay / PhonePe) or WhatsApp. This builds the order
+ * summary, the WhatsApp message, and stashes the order in localStorage so the
+ * post-payment status page can show a summary and let the customer confirm.
  */
 import { WHATSAPP_NUMBER } from '../constants';
 import { GST_PERCENT } from './pricing';

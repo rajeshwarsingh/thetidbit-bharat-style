@@ -20,7 +20,7 @@ const OrderStatusPage: React.FC = () => {
     // TEST MODE: honour the simulated result from the mock pay screen.
     if (sim === 'COMPLETED' || sim === 'FAILED') { setState(sim); return; }
     let active = true;
-    fetch(`/api/phonepe/status?txn=${encodeURIComponent(txn)}`)
+    fetch(`/api/payment/status?txn=${encodeURIComponent(txn)}`)
       .then((r) => r.json())
       .then((d) => { if (active) setState((d.state as State) || 'UNKNOWN'); })
       .catch(() => { if (active) setState('UNKNOWN'); });

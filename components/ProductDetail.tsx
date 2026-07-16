@@ -175,7 +175,7 @@ const ProductDetail: React.FC = () => {
               </button>
             </div>
             <p className="mt-2.5 text-xs text-stone-500 dark:text-stone-400 inline-flex items-center gap-1.5">
-              <CreditCard size={13} className="text-[#5f259f]" /> Pay online via PhonePe
+              <CreditCard size={13} className="text-brand-green" /> Pay online securely
               <span className="mx-1">·</span>
               <MessageCircle size={13} className="text-brand-green" /> or order on WhatsApp — choose at checkout
             </p>
@@ -185,7 +185,7 @@ const ProductDetail: React.FC = () => {
             <div className="mt-6 grid grid-cols-2 gap-3">
               {[
                 { icon: Truck, k: 'Free Shipping', v: 'Across India' },
-                { icon: ShieldCheck, k: 'Secure Payment', v: 'PhonePe checkout' },
+                { icon: ShieldCheck, k: 'Secure Payment', v: 'UPI · Cards · Wallets' },
                 { icon: Heart, k: 'Handmade', v: 'Crafted in India' },
                 { icon: Clock, k: 'Fast Dispatch', v: 'Ships in 24–48 hrs' },
               ].map((f) => (

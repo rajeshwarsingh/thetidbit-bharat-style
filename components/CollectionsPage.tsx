@@ -171,7 +171,7 @@ const CollectionsPage: React.FC = () => {
           <div className="flex items-start gap-3">
             <Package className="text-brand-green shrink-0 mt-0.5" size={22} />
             <p className="text-sm text-stone-600 dark:text-stone-300">
-              <strong className="text-stone-900 dark:text-stone-100">In stock & ready to ship.</strong> Buy online via PhonePe or order on
+              <strong className="text-stone-900 dark:text-stone-100">In stock & ready to ship.</strong> Buy online securely or order on
               WhatsApp. Need bags in bulk for corporate gifting or reselling?
             </p>
           </div>

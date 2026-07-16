@@ -374,7 +374,7 @@ const HomePage: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
             {[
               { icon: Truck, label: 'Free Delivery', sub: 'Across India', color: 'text-blue-600 dark:text-blue-400' },
-              { icon: ShieldCheck, label: 'Secure Payment', sub: 'Pay online via PhonePe', color: 'text-emerald-600 dark:text-emerald-400' },
+              { icon: ShieldCheck, label: 'Secure Payment', sub: 'Pay online securely', color: 'text-emerald-600 dark:text-emerald-400' },
               { icon: Heart, label: 'Handmade Quality', sub: 'Artisan crafted', color: 'text-purple-600 dark:text-purple-400' },
               { icon: Leaf, label: 'Eco-Friendly', sub: 'Natural jute', color: 'text-rose-600 dark:text-rose-400' },
             ].map((badge, i) => {

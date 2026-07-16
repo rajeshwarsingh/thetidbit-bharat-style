@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendOrderEmail, OrderPayload } from '../../../../lib/email';
-import { checkStatus, phonePeMode } from '../../../../lib/phonepe';
+import { checkStatus, isMockPayment } from '../../../../lib/payments';
 import { getCatalogById } from '../../../../data/catalogs';
 import { orderGrandTotal, GST_PERCENT } from '../../../../utils/pricing';
 
@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: 'invalid_order' }, { status: 400 });
   }
 
-  // In LIVE mode, only email once PhonePe confirms the payment (prevents spoofed
+  // In LIVE mode, only email once the gateway confirms payment (prevents spoofed
   // order emails). In TEST mode, the simulated flow is trusted.
-  if (phonePeMode !== 'mock') {
+  if (!isMockPayment()) {
     const status = await checkStatus(String(txn));
     if (status.state !== 'COMPLETED') {
       return NextResponse.json({ ok: false, error: 'payment_not_confirmed' }, { status: 402 });

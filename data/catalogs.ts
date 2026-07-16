@@ -2,7 +2,7 @@
  * TheTidbit — Catalog (retail)
  * ------------------------------------------------------------------
  * A fixed set of standalone catalogs. NO colour variants — each entry is its
- * own product with its own URL, in stock and directly buyable (PhonePe or
+ * own product with its own URL, in stock and directly buyable (online payment or
  * WhatsApp). Bulk / all colour variations live on the /bulk page.
  *
  * ⭐ To edit: change CATALOG_DEFS below.
