@@ -559,11 +559,13 @@ export const HANDBAG_PRODUCT: ProductDetails = {
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461893/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/50_prwztp.png"
     ]},
     { name: "Evil Eye Blue", hex: "#3B82F6", id: "evil-eye-blue", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784267233/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_blue1_b9wttv.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png"
     ]},
     { name: "Evil Eye Pink", hex: "#EC4899", id: "evil-eye-pink", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784267358/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_pink1_ggxcvc.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png"

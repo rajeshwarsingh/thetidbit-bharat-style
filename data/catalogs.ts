@@ -95,8 +95,8 @@ const CATALOG_DEFS: CatalogDef[] = [
       'Sand-neutral colour that matches most wardrobes',
     ],
     images: [
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1783702395/ChatGPT_Image_Jul_10_2026_08_32_15_PM_ppocqo.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1783702399/brown2_t8wp9b.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1783702395/ChatGPT_Image_Jul_10_2026_08_32_15_PM_ppocqo.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1783702397/ChatGPT_Image_Jul_10_2026_08_32_30_PM_twjlrl.png',
     ],
   },
@@ -148,6 +148,7 @@ const CATALOG_DEFS: CatalogDef[] = [
       'Compact profile that packs neatly into larger luggage',
     ],
     images: [
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784267233/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_blue1_b9wttv.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png',
@@ -169,6 +170,7 @@ const CATALOG_DEFS: CatalogDef[] = [
       'Soft palette that suits casual and festive layers',
     ],
     images: [
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784267358/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_pink1_ggxcvc.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png',
