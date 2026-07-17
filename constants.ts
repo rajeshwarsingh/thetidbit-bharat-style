@@ -324,13 +324,19 @@ export const SLING_BAG_PRODUCT_1: ProductDetails = {
     ]},
     { name: "Black Wave", hex: "#000000", id: "black-wave", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434176/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/black_sling_vsegau.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461969/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/85_az8kpf.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768462377/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/86_nujzuo.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284199/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/black/wave_sling_black-3_mxsqyy.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284196/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/black/wave_sling_black-2_jvobao.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284199/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/black/wave_sling_black-4_c2c5ve.png",
     ]},
     { name: "Blue Wave", hex: "#3B82F6", id: "blue-wave", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434177/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/blue_sling_tjsiit.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466380/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/88_fc1jmw.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768466378/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/89_gscvjx.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284167/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_12_08_32_AM_dw8sbn.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784285435/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Jul_17_2026_04_20_14_PM_ddb0bx.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284167/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_07_19_16_PM_k4rw9a.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284166/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_07_23_25_PM_s5ijfm.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284165/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_07_09_44_PM_c7h0ag.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284163/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_06_29_53_PM_fg0llh.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784284166/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/SLING-WAVE/blue/ChatGPT_Image_Mar_31_2026_07_21_16_PM_ezq5jh.png",
     ]},
     { name: "Yellow Mate", hex: "#FBBF24", id: "yellow-mate", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1771434321/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/yellow_sling_nfvr4i.png",
@@ -559,16 +565,17 @@ export const HANDBAG_PRODUCT: ProductDetails = {
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1768461893/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/50_prwztp.png"
     ]},
     { name: "Evil Eye Blue", hex: "#3B82F6", id: "evil-eye-blue", images: [
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784286469/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/devil_eye_2_xi4elt.png",
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1784267233/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_blue1_b9wttv.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784286670/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/evil_eye_lajmnp.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784286996/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/3_pvgfub.png",
     ]},
     { name: "Evil Eye Pink", hex: "#EC4899", id: "evil-eye-pink", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1784267358/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_pink1_ggxcvc.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png",
-      "https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png"
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784287478/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink3_dtioll.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784287480/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink2_apixmq.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784287531/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink4_vbsczn.png",
+      "https://res.cloudinary.com/thetidbit23024/image/upload/v1784287689/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/back_pink_zlwnzn.png",
     ]},
     { name: "Buckle Yellow", hex: "#FBBF24", id: "buckle-yellow", images: [
       "https://res.cloudinary.com/thetidbit23024/image/upload/v1771441984/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/yellow_handbag_dduztp.png",

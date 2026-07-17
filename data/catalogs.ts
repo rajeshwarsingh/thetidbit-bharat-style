@@ -148,10 +148,10 @@ const CATALOG_DEFS: CatalogDef[] = [
       'Compact profile that packs neatly into larger luggage',
     ],
     images: [
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784286469/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/devil_eye_2_xi4elt.png',
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1784267233/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_blue1_b9wttv.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/136_utrspf.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143710/137_vfce90.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784143709/135_vfq8ua.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784286670/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/evil_eye_lajmnp.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784286996/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/3_pvgfub.png',
     ],
   },
   {
@@ -171,9 +171,10 @@ const CATALOG_DEFS: CatalogDef[] = [
     ],
     images: [
       'https://res.cloudinary.com/thetidbit23024/image/upload/v1784267358/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/rounded_pink1_ggxcvc.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772667/uzzcoikblxgtmoysvqok.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1750772541/oqvn4slgydof8kopfo6e.png',
-      'https://res.cloudinary.com/thetidbit23024/image/upload/v1768463875/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/all-products/117_mwm6aw.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784287478/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink3_dtioll.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784287480/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink2_apixmq.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784287531/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/pink4_vbsczn.png',
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784287689/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/ROUNDED-HANDBAG-EVIL-EYE/back_pink_zlwnzn.png',
     ],
   },
   {
