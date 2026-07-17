@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams, Link } from '@/lib/router';
-import { Search, X, Sparkles, Package } from 'lucide-react';
+import { Search, X, Sparkles } from 'lucide-react';
 import SEO from './SEO';
 import Reveal from './Reveal';
 import CatalogProductCard from './CatalogProductCard';
@@ -27,7 +27,6 @@ const CollectionsPage: React.FC = () => {
   const [visible, setVisible] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  // Keep local search input in sync when landing via SearchAction (?q=).
   useEffect(() => {
     setQuery(urlQuery);
   }, [urlQuery]);
@@ -106,97 +105,106 @@ const CollectionsPage: React.FC = () => {
     <>
       <SEO schema={collectionSchema} />
 
-      <section className="bg-jute-100 dark:bg-stone-950 py-12 sm:py-16 transition-colors">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-green mb-3">
-              <Sparkles size={14} /> The Collection
-            </span>
-            <h1 className="font-serif text-3xl sm:text-5xl font-bold text-stone-900 dark:text-stone-100">
-              {pageTitle}
-            </h1>
-            <p className="mt-3 text-stone-600 dark:text-stone-400 max-w-2xl mx-auto">
+      <section className="bg-jute-100 dark:bg-stone-950 border-b border-stone-200/80 dark:border-stone-800 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-green">
+                <Sparkles size={12} /> The Collection
+              </span>
+              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100 mt-1">
+                {pageTitle}
+              </h1>
+            </div>
+            <p className="text-sm text-stone-600 dark:text-stone-400 max-w-xl sm:text-right leading-snug">
               {pageDescription}
             </p>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      <div className="sticky top-[92px] sm:top-[100px] z-30 bg-white/95 dark:bg-stone-900/95 backdrop-blur border-b border-stone-200 dark:border-stone-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 space-y-3">
-          <div className="relative max-w-md mx-auto">
-            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onBlur={() => commitSearch(query)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') commitSearch(query);
-              }}
-              placeholder="Search bags, colours, styles…"
-              aria-label="Search products"
-              className="w-full pl-10 pr-9 py-2.5 rounded-full border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
-            />
-            {query && (
-              <button
-                onClick={() => commitSearch('')}
-                aria-label="Clear search"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 sm:justify-center scrollbar-none">
-            {FILTERS.map((f) => (
-              <button
-                key={f.id}
-                onClick={() => setFilter(f.id)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${
-                  filter === f.id
-                    ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 border-stone-900 dark:border-stone-100'
-                    : 'bg-white dark:bg-stone-800 text-stone-600 dark:text-stone-300 border-stone-200 dark:border-stone-700 hover:border-brand-green'
-                }`}
-              >
-                {f.label}
-              </button>
-            ))}
+      <div className="sticky top-[92px] sm:top-[100px] z-30 bg-white/95 dark:bg-stone-900/95 backdrop-blur border-b border-stone-200 dark:border-stone-700 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+          <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center">
+            <div className="relative w-full lg:w-56 lg:shrink-0">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none" />
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onBlur={() => commitSearch(query)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') commitSearch(query);
+                }}
+                placeholder="Search bags…"
+                aria-label="Search products"
+                className="w-full pl-9 pr-8 py-2 rounded-full border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-sm text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
+              />
+              {query && (
+                <button
+                  onClick={() => commitSearch('')}
+                  aria-label="Clear search"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 p-0.5"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+
+            <div className="flex gap-2 overflow-x-auto pb-0.5 -mx-1 px-1 lg:flex-1 scrollbar-none">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => setFilter(f.id)}
+                  className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-sm font-semibold transition-colors border shrink-0 ${
+                    filter === f.id
+                      ? 'bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 border-stone-900 dark:border-stone-100'
+                      : 'bg-white dark:bg-stone-800 text-stone-600 dark:text-stone-300 border-stone-200 dark:border-stone-700 hover:border-brand-green'
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="hidden lg:flex items-center gap-3 shrink-0 text-xs text-stone-500 dark:text-stone-400">
+              <span>{filtered.length} {filtered.length === 1 ? 'bag' : 'bags'}</span>
+              <span aria-hidden="true">·</span>
+              <Link to="/bulk" className="font-semibold text-brand-green hover:underline whitespace-nowrap">
+                Bulk orders
+              </Link>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between rounded-2xl bg-stone-50 dark:bg-stone-800/50 border border-stone-200 dark:border-stone-700 p-4 sm:p-5">
-          <div className="flex items-start gap-3">
-            <Package className="text-brand-green shrink-0 mt-0.5" size={22} />
-            <p className="text-sm text-stone-600 dark:text-stone-300">
-              <strong className="text-stone-900 dark:text-stone-100">In stock & ready to ship.</strong> Buy online securely or order on
-              WhatsApp. Need bags in bulk for corporate gifting or reselling?
-            </p>
-          </div>
-          <Link
-            to="/bulk"
-            className="shrink-0 bg-brand-green text-white font-bold text-sm px-5 py-2.5 rounded-full hover:opacity-90 transition-opacity text-center"
-          >
-            Bulk Orders
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-5 sm:pb-10">
+        <div className="flex items-center justify-between gap-3 mb-4 lg:hidden">
+          <p className="text-xs text-stone-500 dark:text-stone-400">
+            {filtered.length} {filtered.length === 1 ? 'bag' : 'bags'}
+            {query.trim() ? ` for “${query.trim()}”` : ''}
+          </p>
+          <Link to="/bulk" className="text-xs font-semibold text-brand-green hover:underline whitespace-nowrap">
+            Bulk orders
           </Link>
         </div>
-      </div>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {shown.length === 0 ? (
-          <p className="text-center text-stone-500 py-16">No bags match that search. Try another colour or style.</p>
+          <p className="text-center text-stone-500 py-12">No bags match that search. Try another colour or style.</p>
         ) : (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {shown.map((item, i) => (
-              <Reveal key={item.key} delayMs={(i % 4) * 60}>
-                <CatalogProductCard item={item} />
-              </Reveal>
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+            {shown.map((item, i) =>
+              i < 4 ? (
+                <CatalogProductCard key={item.key} item={item} />
+              ) : (
+                <Reveal key={item.key} delayMs={(i % 4) * 50}>
+                  <CatalogProductCard item={item} />
+                </Reveal>
+              )
+            )}
           </div>
         )}
-        <div ref={sentinelRef} className="h-8" />
+        <div ref={sentinelRef} className="h-6" />
       </section>
 
       <section className="bg-stone-50 dark:bg-stone-900 border-t border-stone-200 dark:border-stone-800 py-12">

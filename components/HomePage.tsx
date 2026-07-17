@@ -406,8 +406,12 @@ const HomePage: React.FC = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5">
-            {CATEGORY_CARDS.map((cat) => (
-              <Link key={cat.id} to={cat.to} className="group relative block aspect-[3/4] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+            {CATEGORY_CARDS.map((cat, i) => (
+              <Link
+                key={cat.id}
+                to={cat.to}
+                className={`group relative block aspect-[3/4] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300${i >= 4 ? ' hidden sm:block' : ''}`}
+              >
                 <img
                   src={cloudinaryTransform(cat.image, { w: 500, h: 660, c: 'fill' })}
                   alt={cat.label}
