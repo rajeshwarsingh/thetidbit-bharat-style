@@ -9,7 +9,8 @@ import { useWishlist } from '../utils/wishlist';
 
 /** Primary navigation model — single source of truth for desktop + mobile. */
 const NAV_LINKS: { label: string; to: string; match: (p: string) => boolean }[] = [
-  { label: 'Home', to: '/', match: (p) => p === '/' },
+  { label: 'Home', to: '/', match: (p) => p === '/' || p === '/smart' },
+  { label: 'Classic', to: '/classic', match: (p) => p === '/classic' },
   { label: 'Shop', to: '/collections', match: (p) => p === '/collections' },
   { label: 'Bulk Orders', to: '/bulk', match: (p) => p === '/bulk' },
   { label: 'Stories', to: '/stories', match: (p) => p === '/stories' || p.startsWith('/stories/') },

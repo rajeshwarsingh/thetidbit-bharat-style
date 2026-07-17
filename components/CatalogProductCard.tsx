@@ -137,11 +137,27 @@ const CatalogProductCard: React.FC<Props> = ({ item, showCollection = false, hid
         )}
         <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5 mb-2">{item.product.tagline || 'Handmade in India'}</p>
 
-        {/* Price */}
-        <div className="flex items-baseline gap-2 mb-3">
-          <span className="text-lg font-serif font-bold text-stone-900 dark:text-stone-100">₹{item.price}</span>
+        {/* Price — sale + MRP strike + % off (most scannable for Indian shoppers) */}
+        <div className="mb-3">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <span className="text-lg font-serif font-bold text-stone-900 dark:text-stone-100">
+              ₹{item.price.toLocaleString('en-IN')}
+            </span>
+            {item.mrp > item.price && (
+              <span className="text-sm text-stone-400 line-through decoration-stone-400/80">
+                ₹{item.mrp.toLocaleString('en-IN')}
+              </span>
+            )}
+            {item.discountPercentage > 0 && (
+              <span className="inline-flex items-center text-[11px] font-bold uppercase tracking-wide text-emerald-800 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-1.5 py-0.5 rounded">
+                {item.discountPercentage}% off
+              </span>
+            )}
+          </div>
           {item.mrp > item.price && (
-            <span className="text-sm text-stone-400 line-through">₹{item.mrp}</span>
+            <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-1">
+              You save ₹{(item.mrp - item.price).toLocaleString('en-IN')}
+            </p>
           )}
         </div>
 

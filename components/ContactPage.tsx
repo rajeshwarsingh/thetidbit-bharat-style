@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Clock } from 'lucide-react';
 import SEO from './SEO';
 import Reveal from './Reveal';
-import { CONTACT_INFO, SOCIAL_LINKS } from '../constants';
+import { CONTACT_INFO, SOCIAL_LINKS, GOOGLE_MAPS_URL } from '../constants';
 import { contactUrl, openWhatsApp } from '../utils/whatsapp';
 
 const ContactPage: React.FC = () => {
@@ -22,11 +22,13 @@ const ContactPage: React.FC = () => {
     {
       icon: MapPin,
       label: 'Registered address',
+      href: GOOGLE_MAPS_URL,
       value: (
         <span className="leading-relaxed">
           {CONTACT_INFO.addressLines.map((line) => (
             <span key={line} className="block">{line}</span>
           ))}
+          <span className="block text-xs text-brand-green mt-1 font-semibold">Open in Google Maps →</span>
         </span>
       ),
     },
@@ -66,7 +68,16 @@ const ContactPage: React.FC = () => {
                   </div>
                 );
                 return c.href ? (
-                  <a key={c.label} href={c.href} className="block">{inner}</a>
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    {...(c.href.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    className="block"
+                  >
+                    {inner}
+                  </a>
                 ) : (
                   <div key={c.label}>{inner}</div>
                 );

@@ -10,12 +10,25 @@
  *    - `name`   → metadata / schema title
  *    - `displayName` → scannable H1 on the product page
  *    - `description` → unique on-page + Product schema copy
- *    - `price`  → selling price (mrp defaults to price = no strike-through)
+ *    - `price`  → selling price
+ *    - `mrp`    → optional; otherwise derived from price tier (higher price → higher MRP)
  * ------------------------------------------------------------------
  */
 import { ProductDetails, CollectionTag } from '../types';
 import { PRODUCT, SLING_BAG_PRODUCT_1, SLING_BAG_PRODUCT_2, HANDBAG_PRODUCT } from '../constants';
 
+/**
+ * Tiered MRP from selling price (~60% off, clean ₹x99 endings).
+ * Higher-priced bags get a higher MRP — not a flat 1199 for all.
+ */
+function mrpForPrice(price: number): number {
+  if (price <= 474) return 1199; // ₹474 → 60% off
+  if (price <= 514) return 1299; // ₹514 → 60% off
+  if (price <= 569) return 1499; // ₹569 → 62% off
+  // Fallback: ~60% off, rounded to nearest ₹x99
+  const raw = price / 0.4;
+  return Math.max(price + 100, Math.ceil(raw / 100) * 100 - 1);
+}
 interface CatalogDef {
   slug: string;
   name: string;
@@ -120,7 +133,7 @@ const CATALOG_DEFS: CatalogDef[] = [
     slug: 'butterfly-sling-pink',
     name: 'TheTidbit Butterfly Sling Bag for Women | Handmade Jute Crossbody Bag | Embroidered Design | Pink',
     displayName: 'Butterfly Sling Bag in Pink',
-    price: 1, collection: 'gift', source: SLING_BAG_PRODUCT_2, colorId: 'butterfly-pink',
+    price: 474, collection: 'gift', source: SLING_BAG_PRODUCT_2, colorId: 'butterfly-pink',
     tagline: 'Hand-woven butterfly motif in pink',
     description:
       'Pink butterfly embroidery on jute makes this sling feel special for college days, brunches and gifts. It stays lightweight in heat, carries the essentials, and shows clear handmade character — the kind of women’s handbag friends notice. Choose it when you want eco-friendly style that still feels feminine and fun.',
@@ -265,7 +278,7 @@ export const SIGNATURE_PRODUCT_LINKS = CATALOG_DEFS.map((d) => ({
 export const CATALOGS: ProductDetails[] = CATALOG_DEFS.map((d) => {
   const c = d.source.colors.find((x) => x.id === d.colorId) || d.source.colors[0];
   const images = d.images && d.images.length ? d.images : c.images;
-  const mrp = d.mrp ?? d.price;
+  const mrp = d.mrp ?? mrpForPrice(d.price);
   return {
     id: d.slug,
     brand: 'TheTidbit',

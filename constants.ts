@@ -32,6 +32,14 @@ export const MARKETPLACE_LINKS = {
   meesho: "https://www.meesho.com/1svk8?ms=2",
 };
 
+/** Google Business / Search reviews — public proof link for 5★ trust badge. */
+export const GOOGLE_REVIEWS_URL = "https://share.google/VUGW7tRIq56Aetb9Y";
+
+/** Google Maps — business location (Ambernath). */
+export const GOOGLE_MAPS_URL =
+  "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent("TheTidbit, Shop No. 406, Shivshakti, Ambernath, Thane, Maharashtra 421505");
+
 // Contact Information
 export const CONTACT_INFO = {
   mobile: "9226740297",

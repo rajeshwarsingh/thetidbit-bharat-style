@@ -11,7 +11,7 @@ export interface Story {
   excerpt: string;
   heroImage: string;
   heroImageAlt: string;
-  lifestyleImages?: StoryImage[]; // In-article lifestyle images (max 2)
+  lifestyleImages?: StoryImage[]; // In-article images (unique insertAfterParagraph each)
   author: {
     name: string;
     role: string;
@@ -24,6 +24,129 @@ export interface Story {
 }
 
 export const stories: Story[] = [
+  {
+    id: '12',
+    slug: 'seven-moods-handmade-jute-bags-thetidbit-vibe-guide',
+    title: 'Seven Moods, One Handmade Bag: A TheTidbit Vibe Guide',
+    excerpt:
+      'From floral joy and evil-eye energy to butterfly charm and sunny yellow — a visual tour of TheTidbit handmade jute bag moods for everyday Indian life.',
+    heroImage:
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318264/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/cartton1_f7b7pp.png',
+    heroImageAlt:
+      'TheTidbit floral round jute sling bag illustrated lifestyle — carry joy, everyday style made special',
+    lifestyleImages: [
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318264/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/ChatGPT_Image_Jul_18_2026_01_20_28_AM_njdlbh.png',
+        alt: 'Evil-eye blue round sling bag — little bag, big energy TheTidbit illustration',
+        insertAfterParagraph: 7,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318263/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/Jul_18_2026_01_22_34_AM_xcwayk.png',
+        alt: 'Red round embroidered jute bag — round vibes TheTidbit lifestyle illustration',
+        insertAfterParagraph: 10,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318265/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/Jul_18_2026_01_22_30_AM_rd2ahu.png',
+        alt: 'Red handmade round bag on cafe table — little bag, big vibes TheTidbit illustration',
+        insertAfterParagraph: 13,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318265/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/ChatGPT_Image_Jul_18_2026_01_21_47_AM_izqndx.png',
+        alt: 'Blue butterfly detail sling bag — carry your cute side TheTidbit illustration',
+        insertAfterParagraph: 16,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318265/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/cartton_2_tzdlvx.png',
+        alt: 'Yellow white handmade jute bag cafe scene — sunny days stylish ways TheTidbit',
+        insertAfterParagraph: 19,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318297/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/cartoon3_esocia.png',
+        alt: 'Blue classic handmade sling bag — effortless everyday style TheTidbit illustration',
+        insertAfterParagraph: 22,
+      },
+    ],
+    author: {
+      name: 'TheTidbit Editorial',
+      role: 'Brand & Style Studio',
+    },
+    publishDate: '2026-07-18',
+    readTime: 8,
+    featured: false,
+    content: [
+      'A handmade bag is not only a product. It is a mood you choose before you leave the house. Some mornings ask for soft florals. Some ask for bold colour. Some just need something light that still looks finished. This guide walks through seven TheTidbit vibes — each one a different way the same craft can feel.',
+      'Use it like a moodboard, not a rulebook. Pick the feeling first. The silhouette usually follows.',
+      '## Mood 1 — Carry joy',
+      'Floral faces and soft pink-blue colour stories belong here. This is the bag for brunches, temple visits that turn into coffee, and days when you want your accessory to feel gentle rather than sharp. Handcrafted jute keeps the look natural; the print or embroidery keeps it personal.',
+      'If your wardrobe leans white, denim, and soft cottons, a joy-forward round sling does the talking so your outfit can stay simple.',
+      '## Mood 2 — Little bag, big energy',
+      'Evil-eye blues and protective motifs carry a different kind of confidence. Not loud — just clear. Perfect for travel weekends, new-city walks, and days when you want a talisman on your shoulder as much as a place for your phone.',
+      'Pair with embroidered white dresses, jhumkas, or a clean kurta. Let the circle motif be the statement. Everything else can breathe.',
+      '## Mood 3 — Round vibes',
+      'Round bags have their own silhouette language. They read playful without trying. A deep red embroidered face against cafe light, pink bougainvillea, and a simple blouse is the mood: warm, photogenic, and still practical for everyday essentials.',
+      'Choose this when you want shape as much as colour — a round sling that sits close to the body and photographs beautifully in golden hour.',
+      '## Mood 4 — Little bag, big vibes',
+      'Sometimes the bag sits on the table and still owns the scene. Colour, culture, and craft in one small circle. This is the mood for slow mornings, journals, and “be you” energy — when style is less about the outing and more about how you want the day to feel.',
+      'Gift this vibe when someone already has “enough bags” but not enough pieces that feel like them.',
+      '## Mood 5 — Carry your cute side',
+      'Butterfly details, soft blue weaves, and limited-edition charm live here. Cute does not mean childish when the craft is honest — it means you are allowed to enjoy a detail that makes you smile in the mirror.',
+      'Style with puff sleeves, floral whites, or a simple tee. Keep jewellery quiet so the butterfly can be the wink.',
+      '## Mood 6 — Sunny days, stylish ways',
+      'Yellow and cream bags are daylight in accessory form. Cafe tables, latte art, daisies, and a notebook that says be your own kind of beautiful — this mood is for weekends, college courtyards, and any outfit that needs warmth without heaviness.',
+      'If your closet is mostly neutrals, one sunny sling can reset the whole week.',
+      '## Mood 7 — Effortless everyday',
+      'Not every day wants a motif moment. Some days want a classic blue sling that still feels handmade: light, tidy, and ready for office, errands, and the checklist that always includes “look cute” somehow. This is the quiet workhorse with personality.',
+      'When in doubt, start here. Then let the louder moods join the rotation for evenings and weekends.',
+      '## How to choose your mood',
+      'Ask one question: what do I want my bag to do for me this month — soften, energise, charm, brighten, or simply disappear into the day? Then open the TheTidbit collection and match that answer to a colour and silhouette. Seven moods. One handmade habit. Carry what completes your everyday look.',
+    ],
+  },
+  {
+    id: '11',
+    slug: 'little-bag-big-energy-handmade-jute-bags-thetidbit',
+    title: 'Little Bag, Big Energy: The Joy of Carrying Handmade',
+    excerpt:
+      'A handmade jute bag is more than an accessory — it is a small daily ritual. Soft vibes, real craft, and the quiet confidence of carrying something made with care.',
+    heroImage:
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318264/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/ChatGPT_Image_Jul_18_2026_01_20_28_AM_njdlbh.png',
+    heroImageAlt:
+      'Illustrated woman with TheTidbit evil-eye blue round sling bag — little bag, big energy lifestyle mood',
+    lifestyleImages: [
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318265/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/ChatGPT_Image_Jul_18_2026_01_21_47_AM_izqndx.png',
+        alt: 'TheTidbit butterfly sling bag illustrated lifestyle — carry your cute side',
+        insertAfterParagraph: 4,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1784318265/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/carttons/cartton_2_tzdlvx.png',
+        alt: 'Yellow handmade jute bag illustrated cafe scene — sunny days, stylish ways',
+        insertAfterParagraph: 9,
+      },
+    ],
+    author: {
+      name: 'Ananya Desai',
+      role: 'Style & Living Editor',
+    },
+    publishDate: '2026-07-18',
+    readTime: 6,
+    featured: false,
+    content: [
+      'Some bags hold your phone and keys. The right one also holds a mood. That is the quiet magic of a handmade jute bag — small enough for everyday life, big enough to change how you walk into a room.',
+      'At TheTidbit, we call it little bag, big energy. Not loud. Not try-hard. Just a piece that feels like you on a good day: light on the shoulder, warm in colour, and made by hands that still care about the finish.',
+      '## Why a small bag can feel like a whole vibe',
+      'Indian days are full. Metro, college, office, market, coffee with a friend who is always ten minutes late. You do not need a suitcase on your arm. You need something that moves with you — and still looks intentional when you sit down.',
+      'A round sling or a soft crossbody does that job beautifully. Phone, slim wallet, lipstick, earphones. The rest of the day stays free. When the bag itself has embroidery, an evil-eye motif, or a butterfly detail, it becomes the outfit’s punctuation mark — the part people notice without you explaining anything.',
+      '## Carry joy, not just essentials',
+      'Joy sounds soft until you feel it. It is the smile when someone asks where you got the bag. It is choosing colour because it lifts your week, not because a trend chart said so. It is knowing the fibre is jute — natural, breathable, and kinder than plastic-heavy fast fashion.',
+      'Handmade also means slight variation is part of the charm. No two embroidered faces feel factory-identical. That is not a flaw. That is proof someone sat with the piece longer than a conveyor belt would allow.',
+      '## Cute details that still work in real life',
+      'Butterfly charms, floral faces, evil-eye circles, sunny yellow weaves — motifs are how TheTidbit bags keep personality without becoming costume. Pair a bold bag with a simple kurta or white shirt and denim. Let either the bag or the outfit speak. Not both at full volume.',
+      'College days love brighter motifs. Office days prefer quieter waves and classic tones. Travel weekends welcome the protective charm of an evil-eye round. Gifting loves whatever feels most like the person you are buying for — because a handmade bag is already a story wrapped in a strap.',
+      '## The energy you take with you',
+      'Fashion advice often starts with rules. We would rather start with feeling. If a bag makes your morning easier and your mirror softer, that is enough reason. Style that follows your every move is not a slogan — it is what happens when craft meets daily life.',
+      'So carry colour. Carry culture. Carry what makes you, you. Browse the TheTidbit collection when you are ready for a handmade bag that stays light, looks loved, and somehow still feels like a little celebration on an ordinary Tuesday.',
+    ],
+  },
   {
     id: '8',
     slug: 'benefits-of-jute-bags-for-women-eco-friendly-everyday-carry',

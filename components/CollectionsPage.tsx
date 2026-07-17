@@ -151,7 +151,7 @@ const CollectionsPage: React.FC = () => {
               )}
             </div>
 
-            <div className="flex gap-2 overflow-x-auto pb-0.5 -mx-1 px-1 lg:flex-1 scrollbar-none">
+            <div className="flex gap-2 overflow-x-auto pb-0.5 -mx-1 px-1 lg:flex-1 scrollbar-hide">
               {FILTERS.map((f) => (
                 <button
                   key={f.id}

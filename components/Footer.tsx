@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Instagram, Phone, Mail, MapPin, X, CreditCard, Facebook, Youtube, ShoppingBag, ExternalLink } from 'lucide-react';
 import { Link } from '@/lib/router';
-import { INSTAGRAM_HANDLE, WHATSAPP_NUMBER, SOCIAL_LINKS, MARKETPLACE_LINKS, CONTACT_INFO } from '../constants';
+import { INSTAGRAM_HANDLE, WHATSAPP_NUMBER, SOCIAL_LINKS, MARKETPLACE_LINKS, CONTACT_INFO, GOOGLE_REVIEWS_URL, GOOGLE_MAPS_URL } from '../constants';
 import { SEO_FAQS } from '../lib/seo-content';
 import { SIGNATURE_PRODUCT_LINKS } from '../data/catalogs';
+import GoogleReviewsBadge from './GoogleReviewsBadge';
 
 const Footer: React.FC = () => {
   const [activeModal, setActiveModal] = useState<string | null>(null);
@@ -89,6 +90,9 @@ const Footer: React.FC = () => {
               <p className="mt-4 max-w-xs text-sm text-stone-400 dark:text-stone-500">
                 TheTidbit crafts premium handmade jute bags for women — eco-friendly handbags and sling bags made in India for everyday style.
               </p>
+              <div className="mt-4">
+                <GoogleReviewsBadge variant="inline" className="text-stone-300 hover:text-white" placement="footer" />
+              </div>
               <div className="mt-6 flex space-x-4">
                 <a 
                   href={SOCIAL_LINKS.instagram} 
@@ -116,6 +120,15 @@ const Footer: React.FC = () => {
                   aria-label="YouTube"
                 >
                   <Youtube size={24} />
+                </a>
+                <a
+                  href={GOOGLE_REVIEWS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-stone-400 dark:text-stone-500 hover:text-white dark:hover:text-stone-200 transition text-xs font-bold self-center"
+                  aria-label="Google reviews"
+                >
+                  Google
                 </a>
                 <a 
                   href={`https://wa.me/${WHATSAPP_NUMBER}`} 
@@ -227,11 +240,17 @@ const Footer: React.FC = () => {
                 </li>
                 <li className="flex items-start gap-2 text-sm">
                   <MapPin size={16} className="mt-0.5 flex-shrink-0" /> 
-                  <span className="leading-relaxed">
+                  <a
+                    href={GOOGLE_MAPS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="leading-relaxed hover:text-white dark:hover:text-stone-200 transition underline-offset-2 hover:underline"
+                  >
                     {CONTACT_INFO.addressLines.map((line) => (
                       <span key={line} className="block">{line}</span>
                     ))}
-                  </span>
+                    <span className="block text-[11px] text-stone-500 mt-1">Open in Google Maps</span>
+                  </a>
                 </li>
                 <li className="pt-2">
                   <Link

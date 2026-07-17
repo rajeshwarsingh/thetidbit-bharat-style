@@ -1,4 +1,4 @@
-import HomePage from '../components/HomePage';
+import SmartPage from '../components/SmartPage';
 import { buildMetadata } from '../lib/seo';
 import { HOME_META } from '../lib/seo-content';
 
@@ -16,6 +16,7 @@ export const metadata = buildMetadata({
   ],
 });
 
+/** Default homepage — Smart experience. Legacy home lives at /classic. */
 export default function Page() {
-  return <HomePage />;
+  return <SmartPage />;
 }
