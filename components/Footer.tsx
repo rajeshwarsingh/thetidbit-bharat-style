@@ -207,6 +207,11 @@ const Footer: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/reviews" className="text-sm hover:text-white dark:hover:text-stone-200 transition">
+                    Reviews
+                  </Link>
+                </li>
+                <li>
                   <a 
                     href="/sitemap.xml" 
                     target="_blank" 

@@ -8,7 +8,6 @@ import SlingTryModal from '../components/SlingTryModal';
 import { SlingTryProvider } from '../components/SlingTryContext';
 import { ThemeProvider } from '../components/ThemeContext';
 import WhatsAppFloatingButton from '../components/WhatsAppFloatingButton';
-import NewYearCelebration from '../components/NewYearCelebration';
 
 /**
  * Client-side app chrome + context providers, ported from the old AppFrame.
@@ -34,7 +33,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           iframeSrc="https://slingtry-ai-virtual-try-on-955247528706.us-west1.run.app/"
         />
         <WhatsAppFloatingButton />
-        <NewYearCelebration />
       </SlingTryProvider>
     </ThemeProvider>
   );

@@ -4,6 +4,7 @@ import { ArrowLeft, Quote, Heart, MapPin } from 'lucide-react';
 import { Link } from '@/lib/router';
 import { ARTISAN_STORY_IMAGE, ARTISAN_SPOTLIGHT_IMAGE, MISSION_IMAGE } from '../constants';
 import SEO from './SEO';
+import SanskritSloka from './SanskritSloka';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import { ABOUT_META } from '../lib/seo-content';
 
@@ -157,6 +158,8 @@ const AboutPage: React.FC = () => {
             <h2 className="font-serif text-3xl font-bold text-stone-900 mt-12">
               What We Believe
             </h2>
+
+            <SanskritSloka sloka="craft" className="my-4 text-stone-500" />
             
             <p>
               We're not perfect. We're a small team trying to do something good. But here's what we believe in, what guides us:

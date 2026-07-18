@@ -22,8 +22,12 @@ import MarketplaceLinks from './MarketplaceLinks';
 import SignatureCollection from './SignatureCollection';
 import BrandTrustStrip from './BrandTrustStrip';
 import GoogleReviewsBadge from './GoogleReviewsBadge';
+import WhatsAppReviewsStrip from './WhatsAppReviewsStrip';
+import AmazonReviewsStrip from './AmazonReviewsStrip';
+import SanskritSloka, { useRandomHeroSloka, SlokaInline } from './SanskritSloka';
 import Reveal from './Reveal';
 import { stories } from '../data/stories';
+import { LIFESTYLE_PROOF, PHOTO_REVIEWS } from '../data/customer-proof';
 import { SEO_FAQS, faqPageJsonLd } from '../lib/seo-content';
 import SEO from './SEO';
 
@@ -114,64 +118,6 @@ const WHY_POINTS = [
   },
 ];
 
-const LIFESTYLE_TESTIMONIALS = [
-  {
-    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394105/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer1_n3htyo.png',
-    quote: 'I carry it everywhere — office, market, even temples.',
-    name: 'Sneha R., Mumbai',
-  },
-  {
-    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394104/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer2_hn1rp3.png',
-    quote: 'The quality surprised me at this price. Friends keep asking where I got it.',
-    name: 'Divya P., Bangalore',
-  },
-  {
-    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394375/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer3_szdndx.png',
-    quote: 'Perfect size for everyday essentials. Love the handmade look.',
-    name: 'Kavitha M., Chennai',
-  },
-  {
-    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771394374/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/customers/customer4_tinjfu.png',
-    quote: 'Gifted this to my sister. She loved it instantly.',
-    name: 'Prachi S., Pune',
-  },
-];
-
-const CUSTOMER_REVIEWS = [
-  {
-    id: 1,
-    name: 'Ananya S.',
-    location: 'Mumbai',
-    rating: 5,
-    text: 'Absolutely in love with this bag. The embroidery is detailed and it fits my phone, wallet, and keys perfectly.',
-    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396787/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/1_Happy_Customers_m8zhdo.png',
-  },
-  {
-    id: 2,
-    name: 'Priya M.',
-    location: 'Jaipur',
-    rating: 5,
-    text: 'Ordered pink for college. Lightweight, cute, and I already got compliments. Will buy more colours.',
-    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396784/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/2_happy_customer_rtiftm.png',
-  },
-  {
-    id: 3,
-    name: 'Riya K.',
-    location: 'Delhi',
-    rating: 5,
-    text: 'Good quality jute. Strap length is perfect for crossbody. Delivery was fast — highly recommend.',
-    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396786/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/3-_happy_customer_qnlt00.png',
-  },
-  {
-    id: 4,
-    name: 'Meera V.',
-    location: 'Hyderabad',
-    rating: 5,
-    text: 'Bought three for Diwali gifting. Everyone noticed the handmade feel. Thoughtful and useful.',
-    photo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1771396784/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/happy%20customer/4_happy_customer_cwlwg2.png',
-  },
-];
-
 const HERO_SLIDE_INTERVAL = 6000;
 const STORY_IMAGE =
   'https://res.cloudinary.com/thetidbit23024/image/upload/v1784316912/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/owner_thetidbit_ouoahb.png';
@@ -183,6 +129,7 @@ const SmartPage: React.FC = () => {
   const [offerSubmitted, setOfferSubmitted] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
   const [desktopBanner, setDesktopBanner] = useState(0);
+  const heroSloka = useRandomHeroSloka();
   const touchStartX = useRef(0);
   const touchDeltaX = useRef(0);
   const heroAutoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -254,6 +201,16 @@ const SmartPage: React.FC = () => {
     <>
       {/* 1. HERO — desktop designed banner; mobile slider unchanged */}
       <section className="relative overflow-hidden">
+        {/* Desktop only — quiet overlay on banner */}
+        {heroSloka && (
+          <div className="hidden sm:block absolute top-0 inset-x-0 z-20 pointer-events-none px-6 py-2.5">
+            <SlokaInline
+              data={heroSloka}
+              className="text-center text-xs text-black max-w-3xl mx-auto"
+            />
+          </div>
+        )}
+
         {/* Desktop — designed banner slider (copy + CTA baked into artwork) */}
         <div className="hidden sm:block relative w-full bg-[#f3ebe0]">
           <div className="relative overflow-hidden">
@@ -521,6 +478,7 @@ const SmartPage: React.FC = () => {
               </div>
             </Reveal>
             <Reveal className="order-1 lg:order-2" delayMs={80}>
+              <SanskritSloka sloka="craft" className="mb-5 text-stone-500 dark:text-stone-400" />
               <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-5">
                 How TheTidbit started
               </h2>
@@ -583,7 +541,7 @@ const SmartPage: React.FC = () => {
             </p>
           </Reveal>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {LIFESTYLE_TESTIMONIALS.map((item, index) => (
+            {LIFESTYLE_PROOF.map((item, index) => (
               <Reveal key={item.name} delayMs={(index % 4) * 70}>
                 <figure className="group relative aspect-[3/4] overflow-hidden">
                   <img
@@ -650,20 +608,38 @@ const SmartPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 9. Reviews — lighter layout */}
+      {/* 9. Reviews — WhatsApp proof + Google + photo quotes */}
       <section id="reviews" className="py-16 sm:py-24 bg-white dark:bg-stone-900 border-t border-stone-100 dark:border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Reveal className="text-center mb-12 sm:mb-16 max-w-2xl mx-auto">
+          <Reveal className="text-center mb-10 sm:mb-12 max-w-2xl mx-auto">
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-3">
               What customers say
             </h2>
             <p className="text-base sm:text-lg text-stone-600 dark:text-stone-400 mb-5">
-              Real carry from women across India — also available on Amazon &amp; Flipkart.
+              Real WhatsApp praise, verified Amazon reviews, and Google ratings from customers across India.
             </p>
             <GoogleReviewsBadge variant="card" className="max-w-lg mx-auto text-left" placement="smart_reviews_proof" />
           </Reveal>
+
+          <Reveal delayMs={60}>
+            <WhatsAppReviewsStrip className="mb-12 sm:mb-14" limit={4} />
+          </Reveal>
+
+          <Reveal delayMs={80}>
+            <AmazonReviewsStrip className="mb-10 sm:mb-12" limit={3} />
+          </Reveal>
+
+          <div className="text-center mb-12 sm:mb-14">
+            <Link
+              to="/reviews"
+              className="inline-flex items-center gap-2 font-bold text-brand-green hover:underline underline-offset-4"
+            >
+              See all reviews <ArrowRight size={16} />
+            </Link>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {CUSTOMER_REVIEWS.map((review, i) => (
+            {PHOTO_REVIEWS.map((review, i) => (
               <Reveal key={review.id} delayMs={(i % 2) * 80}>
                 <article className="flex flex-col sm:flex-row gap-4 sm:gap-5">
                   {review.photo && (

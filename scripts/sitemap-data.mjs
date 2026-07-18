@@ -242,6 +242,7 @@ export const STATIC_PAGES = [
   { loc: '/collections', changefreq: 'weekly', priority: '0.95' },
   { loc: '/products', changefreq: 'weekly', priority: '0.9' },
   { loc: '/stories', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/reviews', changefreq: 'weekly', priority: '0.85' },
   { loc: '/about', changefreq: 'monthly', priority: '0.8' },
   { loc: '/bulk', changefreq: 'monthly', priority: '0.8' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.7' },

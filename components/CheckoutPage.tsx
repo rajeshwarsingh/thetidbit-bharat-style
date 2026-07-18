@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSearchParams, Link } from '@/lib/router';
 import { MessageCircle, CreditCard, ShieldCheck, Truck, ArrowLeft, Loader2 } from 'lucide-react';
 import SEO from './SEO';
@@ -54,16 +54,6 @@ const CheckoutPage: React.FC = () => {
   const [address, setAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [payLabel, setPayLabel] = useState('Razorpay');
-
-  useEffect(() => {
-    fetch('/api/payment/config')
-      .then((r) => r.json())
-      .then((d) => {
-        if (d?.label) setPayLabel(String(d.label));
-      })
-      .catch(() => {});
-  }, []);
 
   if (!item) {
     return (
@@ -271,7 +261,7 @@ const CheckoutPage: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    placeholder="e.g. Priya Sharma"
+                    placeholder="e.g. Jennifer Shah"
                   />
                 </div>
                 <div>
@@ -332,12 +322,10 @@ const CheckoutPage: React.FC = () => {
                 type="button"
                 onClick={payOnline}
                 disabled={loading}
-                className={`inline-flex items-center justify-center gap-2 text-white font-bold py-3.5 rounded-2xl hover:opacity-95 transition-opacity disabled:opacity-60 ${
-                  payLabel === 'PhonePe' ? 'bg-[#5f259f]' : 'bg-stone-900 dark:bg-stone-100 dark:text-stone-900'
-                }`}
+                className="inline-flex items-center justify-center gap-2 text-white font-bold py-3.5 rounded-2xl hover:opacity-95 transition-opacity disabled:opacity-60 bg-stone-900 dark:bg-stone-100 dark:text-stone-900"
               >
                 {loading ? <Loader2 size={18} className="animate-spin" /> : <CreditCard size={18} />}
-                Pay Online ({payLabel})
+                Pay Online
               </button>
               <button
                 type="button"
@@ -348,7 +336,7 @@ const CheckoutPage: React.FC = () => {
               </button>
             </div>
             <p className="mt-3 text-xs text-stone-500 dark:text-stone-400">
-              Pay securely online via {payLabel} (UPI, cards, wallets, netbanking), or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment with you directly.
+              Pay securely online with UPI, cards, wallets or netbanking — or place your order on WhatsApp and we&apos;ll confirm delivery &amp; payment with you directly.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-4 text-xs text-stone-500 dark:text-stone-400">

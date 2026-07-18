@@ -802,7 +802,7 @@ const TrackPage: React.FC = () => {
                 <p className="text-stone-700 dark:text-stone-300 italic text-base leading-relaxed">
                   "{REVIEWS[0]?.text || 'Love my sling bag! Perfect size and the embroidery is so beautiful.'}"
                 </p>
-                <p className="text-sm font-semibold text-stone-900 dark:text-stone-100 mt-2">— {REVIEWS[0]?.author || 'Priya S.'}</p>
+                <p className="text-sm font-semibold text-stone-900 dark:text-stone-100 mt-2">— {REVIEWS[0]?.author || 'Ananya S.'}</p>
               </div>
             </div>
           </div>

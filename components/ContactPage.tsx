@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, MessageCircle, Instagram, Clock } from 'lucide-react';
 import SEO from './SEO';
 import Reveal from './Reveal';
-import { CONTACT_INFO, SOCIAL_LINKS, GOOGLE_MAPS_URL } from '../constants';
+import { CONTACT_INFO, SOCIAL_LINKS, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '../constants';
 import { contactUrl, openWhatsApp } from '../utils/whatsapp';
 
 const ContactPage: React.FC = () => {
@@ -111,7 +111,7 @@ const ContactPage: React.FC = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="w-full mb-4 px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-brand-green"
-                placeholder="e.g. Priya"
+                placeholder="e.g. Jennifer"
               />
               <label className="block text-sm font-medium text-stone-600 dark:text-stone-300 mb-1">Message</label>
               <textarea
@@ -127,6 +127,41 @@ const ContactPage: React.FC = () => {
               </button>
               <p className="mt-3 text-xs text-stone-500 dark:text-stone-400 text-center">Opens WhatsApp with your message pre-filled.</p>
             </form>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="pb-14 sm:pb-20 bg-white dark:bg-stone-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-5">
+              <div>
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 dark:text-stone-100">
+                  Find us
+                </h2>
+                <p className="mt-1 text-sm sm:text-base text-stone-600 dark:text-stone-400">
+                  Shop No. 406, Shivshakti · Ambernath, Thane · Maharashtra 421505
+                </p>
+              </div>
+              <a
+                href={GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-green hover:underline underline-offset-4 shrink-0"
+              >
+                <MapPin size={16} /> Open in Google Maps
+              </a>
+            </div>
+            <div className="overflow-hidden rounded-2xl border border-stone-200 dark:border-stone-700 bg-stone-100 dark:bg-stone-800 aspect-[16/10] sm:aspect-[21/9]">
+              <iframe
+                title="TheTidbit location on Google Maps — Ambernath, Thane"
+                src={GOOGLE_MAPS_EMBED_URL}
+                className="w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
           </Reveal>
         </div>
       </section>

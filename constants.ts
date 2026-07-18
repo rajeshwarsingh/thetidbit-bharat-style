@@ -36,9 +36,15 @@ export const MARKETPLACE_LINKS = {
 export const GOOGLE_REVIEWS_URL = "https://share.google/VUGW7tRIq56Aetb9Y";
 
 /** Google Maps — business location (Ambernath). */
+const GOOGLE_MAPS_QUERY =
+  "TheTidbit, Shop No. 406, Shivshakti, Ambernath, Thane, Maharashtra 421505";
+
 export const GOOGLE_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=" +
-  encodeURIComponent("TheTidbit, Shop No. 406, Shivshakti, Ambernath, Thane, Maharashtra 421505");
+  "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(GOOGLE_MAPS_QUERY);
+
+/** Embeddable Maps iframe (no API key). */
+export const GOOGLE_MAPS_EMBED_URL =
+  "https://maps.google.com/maps?q=" + encodeURIComponent(GOOGLE_MAPS_QUERY) + "&z=15&output=embed";
 
 // Contact Information
 export const CONTACT_INFO = {
@@ -639,7 +645,7 @@ export const REVIEWS: Review[] = [
   },
   {
     id: 2,
-    author: "Priya M.",
+    author: "Jennifer M.",
     rating: 5,
     text: "Ordered the Pink one for college. It's super cute and lightweight. Got so many compliments already!",
     date: "1 week ago"

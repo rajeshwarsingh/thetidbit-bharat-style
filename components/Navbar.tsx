@@ -6,12 +6,14 @@ import { Link, useLocation, useNavigate } from '@/lib/router';
 import { cloudinarySrcSet, cloudinaryTransform } from '../utils/cloudinary';
 import ThemeToggle from './ThemeToggle';
 import { useWishlist } from '../utils/wishlist';
+import { useRandomShortSloka } from './SanskritSloka';
 
 /** Primary navigation model — single source of truth for desktop + mobile. */
 const NAV_LINKS: { label: string; to: string; match: (p: string) => boolean }[] = [
   { label: 'Home', to: '/', match: (p) => p === '/' || p === '/smart' },
   { label: 'Classic', to: '/classic', match: (p) => p === '/classic' },
   { label: 'Shop', to: '/collections', match: (p) => p === '/collections' },
+  { label: 'Reviews', to: '/reviews', match: (p) => p === '/reviews' },
   { label: 'Bulk Orders', to: '/bulk', match: (p) => p === '/bulk' },
   { label: 'Stories', to: '/stories', match: (p) => p === '/stories' || p.startsWith('/stories/') },
   { label: 'About', to: '/about', match: (p) => p === '/about' },
@@ -62,15 +64,23 @@ const IndiaFlagIcon = () => {
 const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showMobileSloka, setShowMobileSloka] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const wishlist = useWishlist();
+  const shortSloka = useRandomShortSloka();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /** Mobile trust bar gently alternates trust line ↔ shloka (same height, no hero clash). */
+  useEffect(() => {
+    const id = window.setInterval(() => setShowMobileSloka((v) => !v), 5500);
+    return () => window.clearInterval(id);
   }, []);
 
   const handleScrollToCollection = (e: React.MouseEvent) => {
@@ -95,15 +105,49 @@ const Navbar: React.FC = () => {
     <>
       {/* Header Container - Wraps both trust bar and nav */}
       <div className="sticky top-0 z-40">
-        {/* Trust bar */}
+        {/* Trust bar — desktop: trust line; mobile: soft swap with shloka (no extra page height) */}
         <div className="bg-stone-900 dark:bg-stone-950 text-white dark:text-stone-200 transition-colors duration-300">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3">
-            <div className="flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] font-semibold tracking-wide">
+            <div className="hidden sm:flex items-center justify-center gap-2 sm:gap-3 text-[10px] sm:text-[12px] font-semibold tracking-wide">
               <span>Free Delivery</span>
               <span className="opacity-40">•</span>
               <span>100% Genuine Brand</span>
               <span className="opacity-40">•</span>
               <span>Handmade in India</span>
+            </div>
+
+            <div className="sm:hidden relative h-5 overflow-hidden">
+              <div
+                className={`absolute inset-x-0 top-0 flex items-center justify-center gap-2 text-[10px] font-semibold tracking-wide transition-opacity duration-500 ${
+                  showMobileSloka ? 'opacity-0' : 'opacity-100'
+                }`}
+              >
+                <span>Free Delivery</span>
+                <span className="opacity-40">•</span>
+                <span>Genuine Brand</span>
+                <span className="opacity-40">•</span>
+                <span>Handmade in India</span>
+              </div>
+              {shortSloka && (
+                <p
+                  className={`absolute inset-x-0 top-0 text-center text-[10px] leading-5 tracking-wide px-1 truncate transition-opacity duration-500 ${
+                    showMobileSloka ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  title={`${shortSloka.sanskrit} — ${shortSloka.meaning}`}
+                >
+                  <span
+                    lang="sa"
+                    style={{
+                      fontFamily:
+                        'var(--font-devanagari), "Noto Serif Devanagari", "Devanagari MT", Georgia, serif',
+                    }}
+                  >
+                    {shortSloka.sanskrit}
+                  </span>
+                  <span className="opacity-50 mx-1">—</span>
+                  <span className="italic opacity-90 font-normal">{shortSloka.meaning}</span>
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -146,15 +190,15 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* Desktop Nav Links - SEO Friendly Links */}
-          <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8 md:ml-8 md:flex-1">
+          {/* Desktop Nav Links — sit toward the right actions, not glued to the logo */}
+          <div className="hidden md:flex md:items-center md:justify-end md:gap-6 lg:gap-8 md:flex-1 md:min-w-0 md:ml-10 lg:ml-16 md:mr-4 lg:mr-6">
             {NAV_LINKS.map((link) => {
               const active = link.match(location.pathname);
               return (
                 <Link
                   key={link.label}
                   to={link.to}
-                  className={`text-sm font-medium border-b-2 transition-colors px-1 py-2 ${active ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
+                  className={`text-sm font-medium border-b-2 transition-colors px-1 py-2 whitespace-nowrap ${active ? 'text-stone-900 dark:text-stone-100 border-brand-green' : 'text-stone-600 dark:text-stone-400 border-transparent hover:text-stone-900 dark:hover:text-stone-100'}`}
                 >
                   {link.label}
                 </Link>
@@ -163,7 +207,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Right-side: Search + Track + Wishlist + Theme + Badge */}
-          <div className="ml-auto flex items-center justify-end gap-0 sm:gap-2 shrink-0">
+          <div className="ml-auto md:ml-0 flex items-center justify-end gap-0 sm:gap-2 shrink-0">
             <Link
               to="/collections"
               aria-label="Search products"

@@ -124,7 +124,7 @@ const CUSTOMER_REVIEWS = [
   },
   {
     id: 2,
-    name: 'Priya M.',
+    name: 'Jennifer M.',
     location: 'Jaipur',
     rating: 5,
     text: 'Ordered the Pink one for college. It\'s super cute and lightweight. Got so many compliments already! Will definitely buy more colors.',

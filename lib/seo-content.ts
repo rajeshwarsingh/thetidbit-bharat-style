@@ -58,6 +58,12 @@ export const STORIES_META = {
     'Read guides on handmade bags for women, jute handbags, eco-friendly fashion in India, styling tips and thoughtful gifting from TheTidbit.',
 };
 
+export const REVIEWS_META = {
+  title: 'Customer Reviews — WhatsApp, Amazon & Google Love',
+  description:
+    'See real TheTidbit customer reviews: WhatsApp messages after delivery, verified Amazon ratings, Google reviews, and photos from women across India.',
+};
+
 /** Org + brand graph for root layout (AI / Google entity recognition). */
 export function organizationJsonLd() {
   return {

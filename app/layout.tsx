@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Lato, Playfair_Display } from 'next/font/google';
+import { Lato, Playfair_Display, Noto_Serif_Devanagari } from 'next/font/google';
 import '../styles.css';
 import Providers from './providers';
 import { SITE_URL, SITE_NAME } from '../lib/seo';
@@ -21,6 +21,13 @@ const playfair = Playfair_Display({
   weight: ['400', '600', '700'],
   style: ['normal', 'italic'],
   variable: '--font-playfair',
+  display: 'swap',
+});
+
+const notoDevanagari = Noto_Serif_Devanagari({
+  subsets: ['devanagari'],
+  weight: ['500', '600', '700'],
+  variable: '--font-devanagari',
   display: 'swap',
 });
 
@@ -70,7 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const org = organizationJsonLd();
   const site = websiteJsonLd();
   return (
-    <html lang="en-IN" className={`${lato.variable} ${playfair.variable}`} suppressHydrationWarning>
+    <html lang="en-IN" className={`${lato.variable} ${playfair.variable} ${notoDevanagari.variable}`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="" />
