@@ -82,7 +82,7 @@ const WHY_CHOOSE_ITEMS = [
   {
     icon: IndianRupee,
     title: 'Affordable Without Compromise',
-    description: 'Premium handmade quality starting at just ₹499. Style shouldn\'t cost the earth.',
+    description: 'Premium handmade quality from just ₹474. Style shouldn\'t cost the earth.',
     color: 'text-rose-600 dark:text-rose-400',
     bg: 'bg-rose-50 dark:bg-rose-950/30',
   },
@@ -155,7 +155,7 @@ const CUSTOMER_REVIEWS = [
 ];
 
 const HERO_SLIDE_INTERVAL = 6000;
-const HERO_VALUE_POINTS = ['Starting at ₹499', 'Handmade in India', 'Free Shipping'];
+const HERO_VALUE_POINTS = ['From ₹474', 'Handmade in India', 'Free Shipping'];
 
 const HomePage: React.FC = () => {
   const [offerPhone, setOfferPhone] = useState('');
@@ -331,7 +331,7 @@ const HomePage: React.FC = () => {
                 Everyday Bags for <span className="text-emerald-300">Real Life</span>
               </p>
               <p className="text-[13px] text-white/70 tracking-wide mb-2">Office &nbsp;•&nbsp; College &nbsp;•&nbsp; Daily &nbsp;•&nbsp; Gifting</p>
-              <p className="text-[17px] font-bold text-white mb-1.5">Starting at <span className="text-emerald-300">₹499</span></p>
+              <p className="text-[17px] font-bold text-white mb-1.5">From <span className="text-emerald-300">₹474</span></p>
               <p className="text-[11px] text-white/60 mb-3.5 tracking-wide">Ready to ship &nbsp;•&nbsp; Ships in 24–48 hrs &nbsp;•&nbsp; Free delivery</p>
               <Link to="/collections" className="flex items-center justify-center gap-2 w-full bg-white text-stone-900 py-3 rounded-xl font-bold text-sm shadow-lg active:scale-[0.98] transition-transform">
                 <ShoppingBag size={16} />

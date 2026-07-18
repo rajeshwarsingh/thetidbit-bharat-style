@@ -30,7 +30,7 @@ const MobileShopCTA: React.FC = () => {
           }}
         >
           <ShoppingBag size={18} />
-          Shop Now — Starting ₹499
+          Shop Now — from ₹474
         </Link>
       </div>
     </div>
