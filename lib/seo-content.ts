@@ -11,6 +11,9 @@ export const BRAND_ENTITIES = {
   brandAliases: ['The Tidbit Bags', 'TheTidbit India', 'TheTidbit Handmade Bags'],
   products: [
     'Handmade Jute Bags',
+    'Handmade Jute Sling Bag',
+    'Boho Embroidered Crossbody Bag',
+    'Evil Eye Jute Sling Bag',
     'Round Sling Bags',
     "Women's Handbags",
     "Women's Sling Bags",
@@ -27,29 +30,35 @@ export const BRAND_ENTITIES = {
 } as const;
 
 export const DEFAULT_META_DESCRIPTION =
-  'Shop premium handmade jute bags for women from TheTidbit — eco-friendly sling bags, crossbody handbags and totes made in India. Stylish everyday bags with free shipping across India.';
+  'Shop handmade jute sling bags and boho embroidered crossbody bags from TheTidbit — from ₹474 with free shipping across India, including Mumbai, Delhi-NCR, Bangalore and Lucknow.';
 
 export const HOME_META = {
-  title: 'TheTidbit — Premium Handmade Jute Bags for Women | Made in India',
+  title: 'Handmade Jute Sling Bags for Women | TheTidbit India',
   description: DEFAULT_META_DESCRIPTION,
 };
 
 export const COLLECTIONS_META = {
-  title: 'Handmade Bag Collections — Office, College, Travel & Gift',
+  title: 'Shop Handmade Jute Bags — Office, College & Gift',
   description:
-    'Browse TheTidbit handmade collections: office bags for women, college sling bags, travel handbags, daily essentials and gift-ready jute bags. Premium made-in-India craft, free shipping.',
+    'Aesthetic office tote bags, college bags for girls, evil eye jute sling bags and gift-ready totes. Handcrafted handbags for Maharashtra, Delhi-NCR, Karnataka and Uttar Pradesh — free shipping.',
 };
 
 export const BULK_META = {
-  title: 'Bulk Orders & Corporate Gifting — Handmade Bags',
+  title: 'Bulk Jute Bags & Eco Corporate Gifting | TheTidbit',
   description:
-    'Order handmade jute bags in bulk for corporate gifting, weddings and brand merchandise. Made in India, customisable colours, premium finish.',
+    'Custom bulk jute bags for eco-friendly corporate gifting in Bangalore, Karnataka and pan-India. Handmade, brand-ready colours for teams, weddings and merchandise.',
+};
+
+export const CONTACT_META = {
+  title: 'Contact TheTidbit — Ambernath, Maharashtra',
+  description:
+    'Reach TheTidbit in Ambernath, Maharashtra for orders and bulk enquiries. We ship handmade jute bags to Mumbai, Pune, Delhi-NCR, Bangalore, Lucknow and across India.',
 };
 
 export const ABOUT_META = {
   title: 'About TheTidbit — Handmade Bags Made in India',
   description:
-    'TheTidbit is an Indian D2C brand crafting premium handmade jute handbags and eco-friendly sling bags with artisans across India.',
+    'TheTidbit is an Indian D2C brand crafting premium handmade jute handbags, evil eye sling bags and eco-friendly crossbody bags with artisans across India.',
 };
 
 export const STORIES_META = {
@@ -64,21 +73,41 @@ export const REVIEWS_META = {
     'See real TheTidbit customer reviews: WhatsApp messages after delivery, verified Amazon ratings, Google reviews, and photos from women across India.',
 };
 
-/** Org + brand graph for root layout (AI / Google entity recognition). */
+/** Org + local registered address (Ambernath) + states we actively sell into. */
 export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'LocalBusiness'],
     name: SITE_NAME,
     alternateName: [...BRAND_ENTITIES.brandAliases],
     url: SITE_URL,
     logo: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1765969614/canva-_logo-_bykbip.png',
+    image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1765969614/canva-_logo-_bykbip.png',
     description: DEFAULT_META_DESCRIPTION,
     foundingLocation: {
       '@type': 'Country',
       name: 'India',
     },
-    areaServed: 'IN',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Shop No. 406, Shivshakti',
+      addressLocality: 'Ambernath',
+      addressRegion: 'Maharashtra',
+      postalCode: '421505',
+      addressCountry: 'IN',
+    },
+    areaServed: [
+      { '@type': 'Country', name: 'India' },
+      { '@type': 'State', name: 'Maharashtra' },
+      { '@type': 'State', name: 'Delhi' },
+      { '@type': 'State', name: 'Haryana' },
+      { '@type': 'State', name: 'Uttar Pradesh' },
+      { '@type': 'State', name: 'Karnataka' },
+      { '@type': 'City', name: 'Mumbai' },
+      { '@type': 'City', name: 'Pune' },
+      { '@type': 'City', name: 'Bangalore' },
+      { '@type': 'City', name: 'Lucknow' },
+    ],
     brand: {
       '@type': 'Brand',
       name: SITE_NAME,
@@ -86,8 +115,11 @@ export function organizationJsonLd() {
     knowsAbout: [
       ...BRAND_ENTITIES.products,
       'Sustainable Fashion',
+      'Sustainable Fashion Brands Delhi',
       'Corporate Gifting',
+      'Eco Friendly Corporate Gifting Bangalore',
       'Jute Handicrafts',
+      'Affordable Sling Bags Under 500',
     ],
     sameAs: [
       'https://www.instagram.com/thetidbit.in/',

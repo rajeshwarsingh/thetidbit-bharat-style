@@ -15,7 +15,7 @@ const NAV_LINKS: { label: string; to: string; match: (p: string) => boolean }[] 
   { label: 'Shop', to: '/collections', match: (p) => p === '/collections' },
   { label: 'Reviews', to: '/reviews', match: (p) => p === '/reviews' },
   { label: 'Bulk Orders', to: '/bulk', match: (p) => p === '/bulk' },
-  { label: 'Stories', to: '/stories', match: (p) => p === '/stories' || p.startsWith('/stories/') },
+  { label: 'Stories', to: '/stories', match: (p) => p === '/stories' || p.startsWith('/stories/') || p.startsWith('/blog/') },
   { label: 'About', to: '/about', match: (p) => p === '/about' },
   { label: 'Contact', to: '/contact', match: (p) => p === '/contact' },
 ];

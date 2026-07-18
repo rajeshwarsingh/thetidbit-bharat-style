@@ -26,7 +26,7 @@ import IndiaPride from './IndiaPride';
 import MobileShopCTA from './MobileShopCTA';
 import MarketplaceLinks from './MarketplaceLinks';
 import SignatureCollection from './SignatureCollection';
-import { stories } from '../data/stories';
+import { stories, getStoryPath } from '../data/stories';
 import { SEO_FAQS, faqPageJsonLd } from '../lib/seo-content';
 import SEO from './SEO';
 
@@ -573,7 +573,7 @@ const HomePage: React.FC = () => {
             {stories.slice(0, 3).map((story) => (
               <Link
                 key={story.id}
-                to={`/stories/${story.slug}`}
+                to={getStoryPath(story)}
                 className="group rounded-2xl overflow-hidden border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800/40 hover:shadow-lg transition-all"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-stone-100 dark:bg-stone-800">

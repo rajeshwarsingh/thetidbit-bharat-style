@@ -19,11 +19,271 @@ export interface Story {
   };
   publishDate: string; // ISO date string
   readTime: number; // minutes
-  content: string[]; // Array of paragraphs
+  content: string[]; // ## h2, ### h3, - list item, **strong**, [[image:alt]] placeholder
   featured: boolean;
+  /** Optional page-level meta keywords (Next metadata). */
+  keywords?: string[];
+  /** Optional bottom CTA label (defaults in StoryDetailPage). */
+  ctaLabel?: string;
+  /** Optional CTA href (defaults to /collections). */
+  ctaHref?: string;
+  /** Optional <title>/OG title when different from the on-page H1. */
+  metaTitle?: string;
+  /**
+   * Canonical public path (e.g. /blog/aesthetic-office-tote-bags).
+   * Defaults to /stories/{slug}.
+   */
+  canonicalPath?: string;
+  /** Show B2B bulk inquiry form below the article body. */
+  showBulkInquiryForm?: boolean;
+}
+
+/** Public URL path for a story (blog or stories journal). */
+export function getStoryPath(story: Pick<Story, 'slug' | 'canonicalPath'>): string {
+  return story.canonicalPath || `/stories/${story.slug}`;
 }
 
 export const stories: Story[] = [
+  {
+    id: '16',
+    slug: 'sustainable-corporate-gifting-jute-bags',
+    title: 'The Future of Corporate Merchandise: Why Top Brands are Switching to Sustainable Jute Bags',
+    metaTitle: 'Bulk Custom Jute Bags & Corporate Gifting Solutions',
+    excerpt:
+      'Looking for premium, eco-friendly corporate gifting in Bangalore or across India? Get customized, handcrafted bulk jute bags with your company branding.',
+    heroImage:
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784376148/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/corporate_z6to4o.png',
+    heroImageAlt:
+      'Eco-friendly corporate jute tote with logo patch on a conference table — custom bulk gifting for brands',
+    author: {
+      name: 'TheTidbit Editorial',
+      role: 'B2B & Corporate Gifting',
+    },
+    publishDate: '2026-07-18',
+    readTime: 8,
+    featured: false,
+    canonicalPath: '/blog/sustainable-corporate-gifting-jute-bags',
+    keywords: [
+      'eco friendly corporate gifting bangalore',
+      'custom bulk jute bags karnataka',
+      'sustainable corporate gifts',
+      'custom brand merchandise india',
+      'artisan made bulk gifting',
+    ],
+    ctaLabel: 'Request a Bulk Quote',
+    ctaHref: '#bulk-inquiry',
+    showBulkInquiryForm: true,
+    content: [
+      'Corporate gifting has undergone a massive shift. The days of handing out cheap plastic pens, generic diary sets, or synthetic laptop sleeves that end up forgotten in a drawer are officially over. Modern businesses want their brand aligned with sustainability, utility, and premium aesthetics.',
+      'Whether you are planning a national tech conference, celebrating a company milestone, or curating employee welcome kits, your merchandise reflects your company’s values. For forward-thinking businesses seeking premium **eco friendly corporate gifting bangalore** and across major tech hubs, custom artisan-made items are the gold standard.',
+      'Here is why handcrafted jute bags are the ultimate upgrade for your **custom brand merchandise india** initiatives.',
+      '[[image:Corporate tote mockup with custom company logo on handcrafted jute]]',
+      '## Why Sustainable Merchandising Matters to Your Brand Identity',
+      '### 1. Enhances CSR and ESG Metrics',
+      'Every custom bag your company orders helps lower your carbon footprint. Switching to biodegradable, plant-based materials shows clients and employees that your sustainability goals are genuine actions, not just marketing buzzwords. **Sustainable corporate gifts** make ESG reporting tangible.',
+      '### 2. Daily High-Visibility Brand Exposure',
+      'Unlike standard gifts that stay hidden inside office drawers, an aesthetic, unlined jute tote bag or a trendy sling bag is used everywhere—at the gym, beach, grocery store, and during daily commutes. This guarantees constant, organic visibility for your printed company logo.',
+      '### 3. Supporting Local Artisan Communities',
+      'Our bags are proudly handcrafted by local weavers and women artisans in Maharashtra. When you choose us for your **custom bulk jute bags karnataka** and nationwide projects, your corporate budget directly sustains rural livelihoods and traditional craftsmanship.',
+      '[[image:Close-up of custom screen printing and embroidery branding on jute]]',
+      '## Fully Customizable Wholesale Options for Your Business',
+      'We don’t believe in one-size-fits-all solutions. We collaborate directly with your marketing or HR teams to tailor every product to your strict brand guidelines:',
+      '- **Custom Screen Printing & Embroidery:** Clean, high-contrast placement of your corporate logo, event slogans, or custom artwork.',
+      '- **Bespoke Handle Designs:** Choose between minimalist cotton rope handles, heavy-duty padded canvas straps, or classic woven options.',
+      '- **Purpose-Driven Dimensions:** Tailored sizing options specifically designed to fit standard 13-inch to 16-inch corporate laptops, heavy seminar document files, or lightweight exhibition giveaways.',
+      '[[image:Handle varieties — cotton rope, padded canvas, and woven strap options]]',
+      '## Perfect Occasions for Eco-Friendly Bulk Orders',
+      '- **Tech Conferences & Seminars:** Ditch the plastic folders. Hand out **custom brand merchandise india** attendees will actually keep and reuse for years.',
+      '- **Employee Onboarding Kits:** Welcome your new hires with a beautifully curated, **artisan made bulk gifting** set that instantly showcases an eco-conscious office culture.',
+      '- **Festive Gifting (Diwali & New Year):** Replace traditional sweets with a durable, premium accessory that leaves a lasting positive impression on your high-value corporate clients.',
+      '## Let’s Build a Greener Future for Your Brand',
+      'TheTidbit offers highly competitive wholesale pricing tiers, reliable lead times, and seamless door-to-door bulk delivery across India.',
+      'Ready to elevate your corporate gifting strategy? Fill out our brief corporate inquiry form below, and our team will get back to you with a custom digital catalog and pricing quote within 24 hours.',
+    ],
+  },
+  {
+    id: '15',
+    slug: 'aesthetic-office-tote-bags',
+    title: '5 Aesthetic Office Tote Bags That Will Survive Your Daily Metro Commute',
+    metaTitle: '5 Aesthetic Office Tote Bags for the Daily Metro Commute',
+    excerpt:
+      'Looking for durable, aesthetic office tote bags in Delhi-NCR, Mumbai, or Pune? Discover handcrafted, spacious jute tote bags with rope handles perfect for work.',
+    heroImage: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842697/article%20jutes/jute1_hpbfrm.png',
+    heroImageAlt:
+      'Aesthetic office jute tote bag with cotton rope handles — durable work bag for metro commute',
+    author: {
+      name: 'Ananya Desai',
+      role: 'Style & Living Editor',
+    },
+    publishDate: '2026-07-18',
+    readTime: 9,
+    featured: false,
+    canonicalPath: '/blog/aesthetic-office-tote-bags',
+    keywords: [
+      'aesthetic office tote bags delhi',
+      'jute tote bags pune',
+      'best sling bags in mumbai online',
+      'sustainable fashion brands delhi',
+      'cotton rope handle tote bags',
+    ],
+    ctaLabel: 'Browse the Office Tote Collection',
+    ctaHref: '/collections/tote-bags',
+    content: [
+      'The modern daily commute is a true endurance test for your wardrobe. Whether you are navigating the rush-hour crowds of the Mumbai Local, boarding the Delhi Metro, or beating the traffic in Pune, your daily work bag needs to be two things: incredibly tough and effortlessly stylish.',
+      'While cheap synthetic bags wear out in months and leather feels too heavy in the summer heat, conscious working professionals are turning to sustainable alternatives. As one of the emerging **sustainable fashion brands delhi** and Mumbai shoppers trust, we have designed the ultimate solution.',
+      'Here is why handcrafted jute tote bags are the smartest upgrade for your office routine, along with our top design picks.',
+      '[[image:Aesthetic office tote bag styled for a Delhi-NCR / Mumbai metro commute]]',
+      '## The Anatomy of a Perfect Work Tote',
+      'A great office bag shouldn’t just look good on your desk; it needs to perform on the move. When curation meets utility, look for these essential features:',
+      '- **Spacious & Unlined:** Roomy interiors to easily toss in your lunchbox, notebook, umbrella, and a makeup pouch.',
+      '- **Secure Zippers:** Heavy-duty zippered closures to keep your laptop and valuables completely safe in crowded spaces.',
+      '- **Robust Straps:** Thick, premium **cotton rope handle tote bags** that distribute weight evenly across your shoulders without digging in.',
+      '## Top 3 Aesthetic Layouts for the Workplace',
+      '### 1. The Classic Minimalist Tote (Ideal for Corporate Offices)',
+      '- **The Vibe:** Clean lines, neutral tones, and structured elegance.',
+      '- **Why it works:** It transitions seamlessly from a formal morning board meeting to a casual post-work dinner.',
+      '- If you are looking for versatile **jute tote bags pune** professionals swear by for multi-tasking days, this is it.',
+      '[[image:Classic minimalist jute tote bag for corporate office wear]]',
+      '### 2. The Boho-Embroidered Utility Bag (For Creative & Media Roles)',
+      '- **The Vibe:** Artistic, unique, and full of personality. Features subtle hand-woven motifs or geometric patterns.',
+      '- **Why it works:** It breaks the monotony of boring corporate wear while keeping a professional silhouette.',
+      '- This style pairs perfectly with cotton formal shirts or ethnic office wear, making it a favorite among **sustainable fashion brands delhi** curators.',
+      '[[image:Boho-embroidered utility jute bag for creative workplace looks]]',
+      '### 3. The Twin-Pocket Commuter Special (For Long Distances)',
+      '- **The Vibe:** Ultra-functional with easy-access external pockets for your metro card, keys, and sanitizer.',
+      '- **Why it works:** Zero fumbling at the security checkpoints. Everything you need instantly is right at your fingertips.',
+      '- Designed specifically to meet the high-speed demands of the **aesthetic office tote bags delhi** and Mumbai commuters rely on daily.',
+      '[[image:Twin-pocket commuter jute tote with easy-access pockets]]',
+      '## Why Jute is Winning the Indian Workspace',
+      'Indian working women are shifting to breathable, plant-based fibers for clear reasons:',
+      '- **Feather-Light:** Jute carries your belongings without adding unnecessary dead weight to your shoulders.',
+      '- **Weather-Resistant:** Naturally breathable, it doesn’t trap moisture or get sticky during heavy monsoon commutes.',
+      '- **Ethical Pride:** Every single bag is handcrafted by local artisans, meaning your everyday utility supports real livelihoods.',
+      '## Upgrade Your Commute',
+      'Stop replacing worn-out synthetic bags every six months. Upgrade your commute with a piece of functional art that respects the planet. Whether you are hunting for the **best sling bags in mumbai online** for casual Fridays or a heavy-duty tote for the weekdays, we have you covered.',
+    ],
+  },
+  {
+    id: '14',
+    slug: 'college-fashion-on-a-budget-5-trendy-sling-bags-under-500',
+    title: 'College Fashion on a Budget: 5 Trendy Sling Bags Under ₹500',
+    excerpt:
+      'Looking for the perfect college bags for girls in Delhi-NCR, Lucknow, or Mumbai? Check out these trendy, affordable, handcrafted jute sling bags under ₹500.',
+    heroImage:
+      'https://res.cloudinary.com/thetidbit23024/image/upload/v1784375743/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/delhi_f5meit.png',
+    heroImageAlt:
+      'College-chic round jute sling bag styled in Delhi-NCR / Lucknow heritage setting — trendy campus fashion under ₹500',
+    lifestyleImages: [
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842702/article%20jutes/jute4_jpwfqy.png',
+        alt: 'Boho embroidered crossbody bag styled for casual campus days',
+        insertAfterParagraph: 6,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842711/article%20jutes/jute8_ewtbyq.png',
+        alt: 'Handwoven evil eye jute sling bag — affordable sling bags under 500',
+        insertAfterParagraph: 14,
+      },
+    ],
+    author: {
+      name: 'Ananya Desai',
+      role: 'Style & Living Editor',
+    },
+    publishDate: '2026-07-18',
+    readTime: 8,
+    featured: false,
+    keywords: [
+      'college bags for girls ncr',
+      'trendy college tote bags lucknow',
+      'affordable sling bags under 500',
+    ],
+    ctaLabel: 'Explore TheTidbit’s College Collection Under ₹500',
+    content: [
+      'Starting a new college semester means updating your wardrobe, but staying stylish shouldn’t drain your pocket money. If you are hunting for the perfect **college bags for girls NCR**, Lucknow, or Mumbai, you already know the struggle: finding something that is durable, fits your phone and keys, and looks aesthetic on Instagram.',
+      'Enter the sustainable fashion revolution. You don’t need to sacrifice style for sustainability—or your budget. Here is why handcrafted jute bags are becoming the ultimate campus trend, and our top **affordable sling bags under 500**.',
+      '## 1. The Boho-Chic Crossbody (Perfect for Casual Campus Days)',
+      'For the days when you only need your phone, cash, and a lip balm, a lightweight crossbody is your best friend.',
+      '**The Vibe:** Effortless, artistic, and relaxed. Pairs perfectly with silver jewelry and a simple kurti or denim jacket.',
+      '**Why it works:** It keeps your hands free while navigating busy campus corridors.',
+      'This **boho embroidered crossbody bag** gives you premium boutique style without the premium price tag.',
+      '## 2. The Evil Eye Jute Sling Bag (For Good Vibes Only)',
+      'Protect your energy and your style points. The evil eye trend isn’t going anywhere, and embedding it onto a woven texture makes it stand out even more.',
+      '**The Vibe:** Trendy, spiritual, and an instant conversation starter.',
+      '**Why it works:** It acts as a statement piece even if you are just wearing a plain white t-shirt.',
+      'It is easily the most popular **handwoven evil eye sling bag** for students looking to add an edge to their daily outfits.',
+      '## 3. The Daily Utility Sling (Your Everyday Companion)',
+      'If you need a reliable bag that handles the daily rough-and-tumble of public transport and crowded classrooms, look for robust materials and secure zippers.',
+      '**The Vibe:** Minimalist, functional, and highly versatile.',
+      '**Why it works:** Made from strong, breathable jute fibres that don’t wear out easily.',
+      'If you’re hunting for **casual everyday sling bags for girls**, this structural design offers maximum durability.',
+      '## 4. The Butterfly Charm Sling (For Aesthetic Days)',
+      'When you want compliments between lectures, butterfly embroidery on natural jute delivers Instagram-ready detail without a heavy tote.',
+      '**The Vibe:** Cute, photogenic, and still commute-friendly.',
+      '**Why it works:** Lightweight enough for metro hops; bold enough to finish a plain tee and jeans.',
+      'A favourite among shoppers searching **college bags for girls NCR** who want personality under ₹500.',
+      '## 5. The Soft Round Pink Sling (Campus Soft-Girl Energy)',
+      'Pink embroidery on a round sling is the easiest “I got dressed” signal on a packed timetable — farewell photos and presentation days included.',
+      '**The Vibe:** Soft, cheerful, and gift-worthy for a roommate or yourself.',
+      '**Why it works:** Holds essentials securely while colour-blocking neutrals in your wardrobe.',
+      'Students hunting **trendy college tote bags Lucknow** often land on this silhouette when they want handmade colour that still feels wearable every day.',
+      '## Why Jute is the Ultimate College Trend in 2026',
+      'Students across India are shifting away from cheap plastic and fast fashion synthetic bags. Here is why eco-friendly materials are winning:',
+      '**Tough & Durable:** Jute fibres can carry weight without tearing or losing shape.',
+      '**Pocket-Friendly Eco-Fashion:** You get an artisan-made item at a fraction of the cost of leather.',
+      '**Local Impact:** Every bag bought supports local weaving communities right here in Maharashtra.',
+      '## Where to Find Them',
+      'Finding **trendy college tote bags Lucknow** or searching for the best **sling bags in Mumbai** online usually leads to overpriced mall brands.',
+      'At TheTidbit, we believe sustainable fashion belongs to everyone. That is why our entire collection of artisan-made, biodegradable **affordable sling bags under 500** is curated to stay highly accessible.',
+    ],
+  },
+  {
+    id: '13',
+    slug: 'handmade-jute-sling-bags-mumbai-delhi-bangalore-lucknow',
+    title: 'Handmade Jute Sling Bags for Mumbai, Delhi-NCR, Bangalore & Lucknow',
+    excerpt:
+      'Looking for a handmade jute sling bag, boho embroidered crossbody, or evil eye jute sling under ₹500? How shoppers in Maharashtra, Delhi-NCR, Karnataka and Uttar Pradesh choose TheTidbit for everyday carry and gifting.',
+    heroImage: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842697/article%20jutes/jute1_hpbfrm.png',
+    heroImageAlt:
+      'Handmade jute sling bag and boho embroidered crossbody bag styled for everyday Indian women',
+    lifestyleImages: [
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842710/article%20jutes/jute2_hau1c2.png',
+        alt: 'Handwoven evil eye jute sling bag — handmade crossbody for travel and daily wear',
+        insertAfterParagraph: 7,
+      },
+      {
+        url: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1766842704/article%20jutes/jute5_zwall1.png',
+        alt: 'Affordable handmade jute tote and sling bags under 500 for college and office',
+        insertAfterParagraph: 13,
+      },
+    ],
+    author: {
+      name: 'TheTidbit Editorial',
+      role: 'Sustainable Style Guide',
+    },
+    publishDate: '2026-07-18',
+    readTime: 9,
+    featured: false,
+    content: [
+      'If you are searching for the best sling bags in Mumbai online — or a quiet upgrade for Delhi metro mornings — a handmade jute sling bag is one of the most practical switches you can make. TheTidbit ships free across India, so craft from Ambernath, Maharashtra can land at your door in Pune, Noida, Bangalore or Lucknow without a mall markup.',
+      'This guide maps how shoppers in four high-intent regions choose TheTidbit: Maharashtra, Delhi-NCR, Karnataka and Uttar Pradesh. The product is the same — handcrafted handbags with honest pricing from ₹474 — but the occasion and vibe shift city to city.',
+      '## Maharashtra — Mumbai slings & Pune totes',
+      'Mumbai days are stacked: local trains, client coffees, evening errands. Lightweight handmade jute sling bags keep phone, card case and keys close without the sticky feel of synthetic fashion bags in humidity. Shoppers who type “best sling bags in Mumbai online” usually want secure straps, breathable fibre and a look that still photographs well.',
+      'In Pune, jute tote bags and classic slings pair easily with college kurtas and hybrid office wear. Handcrafted handbags Maharashtra buyers love tend to favour natural texture over loud logos — embroidery and weave do the talking.',
+      '## Delhi-NCR — sustainable fashion that still looks sharp',
+      'Delhi-NCR has become a hub for conscious shopping. Sustainable fashion brands Delhi audiences follow are expected to show real craft, not greenwashing. TheTidbit’s aesthetic office tote bags and quieter slings work for Gurgaon and Noida workweeks; brighter motifs suit weekend markets and campus days.',
+      'College bags for girls NCR often need to feel cute and commute-ready. A boho embroidered crossbody bag or round sling holds essentials without competing with a laptop backpack — think of it as your always-on layer for metro and café hops.',
+      '## Karnataka — Bangalore gifting & bulk jute',
+      'Bangalore teams ask for eco friendly corporate gifting that still feels premium. Custom bulk jute bags Karnataka HR and startup founders order from TheTidbit for onboarding kits, conference giveaways and festival hampers — consistent handmade quality without plastic shine.',
+      'Individuals in the city also lean toward statement pieces. A handwoven evil eye sling bag travels well for weekend getaways and still looks intentional with linen shirts and denim.',
+      '## Uttar Pradesh — under ₹500 style that lasts',
+      'Affordable sling bags under 500 are a real search in Lucknow and across UP — not because shoppers want disposable fashion, but because they want value. TheTidbit’s handmade jute sling bags sit in that band with GST-clear pricing and free shipping, so the number you see is closer to what you pay.',
+      'Trendy college tote bags Lucknow students pick usually need colour, compliments and a strap that survives packed campuses. Motif embroidery and round slings deliver that without jumping into designer-price territory.',
+      '## Core silhouettes that travel well',
+      'Across all four regions, three styles keep winning: the handmade jute sling bag for daily carry, the boho embroidered crossbody bag for personality, and the evil eye jute sling bag for travel charm. Pair them with free shipping, WhatsApp support and the same Ambernath-rooted craft story — then open Collections when you are ready to choose colour and occasion.',
+      'Whether you are gift-hunting in Bangalore, upgrading a Mumbai commute, or packing a Lucknow college week, start with how you carry — then let handmade jute do the rest.',
+    ],
+  },
   {
     id: '12',
     slug: 'seven-moods-handmade-jute-bags-thetidbit-vibe-guide',

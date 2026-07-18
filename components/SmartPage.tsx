@@ -26,7 +26,7 @@ import WhatsAppReviewsStrip from './WhatsAppReviewsStrip';
 import AmazonReviewsStrip from './AmazonReviewsStrip';
 import SanskritSloka, { useRandomHeroSloka, SlokaInline } from './SanskritSloka';
 import Reveal from './Reveal';
-import { stories } from '../data/stories';
+import { stories, getStoryPath } from '../data/stories';
 import { LIFESTYLE_PROOF, PHOTO_REVIEWS } from '../data/customer-proof';
 import { SEO_FAQS, faqPageJsonLd } from '../lib/seo-content';
 import SEO from './SEO';
@@ -586,7 +586,7 @@ const SmartPage: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {stories.slice(0, 3).map((story, i) => (
               <Reveal key={story.id} delayMs={i * 80}>
-                <Link to={`/stories/${story.slug}`} className="group block">
+                <Link to={getStoryPath(story)} className="group block">
                   <div className="aspect-[16/10] overflow-hidden bg-stone-200 dark:bg-stone-800 mb-4">
                     <img
                       src={cloudinaryTransform(story.heroImage, { w: 800, h: 500, c: 'fill' })}

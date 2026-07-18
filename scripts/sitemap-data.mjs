@@ -207,6 +207,7 @@ export async function loadStories() {
     const heroImage = field(storyBlock, 'heroImage');
     const heroImageAlt = field(storyBlock, 'heroImageAlt');
     const publishDate = field(storyBlock, 'publishDate');
+    const canonicalPath = field(storyBlock, 'canonicalPath');
 
     if (!slug || !title || !heroImage || !publishDate) continue;
 
@@ -218,6 +219,7 @@ export async function loadStories() {
       }
     }
 
+    const loc = canonicalPath || `/stories/${slug}`;
     stories.push({
       id: idMatch[1],
       slug,
@@ -227,8 +229,8 @@ export async function loadStories() {
       heroImageAlt: heroImageAlt || title,
       publishDate,
       lifestyleImages,
-      loc: `/stories/${slug}`,
-      url: `${BASE_URL}/stories/${slug}`,
+      loc,
+      url: `${BASE_URL}${loc}`,
     });
   }
 
@@ -247,6 +249,43 @@ export const STATIC_PAGES = [
   { loc: '/bulk', changefreq: 'monthly', priority: '0.8' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.7' },
 ];
+
+/**
+ * App routes that exist but must NOT appear in sitemaps
+ * (noindex private tools, or redirects to a canonical URL).
+ */
+export const EXCLUDED_FROM_SITEMAP = [
+  { path: '/classic', reason: 'noindex alternate home' },
+  { path: '/home-one', reason: 'noindex brand experiment' },
+  { path: '/checkout', reason: 'noindex transactional' },
+  { path: '/wishlist', reason: 'noindex private' },
+  { path: '/track', reason: 'noindex private' },
+  { path: '/order/pay', reason: 'noindex transactional' },
+  { path: '/order/status', reason: 'noindex transactional' },
+  { path: '/ops/tracking', reason: 'noindex internal ops' },
+  { path: '/blog', reason: 'redirect → /stories' },
+  { path: '/smart', reason: 'redirect → /' },
+  { path: '/story', reason: 'redirect → /stories' },
+  { path: '/collections/tote-bags', reason: 'redirect → /collections?filter=office' },
+];
+
+/** Absolute URLs that must be present across page/product/story sitemaps. */
+export function expectedIndexableUrls(products, stories, collectionFilters) {
+  const urls = new Set();
+  for (const page of STATIC_PAGES) {
+    urls.add(`${BASE_URL}${page.loc}`);
+  }
+  for (const filter of collectionFilters) {
+    urls.add(`${BASE_URL}/collections?filter=${filter}`);
+  }
+  for (const p of products) {
+    urls.add(`${BASE_URL}${p.loc}`);
+  }
+  for (const s of stories) {
+    urls.add(s.url);
+  }
+  return urls;
+}
 
 export function urlEntry({ loc, lastmod, changefreq, priority, images = [] }) {
   const fullLoc = loc.startsWith('http') ? loc : `${BASE_URL}${loc}`;

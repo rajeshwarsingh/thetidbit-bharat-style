@@ -3,10 +3,68 @@ import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from '@/lib/router';
 import { ArrowLeft, Calendar, Clock, Heart, ArrowRight } from 'lucide-react';
 import SEO from './SEO';
-import { stories } from '../data/stories';
+import BulkInquiryForm from './BulkInquiryForm';
+import { stories, getStoryPath } from '../data/stories';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
 import { LOGO_URL } from '../constants';
 import { SIGNATURE_PRODUCT_LINKS } from '../data/catalogs';
+
+type ContentBlock =
+  | { type: 'h2' | 'h3' | 'p'; text: string }
+  | { type: 'ul'; items: string[] }
+  | { type: 'image'; alt: string; url?: string };
+
+/** Parse story.content (+ lifestyleImages) into semantic blocks. */
+function parseStoryBlocks(
+  content: string[],
+  lifestyleImages?: { url: string; alt: string; insertAfterParagraph?: number }[]
+): ContentBlock[] {
+  const lines: string[] = [];
+  content.forEach((paragraph, index) => {
+    lines.push(paragraph);
+    const lifestyle = lifestyleImages?.find((img) => img.insertAfterParagraph === index);
+    if (lifestyle) {
+      lines.push(`[[image:${lifestyle.alt}|${lifestyle.url}]]`);
+    }
+  });
+
+  const blocks: ContentBlock[] = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.startsWith('### ')) {
+      blocks.push({ type: 'h3', text: line.slice(4).trim() });
+      i += 1;
+    } else if (line.startsWith('## ')) {
+      blocks.push({ type: 'h2', text: line.slice(3).trim() });
+      i += 1;
+    } else if (line.startsWith('[[image:') && line.endsWith(']]')) {
+      const inner = line.slice(8, -2);
+      const pipe = inner.indexOf('|');
+      if (pipe === -1) {
+        blocks.push({ type: 'image', alt: inner.trim() });
+      } else {
+        blocks.push({
+          type: 'image',
+          alt: inner.slice(0, pipe).trim(),
+          url: inner.slice(pipe + 1).trim() || undefined,
+        });
+      }
+      i += 1;
+    } else if (line.startsWith('- ')) {
+      const items: string[] = [];
+      while (i < lines.length && lines[i].startsWith('- ')) {
+        items.push(lines[i].slice(2));
+        i += 1;
+      }
+      blocks.push({ type: 'ul', items });
+    } else {
+      blocks.push({ type: 'p', text: line });
+      i += 1;
+    }
+  }
+  return blocks;
+}
 
 const StoryDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -67,13 +125,8 @@ const StoryDetailPage: React.FC = () => {
     "dateModified": story.publishDate,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://thetidbit.in/stories/${story.slug}`
+      "@id": `https://thetidbit.in${getStoryPath(story)}`
     }
-  };
-
-  const handleShopClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    navigate('/collections');
   };
 
   // Find related stories (excluding current story)
@@ -84,16 +137,30 @@ const StoryDetailPage: React.FC = () => {
 
   const relatedStories = getRelatedStories();
   const relatedProducts = SIGNATURE_PRODUCT_LINKS.slice(0, 4);
+  const storyPath = getStoryPath(story);
+  const contentBlocks = parseStoryBlocks(story.content, story.lifestyleImages);
+  const ctaHref = story.ctaHref || '/collections';
 
   // Use optimized image for social sharing (1200x630 for OG/Twitter)
   const socialImage = cloudinaryTransform(story.heroImage, { w: 1200 });
+
+  /** Support **bold** → <strong> inside story paragraphs. */
+  const renderInline = (text: string) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={i}>{part.slice(2, -2)}</strong>;
+      }
+      return <React.Fragment key={i}>{part}</React.Fragment>;
+    });
+  };
 
   return (
     <div className="bg-white min-h-screen">
       <SEO 
         title={story.title}
         description={story.excerpt}
-        canonicalUrl={`https://thetidbit.in/stories/${story.slug}`}
+        canonicalUrl={`https://thetidbit.in${storyPath}`}
         type="article"
         image={socialImage}
         schema={articleSchema}
@@ -169,69 +236,149 @@ const StoryDetailPage: React.FC = () => {
           </header>
 
           {/* Article Body - Large, readable fonts, editorial spacing */}
-          <div className="space-y-6 text-xl leading-relaxed text-stone-700 font-sans">
-            {story.content.map((paragraph, index) => {
-              const lifestyleImage = story.lifestyleImages?.find(
-                img => img.insertAfterParagraph === index
-              );
-              const isHeading = paragraph.startsWith('## ');
-              const headingText = isHeading ? paragraph.slice(3).trim() : '';
-
-              return (
-                <React.Fragment key={index}>
-                  {isHeading ? (
-                    <h2 className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 mt-10 mb-4 leading-snug">
-                      {headingText}
-                    </h2>
-                  ) : (
-                    <p className="mb-6">{paragraph}</p>
-                  )}
-                  {lifestyleImage && (
-                    <figure className="my-12">
+          <div className="space-y-2 text-lg sm:text-xl leading-relaxed text-stone-700 font-sans">
+            {contentBlocks.map((block, index) => {
+              if (block.type === 'h2') {
+                return (
+                  <h2
+                    key={index}
+                    className="font-serif text-2xl sm:text-3xl font-bold text-stone-900 mt-10 mb-4 leading-snug"
+                  >
+                    {renderInline(block.text)}
+                  </h2>
+                );
+              }
+              if (block.type === 'h3') {
+                return (
+                  <h3
+                    key={index}
+                    className="font-serif text-xl sm:text-2xl font-bold text-stone-900 mt-8 mb-3 leading-snug"
+                  >
+                    {renderInline(block.text)}
+                  </h3>
+                );
+              }
+              if (block.type === 'ul') {
+                return (
+                  <ul key={index} className="mb-6 list-disc space-y-3 pl-6 marker:text-brand-green">
+                    {block.items.map((item, itemIndex) => (
+                      <li key={itemIndex} className="leading-relaxed pl-1">
+                        {renderInline(item)}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              }
+              if (block.type === 'image') {
+                if (block.url) {
+                  return (
+                    <figure key={index} className="my-10 sm:my-12">
                       <img
-                        src={cloudinaryTransform(lifestyleImage.url, { w: 1200 })}
-                        srcSet={cloudinarySrcSet(lifestyleImage.url, [800, 1200, 1600])}
-                        sizes="(min-width: 768px) 100vw, 100vw"
-                        alt={lifestyleImage.alt}
+                        src={cloudinaryTransform(block.url, { w: 1200 })}
+                        srcSet={cloudinarySrcSet(block.url, [800, 1200, 1600])}
+                        sizes="(min-width: 768px) 768px, 100vw"
+                        alt={block.alt}
                         className="w-full rounded-2xl"
                         loading="lazy"
                         decoding="async"
                         width="1200"
                         height="675"
                       />
+                      <figcaption className="mt-3 text-center text-sm text-stone-500 leading-relaxed">
+                        {block.alt}
+                      </figcaption>
                     </figure>
-                  )}
-                </React.Fragment>
+                  );
+                }
+                return (
+                  <figure key={index} className="my-10 sm:my-12">
+                    <div className="aspect-video w-full overflow-hidden rounded-2xl border border-dashed border-stone-300 bg-stone-100">
+                      <img
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='900'%3E%3Crect fill='%23f5f5f4' width='100%25' height='100%25'/%3E%3C/svg%3E"
+                        alt={block.alt}
+                        className="h-full w-full object-cover"
+                        width="1600"
+                        height="900"
+                        data-image-placeholder="true"
+                      />
+                    </div>
+                    <figcaption className="mt-3 text-center text-sm text-stone-500 leading-relaxed">
+                      {block.alt} — drop in product photo here
+                    </figcaption>
+                  </figure>
+                );
+              }
+              return (
+                <p key={index} className="mb-6 leading-relaxed">
+                  {renderInline(block.text)}
+                </p>
               );
             })}
           </div>
 
           {/* Soft Product Reference CTA - Editorial, non-commercial */}
           <div className="mt-20 pt-12 border-t border-stone-200">
-            <div className="bg-stone-50 rounded-2xl p-10 text-center border border-stone-100">
-              <Heart className="w-10 h-10 text-stone-400 mx-auto mb-5" />
-              <p className="text-lg text-stone-600 mb-6 leading-relaxed max-w-xl mx-auto">
-                Love the story? Explore TheTidbit’s signature handmade jute bags — each crafted with the same care.
+            <div className="bg-stone-50 rounded-2xl p-10 text-center sm:text-left border border-stone-100">
+              <Heart className="w-10 h-10 text-stone-400 mx-auto sm:mx-0 mb-5" />
+              <p className="text-lg text-stone-600 mb-6 leading-relaxed max-w-xl mx-auto sm:mx-0">
+                {story.showBulkInquiryForm
+                  ? 'Ready to elevate your corporate gifting strategy? Request a custom quote — we’ll reply with a digital catalog within 24 hours.'
+                  : 'Love the story? Explore TheTidbit’s signature handmade jute bags — each crafted with the same care.'}
               </p>
-              <div className="flex flex-wrap justify-center gap-3 mb-6">
-                {relatedProducts.map((p) => (
-                  <Link
-                    key={p.id}
-                    to={p.href}
-                    className="text-sm font-semibold text-brand-green underline underline-offset-2 hover:text-stone-900"
+              {!story.showBulkInquiryForm && (
+                <div className="flex flex-wrap justify-center sm:justify-start gap-3 mb-6">
+                  {relatedProducts.map((p) => (
+                    <Link
+                      key={p.id}
+                      to={p.href}
+                      className="text-sm font-semibold text-brand-green underline underline-offset-2 hover:text-stone-900"
+                    >
+                      {p.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              <div className="flex justify-center sm:justify-start">
+                {ctaHref.startsWith('#') ? (
+                  <a
+                    href={ctaHref}
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && window.gtag) {
+                        window.gtag('event', 'story_cta_click', {
+                          placement: 'story_detail_anchor',
+                          slug: story.slug,
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center justify-center gap-2 bg-stone-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-brand-green transition-colors text-base text-center max-w-md"
                   >
-                    {p.label}
+                    {story.ctaLabel || 'Shop the collection'} <ArrowRight size={18} className="shrink-0" />
+                  </a>
+                ) : (
+                  <Link
+                    to={ctaHref}
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && window.gtag) {
+                        window.gtag('event', 'story_cta_click', {
+                          placement: 'story_detail_collection',
+                          slug: story.slug,
+                        });
+                      }
+                    }}
+                    className="inline-flex items-center justify-center gap-2 bg-stone-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-brand-green transition-colors text-base text-center max-w-md"
+                  >
+                    {story.ctaLabel || 'Shop the collection'} <ArrowRight size={18} className="shrink-0" />
                   </Link>
-                ))}
+                )}
               </div>
-              <button
-                onClick={handleShopClick}
-                className="inline-block bg-stone-900 text-white px-10 py-4 rounded-xl font-semibold hover:bg-stone-800 transition text-base"
-              >
-                Discover the Collection
-              </button>
             </div>
           </div>
+
+          {story.showBulkInquiryForm && (
+            <div className="mt-12">
+              <BulkInquiryForm placement={`story-${story.slug}`} />
+            </div>
+          )}
 
           {/* Related Stories Section */}
           {relatedStories.length > 0 && (
@@ -243,7 +390,7 @@ const StoryDetailPage: React.FC = () => {
                 {relatedStories.map((relatedStory) => (
                   <Link
                     key={relatedStory.id}
-                    to={`/stories/${relatedStory.slug}`}
+                    to={getStoryPath(relatedStory)}
                     className="group block"
                   >
                     <div className="bg-stone-50 rounded-xl overflow-hidden hover:shadow-md transition-all">

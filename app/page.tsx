@@ -8,10 +8,12 @@ export const metadata = buildMetadata({
   path: '/',
   image: 'https://res.cloudinary.com/thetidbit23024/image/upload/v1768458165/2_txnnxs.png',
   keywords: [
-    'handmade jute bags',
-    'premium handbags India',
-    'eco friendly bags',
-    'made in India handbags',
+    'handmade jute sling bag',
+    'boho embroidered crossbody bag',
+    'evil eye jute sling bag',
+    'affordable sling bags under 500',
+    'best sling bags in mumbai online',
+    'handcrafted handbags maharashtra',
     'TheTidbit',
   ],
 });

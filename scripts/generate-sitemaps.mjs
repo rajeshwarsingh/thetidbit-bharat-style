@@ -9,13 +9,17 @@
  */
 import { writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import {
   rootDir,
   today,
+  BASE_URL,
   loadCatalogProducts,
   loadCollectionFilters,
   loadStories,
   STATIC_PAGES,
+  EXCLUDED_FROM_SITEMAP,
+  expectedIndexableUrls,
   urlEntry,
   wrapUrlset,
   wrapSitemapIndex,
@@ -162,6 +166,38 @@ async function generateMainSitemap(products, collectionFilters) {
   console.log(`✓ Generated sitemap-main.xml (legacy combined, ${STATIC_PAGES.length + collectionFilters.length + products.length} URLs)`);
 }
 
+/** Fail the build if any indexable URL is missing from the written sitemaps. */
+async function assertSitemapCoverage(products, stories, collectionFilters) {
+  const files = ['sitemap-pages.xml', 'sitemap-products.xml', 'sitemap-stories.xml'];
+  const found = new Set();
+  for (const file of files) {
+    const xml = await readFile(join(rootDir, 'public', file), 'utf8');
+    for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+      found.add(m[1]);
+    }
+  }
+
+  const expected = expectedIndexableUrls(products, stories, collectionFilters);
+  const missing = [...expected].filter((u) => !found.has(u)).sort();
+  const excludedPresent = EXCLUDED_FROM_SITEMAP
+    .map((e) => `${BASE_URL}${e.path}`)
+    .filter((u) => found.has(u));
+
+  if (missing.length || excludedPresent.length) {
+    if (missing.length) {
+      console.error('\n✗ Missing from sitemap:');
+      missing.forEach((u) => console.error(`  - ${u}`));
+    }
+    if (excludedPresent.length) {
+      console.error('\n✗ Excluded routes incorrectly present:');
+      excludedPresent.forEach((u) => console.error(`  - ${u}`));
+    }
+    throw new Error('Sitemap coverage check failed');
+  }
+
+  console.log(`\n✓ Coverage check passed — ${expected.size} indexable URLs, ${EXCLUDED_FROM_SITEMAP.length} routes correctly excluded`);
+}
+
 async function main() {
   try {
     console.log('Generating sitemaps...\n');
@@ -180,6 +216,7 @@ async function main() {
     await generateImageSitemap(products, stories);
     await generateMainSitemap(products, collectionFilters);
     await generateSitemapIndex();
+    await assertSitemapCoverage(products, stories, collectionFilters);
 
     const total = STATIC_PAGES.length + collectionFilters.length + products.length + stories.length;
     console.log(`\n✓ All sitemaps generated — ${total} indexable URLs across pages, products & stories`);

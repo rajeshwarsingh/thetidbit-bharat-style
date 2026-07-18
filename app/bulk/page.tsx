@@ -6,7 +6,13 @@ export const metadata = buildMetadata({
   title: BULK_META.title,
   description: BULK_META.description,
   path: '/bulk',
-  keywords: ['corporate gifting', 'bulk handmade bags', 'custom jute bags India'],
+  keywords: [
+    'eco friendly corporate gifting bangalore',
+    'custom bulk jute bags karnataka',
+    'corporate gifting',
+    'bulk handmade bags',
+    'custom jute bags India',
+  ],
 });
 
 export default function Page() {

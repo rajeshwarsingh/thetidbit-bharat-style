@@ -45,6 +45,25 @@ export function bulkInquiryUrl(context?: string): string {
   return toUrl(message);
 }
 
+/** Structured B2B quote from the corporate blog inquiry form. */
+export function bulkQuoteFormUrl(data: {
+  name: string;
+  email: string;
+  company: string;
+  quantity: string;
+  message: string;
+}): string {
+  const message =
+    `Hi TheTidbit, I'd like a corporate / bulk quote.` +
+    `\n\nName: ${data.name.trim()}` +
+    `\nCompany: ${data.company.trim()}` +
+    `\nEmail: ${data.email.trim()}` +
+    `\nEstimated quantity: ${data.quantity.trim()}` +
+    `\n\nMessage:\n${data.message.trim()}` +
+    `\n\nPlease share a custom digital catalog, pricing and lead time.`;
+  return toUrl(message);
+}
+
 /** General enquiry / contact. */
 export function contactUrl(context?: string): string {
   const message = `Hi TheTidbit,` + (context ? ` ${context}` : ' I have a question.');

@@ -8,11 +8,12 @@ export const metadata = buildMetadata({
   description: COLLECTIONS_META.description,
   path: '/collections',
   keywords: [
-    'handmade bags online',
-    'jute sling bags',
-    'office bags for women',
-    'college bags for women',
-    'gift handbags',
+    'handmade jute sling bag',
+    'aesthetic office tote bags delhi',
+    'college bags for girls ncr',
+    'jute tote bags pune',
+    'trendy college tote bags lucknow',
+    'handwoven evil eye sling bag',
   ],
 });
 

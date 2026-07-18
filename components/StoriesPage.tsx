@@ -3,8 +3,12 @@ import React from 'react';
 import { Link } from '@/lib/router';
 import { Calendar, Clock, ArrowRight } from 'lucide-react';
 import SEO from './SEO';
-import { stories } from '../data/stories';
+import { stories, getStoryPath } from '../data/stories';
 import { cloudinaryTransform, cloudinarySrcSet } from '../utils/cloudinary';
+
+/** Promotional journal banner — “On the Blog / Carry Style. Carry Joy”. */
+const STORIES_BANNER =
+  'https://res.cloudinary.com/thetidbit23024/image/upload/v1784376383/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/blog_mivwlc.png';
 
 const StoriesPage: React.FC = () => {
   const featuredStory = stories.find(s => s.featured);
@@ -26,12 +30,32 @@ const StoriesPage: React.FC = () => {
         description="Guides on handmade bags, jute handbags, eco-friendly fashion in India, styling tips and gift ideas from TheTidbit."
         canonicalUrl="https://thetidbit.in/stories"
         type="website"
-        image={featuredStory?.heroImage || "https://res.cloudinary.com/thetidbit23024/image/upload/v1766842697/article%20jutes/jute1_hpbfrm.png"}
+        image={STORIES_BANNER}
       />
+
+      {/* Journal promo banner */}
+      <div className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+          <figure className="overflow-hidden rounded-2xl sm:rounded-3xl bg-stone-100 dark:bg-stone-800">
+            <img
+              src={cloudinaryTransform(STORIES_BANNER, { w: 1600 })}
+              srcSet={cloudinarySrcSet(STORIES_BANNER, [800, 1200, 1600, 2000])}
+              sizes="(min-width: 1280px) 1280px, 100vw"
+              alt="TheTidbit Stories — Carry style, carry joy. Tips, trends and handmade bag inspiration"
+              className="w-full h-auto object-cover object-center"
+              width="1600"
+              height="900"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
 
       {/* Header */}
       <div className="bg-white dark:bg-stone-900 border-b border-stone-200 dark:border-stone-800 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
           <div className="max-w-3xl">
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-stone-900 dark:text-stone-100 mb-6 leading-tight">
               Stories &amp; buying guides
@@ -67,7 +91,7 @@ const StoriesPage: React.FC = () => {
               </span>
             </div>
             <Link 
-              to={`/stories/${featuredStory.slug}`}
+              to={getStoryPath(featuredStory)}
               className="group block bg-white dark:bg-stone-800/50 dark:backdrop-blur-sm rounded-3xl overflow-hidden shadow-lg dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70 transition-all duration-300"
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
@@ -144,7 +168,7 @@ const StoriesPage: React.FC = () => {
               {otherStories.map((story) => (
                 <Link
                   key={story.id}
-                  to={`/stories/${story.slug}`}
+                  to={getStoryPath(story)}
                   className="group block bg-white dark:bg-stone-800/50 dark:backdrop-blur-sm rounded-2xl overflow-hidden shadow-md dark:shadow-stone-900/50 hover:shadow-xl dark:hover:shadow-stone-900/70 transition-all duration-300"
                 >
                   {/* Image */}

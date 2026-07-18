@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, MessageCircle, Instagram, Clock } from 'lucide-rea
 import SEO from './SEO';
 import Reveal from './Reveal';
 import { CONTACT_INFO, SOCIAL_LINKS, GOOGLE_MAPS_URL, GOOGLE_MAPS_EMBED_URL } from '../constants';
+import { CONTACT_META } from '../lib/seo-content';
 import { contactUrl, openWhatsApp } from '../utils/whatsapp';
 
 const ContactPage: React.FC = () => {
@@ -38,8 +39,8 @@ const ContactPage: React.FC = () => {
   return (
     <>
       <SEO
-        title="Contact Us"
-        description="Get in touch with TheTidbit for orders, bulk enquiries and support. Reach us on WhatsApp, phone or email — we usually reply within a few hours."
+        title={CONTACT_META.title}
+        description={CONTACT_META.description}
         canonicalUrl="https://thetidbit.in/contact"
       />
 

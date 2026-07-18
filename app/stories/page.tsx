@@ -7,6 +7,8 @@ export const metadata = buildMetadata({
   description: STORIES_META.description,
   path: '/stories',
   type: 'article',
+  image:
+    'https://res.cloudinary.com/thetidbit23024/image/upload/v1784376383/Thetidbit%20Venture%20-%20all%20assets%20%28thetidbit.in%29/blog_mivwlc.png',
   keywords: [
     'handmade bags guide',
     'jute bags',
